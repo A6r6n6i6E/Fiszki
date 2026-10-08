@@ -1,0 +1,18 @@
+SLOWKO 1.1 - TXT
+
+1. Najprostszy test na komputerze: otwórz slowko-demo.html.
+2. W aplikacji: "Dodaj słówka z TXT" -> wybierz plik -> "Dodaj do nauki".
+3. Przykładowy plik do importu: przyklad-slowka.txt.
+4. Cała baza ze zdjęć jest w data/slowka.txt.
+   Dopisz wiersze: polski;angielski;dział
+   Warianty oddziel znakiem |. Dział jest opcjonalny.
+5. Publikacja GitHub/Cloudflare:
+   Build command: node tools/build.cjs
+   Build output directory: public
+   Framework: None
+6. Zmiana data/slowka.txt wymaga nowego zbudowania i wdrożenia aplikacji.
+   Prywatny import TXT nie zmienia repozytorium ani pliku na dysku.
+7. TXT przechowuje słówka. Kopia JSON z ustawień przenosi słówka i postęp.
+
+Przed aktualizacją zapisz kopię JSON. Publikuj pod tym samym adresem, aby zachować
+zapis lokalny. Pełna instrukcja: README.md. Zakres sprawdzeń: TESTY.md.

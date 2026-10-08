@@ -1,0 +1,1731 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f7f3">
+  <meta name="description" content="Słówko — ćwicz pisownię angielskich słów. Polski podpowiada, Ty wpisujesz po angielsku.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Słówko">
+  <meta name="color-scheme" content="light">
+  <title>Słówko — angielski, po Twojemu</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22512%22%20height%3D%22512%22%20viewBox%3D%220%200%20512%20512%22%3E%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22108%22%20fill%3D%22%23286448%22%2F%3E%3Cg%20transform%3D%22rotate(8%20256%20256)%22%3E%3Crect%20x%3D%22151%22%20y%3D%22112%22%20width%3D%22227%22%20height%3D%22292%22%20rx%3D%2234%22%20fill%3D%22%23163f2b%22%20opacity%3D%22.35%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22rotate(-8%20256%20256)%22%3E%3Crect%20x%3D%22130%22%20y%3D%22103%22%20width%3D%22248%22%20height%3D%22306%22%20rx%3D%2237%22%20fill%3D%22%23d4ebba%22%2F%3E%3Cpath%20d%3D%22m186%20253%2045%2045%2098-108%22%20stroke%3D%22%23286448%22%20stroke-width%3D%2229%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M194%20352h105%22%20stroke%3D%22%23286448%22%20stroke-opacity%3D%22.28%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+  <style>
+/* Słówko — responsive interface, including compact iPhone layouts. */
+:root {
+  --page: #f6f7f3; --paper: #ffffff; --ink: #202e2b; --muted: #6b7771;
+  --line: #e3e8df; --green: #286448; --green-dark: #1c4a34;
+  --mint: #e6f2df; --lime: #d4ebba; --error: #a54032; --error-bg: #fff3ed;
+  --radius: 24px; --shadow: 0 8px 32px #253e2d06;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px; color: var(--ink); background: var(--page); color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 300px; -webkit-font-smoothing: antialiased; }
+button, input, select { font: inherit; }
+button, select { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+button:disabled { cursor: default; opacity: .55; }
+a { color: inherit; }
+button, input, select, summary, a { touch-action: manipulation; }
+:focus-visible { outline: 3px solid #669e61; outline-offset: 4px; }
+input:focus-visible { outline: none; }
+[hidden] { display: none !important; }
+.icon { display: inline-block; width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; flex-shrink: 0; }
+.svg-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.skip-link { position: fixed; left: 16px; top: -70px; z-index: 100; padding: 14px; background: var(--ink); color: white; border-radius: 12px; }
+.skip-link:focus { top: 12px; }
+.app-header { background: #ffffffaa; border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1196px; margin: auto; padding: 0 28px; height: 90px; display: flex; align-items: center; gap: 32px; }
+.brand { text-decoration: none; font-weight: 800; font-size: 29px; letter-spacing: -1.4px; display: inline-flex; gap: 10px; align-items: center; margin-right: auto; }
+.brand-mark { width: 38px; height: 38px; border-radius: 12px; background: var(--green); color: var(--lime); display: grid; place-items: center; transform: rotate(-5deg); }
+.brand-mark .icon { width: 27px; height: 27px; stroke-width: 3; }
+.brand-dot { color: var(--green); }
+.top-nav { display: flex; gap: 8px; padding: 5px; border: 1px solid var(--line); background: #f5f7f1; border-radius: 14px; }
+.nav-button { border: none; display: flex; gap: 9px; align-items: center; border-radius: 10px; color: var(--muted); padding: 11px 18px; background: transparent; font-weight: 650; font-size: 14px; min-height: 44px; }
+.nav-button.active { color: var(--green-dark); background: white; box-shadow: 0 2px 8px #17221b0a; }
+.nav-button:hover { color: var(--green); }
+.icon-button { width: 44px; height: 44px; display: inline-grid; place-items: center; border: 1px solid var(--line); border-radius: 13px; background: white; color: var(--ink); flex-shrink: 0; }
+.icon-button:hover { background: var(--mint); border-color: #ceddc4; }
+.app-main { max-width: 1196px; margin: auto; padding: 43px 28px 20px; }
+.page-heading { display: flex; gap: 24px; justify-content: space-between; align-items: center; margin: 0 0 34px; }
+.eyebrow { font-size: 10px; letter-spacing: 1.8px; font-weight: 750; display: flex; align-items: center; gap: 8px; color: var(--green); margin: 0 0 12px; }
+.tiny-line { width: 20px; height: 2px; background: var(--green); display: inline-block; }
+h1 { font-size: clamp(30px, 3.5vw, 43px); font-weight: 700; letter-spacing: -1.65px; line-height: 1.14; margin: 0; }
+.page-subtitle { color: var(--muted); font-size: 15px; margin: 12px 0 0; line-height: 1.5; }
+.set-badge { display: flex; align-items: center; gap: 13px; border: 1px solid var(--line); background: #eff2e9; padding: 14px 18px; border-radius: 17px; flex-shrink: 0; }
+.set-number { font-size: 32px; font-weight: 750; letter-spacing: -2px; color: var(--green); }
+.set-badge strong { font-size: 14px; font-weight: 700; display: block; }
+.set-badge div > span { display: block; font-size: 11px; color: var(--muted); margin-top: 4px; }
+.workspace { display: grid; grid-template-columns: 263px minmax(0, 1fr); gap: 27px; align-items: start; }
+.sidebar { display: flex; flex-direction: column; gap: 17px; }
+.progress-card, .scope-card { border: 1px solid var(--line); background: var(--paper); border-radius: 20px; padding: 23px; }
+.section-overline { font-size: 10px; font-weight: 750; letter-spacing: 1.5px; color: var(--muted); display: flex; align-items: center; justify-content: space-between; margin: 0; }
+.section-overline .icon { width: 17px; height: 17px; color: var(--green); }
+.progress-ring { --progress: 0%; width: 152px; height: 152px; padding: 9px; margin: 24px auto 25px; border-radius: 50%; background: conic-gradient(var(--green) var(--progress), #edf1e9 0); }
+.ring-inner { height: 100%; width: 100%; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; flex-direction: column; }
+.ring-inner > strong { font-size: 34px; line-height: 1.1; font-weight: 700; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+.ring-inner strong span { font-size: 18px; font-weight: 450; margin-left: 1px; }
+.ring-inner > span { font-size: 11px; color: var(--muted); margin-top: 7px; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; text-align: center; margin: 0 0 20px; }
+.stats-grid > div + div { border-left: 1px solid var(--line); }
+.stats-grid strong { display: block; font-size: 26px; line-height: 1; letter-spacing: -.7px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.stats-grid div:first-child strong { color: var(--green); }
+.stats-grid span { display: block; font-size: 11px; color: var(--muted); margin-top: 7px; }
+.accuracy-row { border-top: 1px solid var(--line); padding-top: 17px; font-size: 11px; display: flex; align-items: center; justify-content: space-between; color: var(--muted); }
+.accuracy-row strong { font-size: 13px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.global-progress { font-size: 10px; color: var(--muted); text-align: center; line-height: 1.5; margin: 13px 0 0; }
+.global-progress:empty { display: none; }
+.scope-card { padding: 21px; }
+.select-input { background: white; color: var(--ink); border: 1px solid #d9e0d4; border-radius: 10px; min-height: 46px; width: 100%; padding: 9px 32px 9px 12px; font-size: 13px; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 20 20'%3E%3Cpath d='m5 8 5 5 5-5' fill='none' stroke='%236b7771' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; text-overflow: ellipsis; }
+.scope-card .select-input { margin-top: 12px; }
+.scope-help { font-size: 12px; color: var(--muted); line-height: 1.6; margin: 11px 0 13px; }
+.text-button { border: 0; background: transparent; padding: 5px 0; display: inline-flex; gap: 7px; align-items: center; color: var(--muted); font-size: 12px; font-weight: 550; min-height: 34px; text-decoration: none; }
+.text-button:hover { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
+.text-button .icon { width: 15px; height: 15px; }
+.quiet-note { display: flex; align-items: start; gap: 10px; padding: 0 12px; color: var(--muted); }
+.quiet-note .icon { width: 18px; height: 18px; margin-top: 3px; opacity: .75; }
+.quiet-note p { font-size: 11px; line-height: 1.7; margin: 0; }
+.content { min-width: 0; }
+.quiz-card { border: 1px solid var(--line); background: white; border-radius: var(--radius); padding: 29px 36px 30px; box-shadow: var(--shadow); min-height: 497px; }
+.quiz-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.category-badge { background: #f0f4eb; color: #4c6747; padding: 7px 11px; border-radius: 8px; font-size: 11px; font-weight: 650; line-height: 1.4; }
+.direction { color: #939d96; font-size: 11px; letter-spacing: 1.2px; display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.direction b { color: var(--ink); font-weight: 650; }
+.direction .icon { width: 18px; height: 18px; }
+.question-block { padding: 45px 0 35px; min-height: 201px; display: flex; justify-content: center; flex-direction: column; text-align: center; }
+.question-overline { font-size: 10px; letter-spacing: 1.6px; color: var(--muted); font-weight: 600; margin: 0 0 17px; }
+.question-overline.retry { color: #95623d; }
+#polish-word { font-size: clamp(27px, 3vw, 38px); line-height: 1.2; font-weight: 650; letter-spacing: -1.1px; margin: 0; text-wrap: balance; overflow-wrap: anywhere; }
+#polish-word.long { font-size: 29px; line-height: 1.3; }
+.word-cue { font-size: 12px; line-height: 1.5; margin: 14px 0 0; color: #6c7656; }
+.answer-label { font-size: 12px; font-weight: 650; display: flex; align-items: center; justify-content: space-between; margin: 0 0 9px; }
+.answer-label span { font-size: 11px; font-weight: 400; color: var(--muted); }
+.input-wrap { display: flex; align-items: center; border: 1.5px solid #dbe3d6; border-radius: 13px; background: #fafbf8; padding-right: 15px; transition: box-shadow .15s, border-color .15s; }
+.input-wrap:focus-within { border-color: var(--green); box-shadow: 0 0 0 3px #28644810; background: white; }
+#answer { background: transparent; min-width: 0; width: 100%; padding: 17px 18px; height: 60px; border: 0; border-radius: 13px; color: var(--ink); font-size: 19px; letter-spacing: .1px; }
+#answer::placeholder { color: #929b93; font-size: 16px; }
+.input-icon { display: grid; place-items: center; font-size: 23px; font-weight: 700; }
+.input-wrap.is-correct { border-color: #5f9874; background: #f4f9ef; color: var(--green); }
+.input-wrap.is-wrong { border-color: #d8a08c; background: #fffaf6; color: var(--error); }
+.answer-hint { font-size: 11px; color: var(--muted); margin: 10px 0 0; line-height: 1.5; }
+.input-error { color: var(--error); font-size: 12px; margin: 9px 0 0; }
+.quiz-actions { margin-top: 26px; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.button { border-radius: 12px; min-height: 49px; border: 1px solid transparent; padding: 13px 20px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; font-weight: 650; line-height: 1.35; transition: background .15s, transform .12s; }
+.button:active { transform: translateY(1px); }
+.button-primary { background: var(--green); color: white; border-color: var(--green); }
+.button-primary:hover { background: var(--green-dark); border-color: var(--green-dark); }
+#check-button { min-width: 170px; }
+.button-primary .icon { width: 18px; height: 18px; }
+.button-quiet { color: var(--muted); background: transparent; padding-left: 0; padding-right: 12px; }
+.button-quiet:hover { color: var(--ink); }
+.button-secondary { background: white; border-color: #d8e0d2; color: var(--ink); }
+.button-secondary:hover { background: #f1f5ec; }
+.button-danger { background: #fff3ec; border-color: #e8c6b9; color: #984532; }
+.button-danger:hover { background: #fae5db; }
+.next-button { margin-left: auto; }
+.feedback { margin-top: 20px; padding: 19px 21px; border: 1px solid #dbe9ce; border-radius: 14px; background: #f2f8ec; color: #2f593d; animation: appear .18s ease-out; }
+.feedback.is-wrong { color: #8d422f; background: var(--error-bg); border-color: #f0d8ca; }
+.feedback-heading { display: flex; align-items: center; gap: 9px; }
+.feedback-heading h3 { font-size: 15px; margin: 0; font-weight: 750; }
+#feedback-symbol { width: 22px; height: 22px; border-radius: 50%; font-size: 14px; background: #daebcc; display: grid; place-items: center; font-weight: 700; }
+.is-wrong #feedback-symbol { background: #f3d7c8; }
+.solution-label { font-size: 10px; letter-spacing: 1px; margin: 16px 0 5px; font-weight: 700; text-transform: uppercase; opacity: .8; }
+.solution { font-size: 23px; font-weight: 750; line-height: 1.3; letter-spacing: -.3px; color: var(--ink); overflow-wrap: anywhere; margin: 0; }
+.feedback-description { font-size: 12px; line-height: 1.65; margin: 9px 0 0; }
+.typed-answer { font-size: 12px; margin: 8px 0 0; line-height: 1.55; overflow-wrap: anywhere; }
+.variant-note { font-size: 11px; line-height: 1.55; margin: 9px 0 0; opacity: .9; }
+.learning-rule { display: flex; align-items: center; gap: 12px; justify-content: center; padding: 24px 22px; }
+.rule-check { width: 32px; height: 32px; border: 1px solid #d1e0c5; border-radius: 50%; color: var(--green); display: grid; place-items: center; flex-shrink: 0; }
+.rule-check .icon { width: 17px; height: 17px; }
+.learning-rule p { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.75; }
+.learning-rule strong { color: #596a59; font-weight: 650; }
+.done-card { border: 1px solid var(--line); padding: 43px 30px; border-radius: var(--radius); text-align: center; background: white; }
+.done-illustration { width: 90px; height: 100px; border-radius: 18px; background: var(--lime); display: grid; place-items: center; margin: 4px auto 29px; transform: rotate(-8deg); position: relative; }
+.done-illustration .icon { width: 53px; height: 53px; stroke-width: 2.6; color: var(--green); }
+.done-illustration span { position: absolute; width: 31px; height: 31px; border-radius: 50%; background: var(--green); color: white; bottom: -5px; right: -12px; border: 4px solid white; display: grid; place-items: center; font-size: 13px; }
+.centered { justify-content: center; }
+.done-card h2 { font-size: 33px; letter-spacing: -1px; line-height: 1.2; margin: 10px 0 12px; }
+.done-card > p:not(.eyebrow) { color: var(--muted); font-size: 14px; line-height: 1.7; max-width: 390px; margin: 0 auto; }
+.done-actions { display: flex; flex-direction: column; gap: 11px; margin: 25px auto 0; max-width: 330px; align-items: stretch; }
+.done-actions .text-button { align-self: center; }
+.app-footer { margin-top: 31px; border-top: 1px solid var(--line); padding: 17px 0 max(12px, env(safe-area-inset-bottom)); display: flex; gap: 18px; justify-content: space-between; align-items: center; color: var(--muted); font-size: 11px; }
+.app-footer .text-button { font-size: 11px; }
+.save-status { display: flex; align-items: center; gap: 7px; }
+.status-dot { width: 6px; height: 6px; background: #83a273; border-radius: 50%; flex-shrink: 0; }
+.status-dot.offline { background: #b68a55; }
+.status-dot.warning { background: var(--error); }
+.library-view { border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 28px 0; background: white; overflow: hidden; }
+.library-heading h2 { font-size: 25px; font-weight: 650; letter-spacing: -.8px; margin: 11px 0 22px; }
+.library-toolbar { display: flex; align-items: center; gap: 10px; }
+.search-field { display: flex; align-items: center; min-width: 0; flex: 1; min-height: 46px; border: 1px solid #d9e0d4; border-radius: 10px; padding: 0 12px; color: var(--muted); background: #fafbf8; }
+.search-field:focus-within { border-color: var(--green); box-shadow: 0 0 0 2px #28644810; }
+.search-field .icon { width: 17px; height: 17px; }
+.search-field input { width: 100%; min-width: 0; border: 0; background: transparent; font-size: 13px; padding: 13px 0 13px 9px; color: var(--ink); }
+.library-toolbar .select-input { width: 131px; flex-shrink: 0; }
+.library-count { font-size: 11px; color: var(--muted); margin: 18px 0 10px; }
+.word-list { padding: 0; margin: 0; list-style: none; }
+.word-row { display: flex; gap: 13px; align-items: center; padding: 17px 0; border-top: 1px solid var(--line); }
+.word-row-main { flex: 1; min-width: 0; }
+.word-row-main strong { font-size: 14px; line-height: 1.4; font-weight: 600; display: block; overflow-wrap: anywhere; }
+.word-english { font-size: 14px; color: var(--green); margin: 5px 0; line-height: 1.5; overflow-wrap: anywhere; }
+.word-meta { font-size: 10px; color: var(--muted); line-height: 1.5; margin: 0; }
+.word-state { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.state-chip { font-size: 10px; line-height: 1.4; white-space: nowrap; padding: 6px 9px; border-radius: 6px; color: var(--muted); background: #f3f5ef; }
+.state-chip.learned { background: var(--mint); color: var(--green); }
+.restore-button { width: 36px; height: 36px; border-radius: 10px; color: var(--muted); }
+.restore-button .icon { width: 16px; height: 16px; }
+.empty-state { text-align: center; padding: 48px 12px; color: var(--muted); }
+.empty-state > .icon { width: 32px; height: 32px; }
+.empty-state h3 { font-size: 17px; color: var(--ink); }
+.empty-state p { font-size: 13px; line-height: 1.6; }
+dialog { color: var(--ink); border: 1px solid var(--line); border-radius: 24px; padding: 28px; background: white; box-shadow: 0 24px 100px #20322c26; max-height: min(90dvh, 920px); }
+dialog::backdrop { background: #14251fb0; backdrop-filter: blur(3px); }
+.settings-dialog { width: 580px; max-width: calc(100vw - 28px); }
+.dialog-heading { display: flex; gap: 18px; align-items: center; justify-content: space-between; }
+.dialog-heading h2 { font-size: 25px; line-height: 1.2; letter-spacing: -.8px; margin: 8px 0 0; }
+.settings-section { margin-top: 25px; }
+.settings-section h3, .danger-zone h3 { font-size: 15px; margin: 0 0 9px; font-weight: 700; }
+.settings-section p, .help-details p, .danger-zone p { color: var(--muted); line-height: 1.7; font-size: 13px; margin: 0 0 12px; }
+.settings-section strong, .help-details strong { color: #4a5e4b; font-weight: 650; }
+.backup-actions { display: flex; gap: 10px; margin: 15px 0 12px; }
+.backup-actions .button { flex: 1; }
+.settings-section .small-note { font-size: 11px; line-height: 1.7; }
+.help-details { border-top: 1px solid var(--line); margin-top: 19px; }
+.help-details summary { padding: 18px 0 2px; cursor: pointer; font-size: 14px; font-weight: 650; }
+.help-details[open] summary { margin-bottom: 13px; }
+.danger-zone { border-top: 1px solid var(--line); margin-top: 24px; padding-top: 23px; }
+.danger-zone .button { margin-top: 2px; }
+.version-label { font-size: 10px; color: #8c968f; text-align: center; margin: 26px 0 0; }
+.confirm-dialog { width: 460px; max-width: calc(100vw - 30px); }
+.confirm-dialog h2 { font-size: 22px; letter-spacing: -.5px; line-height: 1.25; margin: 0 0 15px; }
+.confirm-dialog p { line-height: 1.7; color: var(--muted); font-size: 14px; margin: 0 0 25px; }
+.confirm-actions { display: flex; justify-content: flex-end; gap: 10px; }
+.toast { position: fixed; bottom: max(22px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); background: #223c2e; color: white; max-width: calc(100vw - 30px); width: max-content; border-radius: 13px; box-shadow: 0 8px 30px #14231b25; padding: 14px 20px; font-size: 13px; line-height: 1.6; z-index: 30; }
+.notice { border: 1px solid #eac6a8; background: #fff3df; padding: 15px 22px; color: #89562b; font-size: 13px; line-height: 1.6; margin: 15px auto; width: min(1140px, calc(100% - 32px)); border-radius: 12px; }
+@keyframes appear { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 960px) {
+  .workspace { grid-template-columns: 225px minmax(0, 1fr); gap: 20px; }
+  .quiz-card { padding: 25px; }
+  .progress-card { padding: 21px 17px; }
+  .scope-card { padding: 19px 17px; }
+  .set-badge { padding: 12px; }
+  .set-badge div > span { font-size: 10px; }
+  .page-heading { gap: 12px; }
+  .page-subtitle { font-size: 13px; }
+  .question-block { padding-top: 35px; }
+  .library-view { padding: 23px 21px 0; }
+  .library-toolbar { flex-direction: column; align-items: stretch; }
+  .library-toolbar .select-input { width: 100%; }
+}
+@media (max-width: 700px) {
+  .header-inner { height: 70px; padding: 0 18px; gap: 13px; }
+  .brand { font-size: 25px; gap: 8px; }
+  .brand-mark { width: 33px; height: 33px; border-radius: 10px; }
+  .brand-mark .icon { width: 23px; height: 23px; }
+  .top-nav { gap: 2px; padding: 3px; border-radius: 12px; }
+  .nav-button { padding: 8px 10px; font-size: 12px; gap: 5px; min-height: 40px; }
+  .nav-button .icon { width: 17px; height: 17px; }
+  .settings-button { width: 39px; height: 39px; border: 0; background: transparent; }
+  .app-main { padding: 26px 18px 12px; }
+  .page-heading { margin-bottom: 23px; }
+  .eyebrow { font-size: 9px; letter-spacing: 1.3px; margin-bottom: 10px; }
+  h1 { font-size: 32px; letter-spacing: -1.35px; }
+  .page-subtitle { font-size: 12px; margin-top: 9px; max-width: 290px; }
+  .set-badge { display: none; }
+  .workspace { display: flex; flex-direction: column; gap: 17px; }
+  .sidebar { width: 100%; gap: 11px; }
+  .progress-card { position: relative; padding: 16px 17px; border-radius: 16px; display: grid; grid-template-columns: 68px 1fr auto; column-gap: 14px; align-items: center; }
+  .progress-card > .section-overline { display: none; }
+  .progress-ring { width: 64px; height: 64px; padding: 5px; margin: 0; }
+  .ring-inner > strong { font-size: 19px; letter-spacing: -.7px; }
+  .ring-inner strong span { font-size: 10px; }
+  .ring-inner > span { display: none; }
+  .stats-grid { margin: 0; gap: 0; }
+  .stats-grid strong { font-size: 23px; }
+  .stats-grid span { font-size: 9px; margin-top: 6px; }
+  .stats-grid > div { padding: 0 9px; }
+  .accuracy-row { display: flex; flex-direction: column-reverse; border: 0; padding: 0 0 0 15px; gap: 6px; border-left: 1px solid var(--line); }
+  .accuracy-row strong { font-size: 21px; font-weight: 600; }
+  .accuracy-row span { font-size: 0; }
+  .accuracy-row span::after { content: "trafność"; font-size: 9px; }
+  .global-progress { grid-column: 1 / -1; text-align: left; margin: 11px 0 0; font-size: 10px; }
+  .scope-card { border: 0; padding: 0; background: transparent; display: flex; align-items: center; gap: 10px; }
+  .scope-card label { letter-spacing: 1px; font-size: 9px; flex-shrink: 0; }
+  .scope-card .select-input { margin: 0; background-color: #ffffffb0; font-size: 12px; min-height: 43px; }
+  .scope-help, .quiet-note, #reset-scope { display: none; }
+  .content { width: 100%; }
+  .quiz-card { padding: 20px 21px 22px; border-radius: 19px; min-height: unset; }
+  .quiz-top { gap: 10px; }
+  .category-badge { font-size: 10px; padding: 6px 9px; }
+  .direction { font-size: 10px; gap: 5px; }
+  .direction .icon { width: 16px; height: 16px; }
+  .question-block { min-height: 156px; padding: 28px 0 25px; }
+  .question-overline { font-size: 8px; letter-spacing: 1.2px; margin-bottom: 13px; line-height: 1.7; }
+  #polish-word { font-size: 29px; letter-spacing: -.8px; }
+  #polish-word.long { font-size: 24px; letter-spacing: -.6px; }
+  .word-cue { font-size: 10px; margin-top: 11px; }
+  .answer-label { font-size: 11px; }
+  .answer-label span { font-size: 10px; }
+  #answer { font-size: 18px; padding: 16px 14px; height: 56px; }
+  #answer::placeholder { font-size: 14px; }
+  .answer-hint { font-size: 10px; }
+  .quiz-actions { margin-top: 21px; }
+  .button { min-height: 49px; font-size: 13px; padding: 13px 17px; border-radius: 11px; }
+  #check-button { min-width: 149px; }
+  .learning-rule { padding: 18px 6px 0; gap: 10px; justify-content: flex-start; }
+  .learning-rule p { font-size: 10px; }
+  .rule-check { width: 28px; height: 28px; }
+  .feedback { margin-top: 16px; padding: 17px; }
+  .feedback-heading h3 { font-size: 14px; }
+  .solution { font-size: 21px; }
+  .feedback-description { font-size: 11px; }
+  .app-footer { margin-top: 22px; padding-top: 13px; gap: 7px; flex-wrap: wrap; font-size: 10px; }
+  .app-footer .text-button { font-size: 10px; }
+  .app-footer .text-button .icon { width: 13px; height: 13px; }
+  .library-view { padding: 22px 19px 0; border-radius: 19px; }
+  .library-heading h2 { font-size: 23px; margin-bottom: 18px; }
+  .library-toolbar { flex-direction: row; flex-wrap: wrap; }
+  .library-toolbar .select-input { width: 100%; }
+  .search-field { flex-basis: 100%; }
+  .search-field input { font-size: 16px; }
+  .library-toolbar .select-input { font-size: 16px; }
+  .word-row { gap: 9px; padding: 16px 0; }
+  .word-row-main strong, .word-english { font-size: 13px; }
+  .word-meta { font-size: 9px; }
+  .word-state { flex-direction: column; gap: 7px; }
+  .state-chip { font-size: 9px; padding: 5px 7px; }
+  dialog { padding: 24px 21px; border-radius: 20px; }
+  .dialog-heading h2 { font-size: 23px; }
+  .backup-actions { gap: 8px; }
+  .backup-actions .button { padding: 12px 10px; font-size: 12px; }
+  .backup-actions .icon { width: 17px; height: 17px; }
+  .done-card { padding: 36px 21px; border-radius: 19px; }
+  .done-card h2 { font-size: 29px; }
+  .done-card > p:not(.eyebrow) { font-size: 13px; }
+}
+@media (max-width: 370px) {
+  .header-inner { padding: 0 12px; gap: 8px; }
+  .brand { font-size: 23px; gap: 6px; }
+  .brand-mark { width: 30px; height: 30px; }
+  .nav-button { padding: 8px; font-size: 11px; }
+  .nav-button .icon { display: none; }
+  .app-main { padding-left: 13px; padding-right: 13px; }
+  .progress-card { padding: 13px; column-gap: 8px; grid-template-columns: 60px 1fr auto; }
+  .progress-ring { width: 58px; height: 58px; }
+  .accuracy-row { padding-left: 12px; }
+  .quiz-card { padding-left: 17px; padding-right: 17px; }
+  h1 { font-size: 29px; }
+  .scope-card label { font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media print {
+  .app-header, .sidebar, .app-footer, .quiz-actions, .learning-rule, dialog, .toast { display: none !important; }
+  body, .app-main { background: white; }
+  .app-main { padding: 0; }
+  .workspace { display: block; }
+  .quiz-card, .library-view { box-shadow: none; }
+}
+
+@media (max-width: 700px) {
+  .nav-button .icon { display: none; }
+  .nav-button span { white-space: nowrap; }
+}
+@media (max-width: 370px) {
+  .brand { font-size: 22px; }
+  .brand-mark { width: 28px; height: 28px; }
+  .settings-button { width: 35px; }
+}
+
+@media (max-width: 700px) {
+  .scope-card .select-input { font-size: 16px; }
+}
+
+/* Vocabulary TXT management, v1.1 */
+.vocab-launch { justify-content: center; font-size: 13px; min-height: 46px; }
+.library-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.library-heading h2 { margin-bottom: 0; }
+.library-heading > .button { min-height: 44px; padding: 10px 13px; }
+.vocab-dialog { width: 650px; max-width: calc(100vw - 28px); overflow-y: auto; overscroll-behavior: contain; }
+.vocab-summary { font-size: 12px; color: var(--muted); margin: 16px 0 23px; line-height: 1.6; }
+.txt-format { display: flex; align-items: flex-start; gap: 14px; }
+.txt-tag { display: inline-flex; background: #eef4e5; border: 1px solid #dce8d0; color: #3f6335; padding: 13px 10px; border-radius: 12px; font-size: 13px; font-weight: 750; }
+.txt-format strong { font-size: 15px; }
+.txt-format p { color: var(--muted); font-size: 13px; line-height: 1.6; margin: 5px 0 0; }
+.txt-example { border: 1px solid var(--line); background: #f6f7f3; border-radius: 12px; padding: 14px 16px; font-size: 13px; line-height: 1.8; overflow-wrap: anywhere; white-space: pre-wrap; }
+.vocab-file-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin: 20px 0; }
+#vocab-file-name { overflow-wrap: anywhere; }
+.vocab-text-label { display: block; margin: 20px 0 10px; }
+#vocab-text { display: block; width: 100%; resize: vertical; min-height: 118px; max-height: 350px; padding: 14px; border: 1px solid #cad6c5; border-radius: 12px; font-family: ui-monospace, monospace; font-size: 16px; line-height: 1.6; color: var(--ink); background: white; }
+#vocab-text:focus-visible { outline: 2px solid #669e61; outline-offset: 2px; }
+.vocab-dialog .small-note { font-size: 12px; color: var(--muted); line-height: 1.7; }
+.vocab-preview { margin-top: 20px; border: 1px solid #d9e6cf; border-radius: 14px; padding: 18px; background: #f5f8f0; }
+.vocab-preview h3 { font-size: 14px; line-height: 1.7; margin: 0 0 8px; }
+#vocab-preview-list { list-style: none; padding: 0; margin: 0; }
+#vocab-preview-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; border-top: 1px solid #e1e8da; padding: 9px 0; font-size: 13px; overflow-wrap: anywhere; }
+#vocab-preview-list li > * { flex: 1; min-width: 0; }
+#vocab-preview-list li span { text-align: right; }
+#confirm-vocab-import { margin-top: 8px; width: 100%; justify-content: center; }
+.vocab-result { white-space: pre-wrap; overflow-wrap: anywhere; padding: 15px; border-radius: 12px; border: 1px solid #cfe0c1; background: #f0f7e9; font-size: 14px; line-height: 1.7; }
+.vocab-result.is-error { background: #fff5ef; border-color: #eecdb7; }
+.vocab-help { margin-top: 24px; }
+#clear-own-txt { color: #913e31; line-height: 1.6; text-align: left; }
+@media (max-width: 700px) {
+  .vocab-launch { align-self: flex-start; min-height: 40px; padding: 8px 14px; font-size: 12px; }
+  .vocab-dialog { padding: 23px 19px; }
+  .vocab-dialog .dialog-heading h2 { font-size: 26px; }
+  .txt-example { font-size: 12px; padding: 12px; }
+  .vocab-summary { font-size: 11px; margin-bottom: 20px; }
+  .vocab-dialog .backup-actions { flex-direction: column; align-items: stretch; }
+  .vocab-dialog .backup-actions .button { justify-content: center; }
+  .vocab-preview { padding: 14px; }
+}
+
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6v14M3 4c4-1 7 0 9 2 2-2 5-3 9-2v14c-4-1-7 0-9 2-2-2-5-3-9-2Z"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h7m6 0h3M4 12h3m6 0h7M4 18h11m6 0h-1"/><circle cx="14" cy="6" r="3"/><circle cx="10" cy="12" r="3"/><circle cx="18" cy="18" r="3"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5M6 6a8 8 0 0 1 13 3M18 18A8 8 0 0 1 5 15"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m-5 5 5-5 5 5M4 16v5h16v-5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6Z"/><path d="m8 12 3 3 5-6"/></symbol>
+  </svg>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand" href="#main-content" aria-label="Słówko — strona główna">
+        <span class="brand-mark"><svg class="icon"><use href="#i-check"/></svg></span>
+        <span>Słówko<span class="brand-dot">.</span></span>
+      </a>
+      <nav class="top-nav" aria-label="Widoki aplikacji">
+        <button id="nav-study" class="nav-button active" aria-current="page">
+          <svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg><span>Nauka</span>
+        </button>
+        <button id="nav-library" class="nav-button">
+          <svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><span>Baza słówek</span>
+        </button>
+      </nav>
+      <button id="settings-button" class="icon-button settings-button" aria-label="Ustawienia i pomoc" title="Ustawienia i pomoc">
+        <svg class="icon" aria-hidden="true"><use href="#i-sliders"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div id="storage-notice" class="notice" role="alert" hidden></div>
+  <main id="main-content" class="app-main">
+    <section class="page-heading" aria-labelledby="page-title">
+      <div>
+        <div class="eyebrow"><span class="tiny-line"></span> TWÓJ ANGIELSKI. TWOJE TEMPO.</div>
+        <h1 id="page-title">Jedno słówko bliżej.</h1>
+        <p class="page-subtitle">Przeczytaj po polsku. Zapisz po angielsku. Zapamiętaj.</p>
+      </div>
+      <div class="set-badge" aria-label="Zestaw 01: Człowiek">
+        <span class="set-number">01</span><div><strong>Człowiek</strong><span id="set-size">Baza ze zdjęć</span></div>
+      </div>
+    </section>
+
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Zakres nauki i postęp">
+        <section class="progress-card">
+          <div class="section-overline">TWÓJ POSTĘP <svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg></div>
+          <div id="progress-ring" class="progress-ring" role="progressbar" aria-label="Opanowanie wybranego zakresu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="ring-inner"><strong id="progress-percent">0<span>%</span></strong><span>opanowane</span></div>
+          </div>
+          <div class="stats-grid">
+            <div><strong id="learned-count">0</strong><span>opanowane</span></div>
+            <div><strong id="remaining-count">0</strong><span>do nauki</span></div>
+          </div>
+          <div class="accuracy-row"><span>Trafność odpowiedzi</span><strong id="accuracy">—</strong></div>
+          <p id="global-progress" class="global-progress"></p>
+        </section>
+        <section class="scope-card">
+          <label for="category" class="section-overline">ZAKRES NAUKI</label>
+          <select id="category" class="select-input" aria-label="Wybierz dział"></select>
+          <p class="scope-help">Ucz się całego zestawu albo wybierz jeden dział.</p>
+          <button id="reset-scope" class="text-button">
+            <svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg>Zacznij zakres od nowa
+          </button>
+        </section>
+        <button id="add-vocab-button" class="button button-secondary vocab-launch" type="button">
+          <svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Dodaj słówka z TXT
+        </button>
+        <div class="quiet-note">
+          <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
+          <p>Bez konta i bez pośpiechu.<br>Postęp zostaje na tym urządzeniu.</p>
+        </div>
+      </aside>
+
+      <div class="content">
+        <section id="study-view" aria-label="Nauka pisowni">
+          <article id="quiz-card" class="quiz-card">
+            <div class="quiz-top">
+              <span id="word-category" class="category-badge"></span>
+              <span class="direction"><b>PL</b><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>EN</span>
+            </div>
+            <div class="question-block">
+              <p id="attempt-label" class="question-overline">JAK TO NAPISZESZ PO ANGIELSKU?</p>
+              <h2 id="polish-word"></h2>
+              <p id="word-cue" class="word-cue" hidden></p>
+            </div>
+
+            <form id="answer-form" novalidate>
+              <label for="answer" class="answer-label">Twoja odpowiedź <span>po angielsku</span></label>
+              <div id="input-wrap" class="input-wrap">
+                <input id="answer" type="text" lang="en" placeholder="Wpisz słowo lub zwrot…"
+                  autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false"
+                  inputmode="text" enterkeyhint="go" maxlength="240"
+                  aria-describedby="answer-hint input-error" aria-invalid="false">
+                <span id="input-icon" class="input-icon" aria-hidden="true"></span>
+              </div>
+              <p id="input-error" class="input-error" role="alert" hidden></p>
+              <p id="answer-hint" class="answer-hint">Wielkość liter i dodatkowe spacje nie mają znaczenia.</p>
+
+              <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true" hidden>
+                <div class="feedback-heading"><span id="feedback-symbol" aria-hidden="true"></span><h3 id="feedback-title"></h3></div>
+                <p id="solution-label" class="solution-label"></p>
+                <p id="solution" class="solution" lang="en"></p>
+                <p id="typed-answer" class="typed-answer" hidden></p>
+                <p id="feedback-description" class="feedback-description"></p>
+                <p id="variant-note" class="variant-note" hidden></p>
+              </div>
+
+              <div class="quiz-actions">
+                <button id="skip-button" class="button button-quiet" type="button">Nie wiem</button>
+                <button id="check-button" class="button button-primary" type="submit">
+                  Sprawdź<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </button>
+                <button id="next-button" class="button button-primary next-button" type="button" hidden>
+                  <span id="next-label">Następne słówko</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </button>
+              </div>
+            </form>
+          </article>
+
+          <article id="done-card" class="done-card" hidden>
+            <div class="done-illustration" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg><span>✓</span></div>
+            <p class="eyebrow centered">DOBRA ROBOTA!</p>
+            <h2 id="done-title">Wszystko opanowane.</h2>
+            <p id="done-description"></p>
+            <div class="done-actions">
+              <button id="done-all" class="button button-primary">Przejdź do całego zestawu</button>
+              <button id="done-reset" class="button button-secondary">Rozpocznij ten zakres od nowa</button>
+              <button id="done-library" class="text-button">Zobacz opanowane słówka</button>
+            </div>
+          </article>
+
+          <div class="learning-rule">
+            <span class="rule-check"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>
+            <p><strong>Umiesz? Słówko znika z puli.</strong><br>Po pomyłce zobaczysz odpowiedź i wrócisz do niego później.</p>
+          </div>
+        </section>
+
+        <section id="library-view" class="library-view" aria-labelledby="library-title" hidden>
+          <div class="library-heading"><div><p class="section-overline">TWÓJ SŁOWNICZEK</p><h2 id="library-title">Wszystko w jednym miejscu.</h2></div>
+            <button id="library-add-vocab" class="button button-secondary" type="button">+ Dodaj słówka</button>
+          </div>
+          <div class="library-toolbar">
+            <label class="search-field">
+              <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+              <input id="word-search" type="search" placeholder="Szukaj po polsku lub angielsku…" aria-label="Szukaj w bazie słówek" autocomplete="off">
+            </label>
+            <select id="status-filter" class="select-input" aria-label="Filtruj według postępu">
+              <option value="all">Wszystkie</option><option value="pending">Do nauki</option><option value="learned">Opanowane</option>
+            </select>
+          </div>
+          <p id="library-count" class="library-count" aria-live="polite"></p>
+          <ul id="word-list" class="word-list"></ul>
+          <div id="library-empty" class="empty-state" hidden><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><h3>Tu jeszcze nic nie ma.</h3><p>Zmień wyszukiwanie, dział lub filtr postępu.</p></div>
+        </section>
+      </div>
+    </div>
+    <footer class="app-footer">
+      <span class="save-status"><span id="connection-dot" class="status-dot"></span><span id="connection-status">Postęp zapisywany lokalnie</span></span>
+      <button id="about-button" class="text-button">O zestawie i zasadach<svg class="icon" aria-hidden="true"><use href="#i-info"/></svg></button>
+    </footer>
+  </main>
+
+  <dialog id="settings-dialog" class="settings-dialog">
+    <div class="dialog-heading"><div><p class="section-overline">WSZYSTKO POD KONTROLĄ</p><h2>Ustawienia i pomoc</h2></div>
+      <button id="close-settings" class="icon-button" aria-label="Zamknij ustawienia"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <section class="settings-section">
+      <h3>Twoje postępy</h3>
+      <p>Zapisywane automatycznie w tej przeglądarce. Nie synchronizują się same między urządzeniami ani przeglądarkami. Usunięcie danych witryny lub tryb prywatny może spowodować ich utratę.</p>
+      <div class="backup-actions">
+        <button id="export-button" class="button button-secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Zapisz kopię</button>
+        <button id="import-button" class="button button-secondary"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Wczytaj kopię</button>
+        <input id="import-file" type="file" accept=".json,application/json" hidden>
+      </div>
+      <p class="small-note">Plik JSON przenosi wyniki razem ze słówkami na drugi telefon lub komputer. Wczytanie kopii zastępuje obecny postęp dopiero po Twoim potwierdzeniu.</p>
+    </section>
+    <section class="settings-section">
+      <h3>Własna baza TXT</h3>
+      <p>Wczytaj listę z pliku albo wpisz nowe słówka. Import tylko dodaje hasła, nie kasuje wyników. Swoją kolekcję możesz wyeksportować do TXT.</p>
+      <button id="settings-vocab-button" class="button button-secondary" type="button">Dodaj / eksportuj słówka</button>
+    </section>
+    <section class="settings-section">
+      <h3>Na ekranie iPhone’a</h3>
+      <p>Otwórz adres aplikacji w Safari. W menu udostępniania wybierz <strong>Do ekranu głównego</strong>. Gdy pojawi się opcja <strong>Otwórz jako aplikację www</strong>, włącz ją i stuknij <strong>Dodaj</strong>.</p>
+      <p class="small-note">Wersja pod adresem HTTPS ma tryb offline po pierwszym załadowaniu i przygotowaniu pamięci podręcznej. Gotowość zobaczysz u dołu ekranu. Wersję plikową HTML najlepiej otworzyć na komputerze.</p>
+      <button id="install-button" class="button button-secondary" hidden>Zainstaluj aplikację</button>
+    </section>
+    <details id="rules-details" class="help-details">
+      <summary>Jak sprawdzane są odpowiedzi?</summary>
+      <p>Jedna poprawna odpowiedź oznacza opanowanie fiszki i usuwa ją z losowania. Błędna odpowiedź albo „Nie wiem” pokazuje rozwiązanie, ale zostawia fiszkę do nauki. Jeśli są dostępne inne fiszki, pomyłka wróci po nich, a nie natychmiast.</p>
+      <p>Liczy się pisownia z tego słowniczka. Wielkość liter, nadmiar spacji i typograficzne odmiany apostrofów oraz łączników nie wpływają na wynik. Brakująca litera, inny wyraz lub brak wymaganego łącznika to błąd. Wybrane warianty amerykańskie są akceptowane.</p>
+      <p><strong>sb</strong> oznacza <strong>somebody / someone</strong>, a <strong>sth</strong> oznacza <strong>something</strong>: każdy z tych zapisów jest prawidłowy. W bazie ze zdjęć części podane w nawiasach są opcjonalne. W imporcie TXT wpisz oba warianty oddzielone znakiem |, np. test | a test. Przy hasłach z równoważnymi wariantami wystarczy jeden z nich.</p>
+      <p>Niektóre różne słówka mają identyczne polskie tłumaczenie. Wtedy wskazówka z początkiem wyrazu mówi, którego hasła dotyczy pytanie. Każde z nich opanowujesz oddzielnie. Inne, niezapisane tu synonimy nie są automatycznie zaliczane.</p>
+      <p>Trafność to udział poprawnych odpowiedzi we wszystkich próbach; „Nie wiem” też jest próbą. Przywrócenie pojedynczego słówka do nauki zachowuje historię prób. Reset zakresu ją usuwa.</p>
+    </details>
+    <details id="source-details" class="help-details">
+      <summary>Skąd pochodzą słówka?</summary>
+      <p id="source-summary"></p>
+      <p>Przepisano listę słownictwa, bez bloku ćwiczeń „Pronounce it”. Zaznaczenia długopisem nie ograniczają bazy. Przeciwieństwa i warianty o innych znaczeniach rozdzielono na osobne pytania.</p>
+      <p>Wiersz <strong lang="en">cope with sth</strong> przy dolnej krawędzi pierwszego zdjęcia jest ucięty. Tłumaczenie „radzić sobie z czymś” zostało uzupełnione redakcyjnie. W pytaniach o „vintage” i „piercing” polską podpowiedź zapisano tak, aby nie zdradzała angielskiej odpowiedzi.</p>
+      <p>Kod aplikacji nie wysyła wpisywanych odpowiedzi ani postępów na serwer. Nie wymaga konta, płatnego API ani zewnętrznych bibliotek.</p>
+    </details>
+    <section class="danger-zone">
+      <div><h3>Nowy start</h3><p>Wyzerowanie usuwa wyniki wszystkich działów. Najpierw warto zapisać kopię.</p></div>
+      <button id="reset-all" class="button button-danger">Wyzeruj postępy</button>
+    </section>
+    <p class="version-label">Słówko · wersja 1.1 · import TXT · z polskiego na angielski</p>
+  </dialog>
+
+
+  <dialog id="vocab-dialog" class="vocab-dialog" aria-labelledby="vocab-title">
+    <div class="dialog-heading">
+      <div><p class="section-overline">TWOJE SŁOWA. TWOJA LISTA.</p><h2 id="vocab-title">Dodaj słówka.</h2></div>
+      <button id="close-vocab" class="icon-button" aria-label="Zamknij import słówek" type="button"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <p id="vocab-summary" class="vocab-summary"></p>
+    <div class="txt-format">
+      <span class="txt-tag">.TXT</span>
+      <div><strong>Jedna linia = jedna fiszka.</strong>
+        <p>Najpierw polskie hasło, potem angielska odpowiedź. Rozdziel je średnikiem. Dział jest opcjonalny.</p>
+      </div>
+    </div>
+    <pre class="txt-example">jabłko;apple;Jedzenie
+podróż;journey | trip;Podróże
+uczyć się;learn</pre>
+    <div class="vocab-file-row">
+      <button id="choose-vocab-file" class="button button-secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Wybierz plik .txt</button>
+      <span id="vocab-file-name" class="small-note" aria-live="polite"></span>
+      <input id="vocab-file" type="file" accept=".txt,text/plain" hidden>
+    </div>
+    <label for="vocab-text" class="answer-label vocab-text-label">Albo wpisz / wklej swoją listę</label>
+    <textarea id="vocab-text" rows="5" maxlength="2000000" spellcheck="false" autocapitalize="none" autocorrect="off" aria-describedby="vocab-format-help" placeholder="polskie hasło;angielska odpowiedź;dział"></textarea>
+    <p id="vocab-format-help" class="small-note">Zapisz plik w UTF-8. Alternatywne odpowiedzi rozdziel znakiem <strong>|</strong>. Puste linie i komentarze zaczynające się od <strong>#</strong> są pomijane. Brak działu = „Własne słówka”.</p>
+    <button id="preview-vocab-button" class="button button-secondary" type="button">Sprawdź listę</button>
+    <section id="vocab-preview" class="vocab-preview" aria-live="polite" hidden>
+      <h3 id="vocab-preview-title"></h3>
+      <ul id="vocab-preview-list"></ul>
+      <p id="vocab-preview-note" class="small-note"></p>
+      <button id="confirm-vocab-import" class="button button-primary" type="button" disabled>Dodaj do nauki<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    </section>
+    <p id="vocab-result" class="vocab-result" role="status" aria-live="polite" hidden></p>
+    <details class="help-details vocab-help">
+      <summary>Zapisz listę do TXT / zarządzaj importem</summary>
+      <div class="backup-actions">
+        <button id="export-all-txt" class="button button-secondary" type="button">Eksportuj całą bazę</button>
+        <button id="export-own-txt" class="button button-secondary" type="button">Eksportuj tylko własne</button>
+      </div>
+      <p>TXT zawiera słówka, bez wyników. Kopię słówek razem z postępem zapiszesz w ustawieniach jako JSON.</p>
+      <p>Import jest kopią pliku na tym urządzeniu, nie synchronizacją. Zmiana pliku na dysku wymaga ponownego importu. Duplikat (to samo polskie hasło i pierwszy angielski wariant) jest pomijany; import nie nadpisuje jego odpowiedzi ani działu.</p>
+      <p>Wspólna baza projektu jest w <code>data/slowka.txt</code>. Zmiana tego pliku wymaga przebudowania i opublikowania projektu. Usunięcie prywatnego importu nie zmienia pliku projektu.</p>
+      <button id="clear-own-txt" class="text-button" type="button">Usuń zaimportowane słówka z tego urządzenia</button>
+    </details>
+  </dialog>
+
+  <dialog id="confirm-dialog" class="confirm-dialog">
+    <h2 id="confirm-title"></h2><p id="confirm-description"></p>
+    <div class="confirm-actions">
+      <button id="confirm-cancel" class="button button-secondary">Anuluj</button>
+      <button id="confirm-ok" class="button button-danger">Potwierdź</button>
+    </div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><div class="notice">Włącz JavaScript w przeglądarce, aby rozpocząć naukę. Aplikacja nie potrzebuje konta.</div></noscript>
+<script>
+window.SLOWKO_STANDALONE = true;
+/* Generated from data/slowka.txt by tools/build.cjs. */
+globalThis.SLOWKO_DATA = {"id":"czlowiek-01","version":2,"title":"Człowiek · Unit 01","languageFrom":"pl","languageTo":"en","description":"Lista słownictwa przepisana z dwóch zdjęć użytkownika. Pary przeciwieństw i różnych znaczeń rozdzielono; warianty równoznaczne z ukośnikiem pozostawiono razem. Pominięto ćwiczenia wymowy i odręczne oznaczenia.","notes":["Ucięte przy dolnej krawędzi zdjęcia hasło „cope with sth” ma redakcyjnie uzupełnione tłumaczenie.","Identyczne tłumaczenia w tym samym dziale mają podpowiedź rozróżniającą synonimy; każda z takich fiszek jest oceniana oddzielnie.","Skróty sb/sth oraz pełne somebody/someone/something są równoważne. Elementy w nawiasach są opcjonalne.","Wybrane warianty pisowni amerykańskiej dodano do odpowiedzi. Dowolne synonimy spoza zapisanych wariantów nie są automatycznie uznawane.","W pytaniu o vintage pominięto angielskie słowo obecne w polskim tłumaczeniu, aby nie zdradzać odpowiedzi."],"categories":[{"id":"personal","label":"Dane osobowe","group":"Człowiek"},{"id":"life","label":"Okresy życia","group":"Człowiek"},{"id":"build","label":"Budowa ciała","group":"Wygląd zewnętrzny"},{"id":"hair","label":"Włosy","group":"Wygląd zewnętrzny"},{"id":"face","label":"Twarz","group":"Wygląd zewnętrzny"},{"id":"clothes","label":"Ubrania","group":"Rzeczy osobiste"},{"id":"accessories","label":"Obuwie i dodatki","group":"Rzeczy osobiste"},{"id":"clothing-verbs","label":"Ubieranie: czasowniki i zwroty","group":"Rzeczy osobiste"},{"id":"clothing-adjectives","label":"Opis ubrań","group":"Rzeczy osobiste"},{"id":"personality","label":"Cechy charakteru","group":"Człowiek"},{"id":"feelings","label":"Uczucia i emocje","group":"Człowiek"},{"id":"emotion-nouns","label":"Emocje: rzeczowniki","group":"Człowiek"},{"id":"body-language","label":"Mowa ciała","group":"Człowiek"},{"id":"idioms","label":"Idiomy","group":"Człowiek"},{"id":"interests","label":"Umiejętności i zainteresowania","group":"Człowiek"},{"id":"values","label":"Osobisty system wartości","group":"Człowiek"},{"id":"role-models","label":"Autorytety","group":"Człowiek"}],"words":[{"id":"personal-citizenship","category":"personal","en":"citizenship / nationality","pl":"obywatelstwo","answers":["citizenship","nationality"],"sourcePhoto":1},{"id":"personal-distinguishing-features","category":"personal","en":"distinguishing features","pl":"znaki szczególne","answers":["distinguishing features"],"sourcePhoto":1},{"id":"personal-family-name","category":"personal","en":"family / last name","pl":"nazwisko","answers":["family name","last name"],"sourcePhoto":1},{"id":"personal-gender","category":"personal","en":"gender / sex","pl":"płeć","answers":["gender","sex"],"sourcePhoto":1},{"id":"personal-maiden-name","category":"personal","en":"maiden name","pl":"nazwisko panieńskie","answers":["maiden name"],"sourcePhoto":1},{"id":"personal-middle-name","category":"personal","en":"middle name","pl":"drugie imię","answers":["middle name"],"sourcePhoto":1},{"id":"personal-profession","category":"personal","en":"profession / occupation","pl":"zawód","answers":["profession","occupation"],"sourcePhoto":1},{"id":"personal-racial-group","category":"personal","en":"racial / ethnic group","pl":"grupa etniczna","answers":["racial group","ethnic group"],"sourcePhoto":1},{"id":"life-adolescent","category":"life","en":"adolescent","pl":"osoba w wieku dojrzewania","answers":["adolescent"],"sourcePhoto":1},{"id":"life-adulthood","category":"life","en":"adulthood","pl":"dorosłość","answers":["adulthood"],"sourcePhoto":1},{"id":"life-ageing","category":"life","en":"ageing","pl":"starzejący się","answers":["ageing","aging"],"sourcePhoto":1},{"id":"life-be-in-your-prime","category":"life","en":"be in your prime","pl":"być w kwiecie wieku","answers":["be in your prime"],"sourcePhoto":1},{"id":"life-grown-up","category":"life","en":"grown-up","pl":"dorosły, osoba dorosła","answers":["grown-up"],"sourcePhoto":1},{"id":"life-minor","category":"life","en":"minor","pl":"osoba nieletnia","answers":["minor"],"sourcePhoto":1},{"id":"life-newborn","category":"life","en":"newborn","pl":"noworodek","answers":["newborn"],"sourcePhoto":1},{"id":"life-not-look-your-age","category":"life","en":"not look your age","pl":"nie wyglądać na swój wiek","answers":["not look your age"],"sourcePhoto":1},{"id":"life-pass-away","category":"life","en":"pass away","pl":"umrzeć","answers":["pass away"],"sourcePhoto":1},{"id":"life-pensioner","category":"life","en":"pensioner","pl":"emeryt, emerytka","answers":["pensioner"],"sourcePhoto":1},{"id":"life-retire","category":"life","en":"retire","pl":"pójść na emeryturę","answers":["retire"],"sourcePhoto":1},{"id":"life-toddler","category":"life","en":"toddler","pl":"dziecko w wieku 1–2 lat","answers":["toddler"],"sourcePhoto":1},{"id":"life-turn-eighteen","category":"life","en":"turn (eighteen)","pl":"skończyć (osiemnaście) lat","answers":["turn eighteen","turn"],"sourcePhoto":1},{"id":"life-underage","category":"life","en":"underage","pl":"niepełnoletni","answers":["underage"],"sourcePhoto":1},{"id":"build-lean","category":"build","en":"lean","pl":"szczupły, chudy","answers":["lean"],"sourcePhoto":1},{"id":"build-muscular","category":"build","en":"muscular","pl":"muskularny","answers":["muscular"],"sourcePhoto":1},{"id":"build-overweight","category":"build","en":"overweight","pl":"z nadwagą","answers":["overweight"],"sourcePhoto":1},{"id":"build-petite","category":"build","en":"petite","pl":"drobny","answers":["petite"],"sourcePhoto":1},{"id":"build-slender","category":"build","en":"slender","pl":"szczupły","answers":["slender"],"sourcePhoto":1},{"id":"build-stocky","category":"build","en":"stocky","pl":"krępy","answers":["stocky"],"sourcePhoto":1},{"id":"build-stout","category":"build","en":"stout","pl":"tęgi, korpulentny","answers":["stout"],"sourcePhoto":1},{"id":"build-well-built","category":"build","en":"well-built","pl":"dobrze zbudowany","answers":["well-built"],"sourcePhoto":1},{"id":"hair-balding","category":"hair","en":"balding","pl":"łysiejący","answers":["balding"],"sourcePhoto":1},{"id":"hair-bushy","category":"hair","en":"bushy","pl":"puszyste, napuszone","answers":["bushy"],"sourcePhoto":1},{"id":"hair-crew-cut","category":"hair","en":"crew cut","pl":"bardzo krótka fryzura","answers":["crew cut"],"sourcePhoto":1},{"id":"hair-dreadlocks","category":"hair","en":"dreadlocks","pl":"dredy","answers":["dreadlocks"],"sourcePhoto":1},{"id":"hair-frizzy","category":"hair","en":"frizzy","pl":"kędzierzawe","answers":["frizzy"],"sourcePhoto":1},{"id":"hair-glossy","category":"hair","en":"glossy","pl":"błyszczące","answers":["glossy"],"sourcePhoto":1},{"id":"hair-greasy","category":"hair","en":"greasy","pl":"tłuste, przetłuszczające się","answers":["greasy"],"sourcePhoto":1},{"id":"hair-greying","category":"hair","en":"greying","pl":"siwiejący","answers":["greying","graying"],"sourcePhoto":1},{"id":"hair-highlights","category":"hair","en":"highlights","pl":"pasemka","answers":["highlights"],"sourcePhoto":1},{"id":"hair-pigtails","category":"hair","en":"pigtails","pl":"warkoczyki","answers":["pigtails"],"sourcePhoto":1},{"id":"hair-plait","category":"hair","en":"plait","pl":"warkocz","answers":["plait"],"sourcePhoto":1},{"id":"hair-tied-in-a-bun","category":"hair","en":"(tied) in a bun","pl":"(zebrane) w kok","answers":["tied in a bun","in a bun"],"sourcePhoto":1},{"id":"face-acne","category":"face","en":"acne","pl":"trądzik","answers":["acne"],"sourcePhoto":1},{"id":"face-bags","category":"face","en":"bags","pl":"worki pod oczami","answers":["bags","bags under the eyes"],"sourcePhoto":1},{"id":"face-bearded","category":"face","en":"bearded","pl":"brodaty, z brodą","answers":["bearded"],"sourcePhoto":1},{"id":"face-beauty-spot","category":"face","en":"beauty spot","pl":"pieprzyk","answers":["beauty spot"],"sourcePhoto":1},{"id":"face-bushy-eyebrows","category":"face","en":"bushy eyebrows","pl":"krzaczaste brwi","answers":["bushy eyebrows"],"sourcePhoto":1},{"id":"face-clean-shaven","category":"face","en":"clean-shaven","pl":"ogolony","answers":["clean-shaven"],"sourcePhoto":1},{"id":"face-close-set-eyes","category":"face","en":"close-set eyes","pl":"blisko osadzone oczy","answers":["close-set eyes"],"sourcePhoto":1},{"id":"face-deep-set-eyes","category":"face","en":"deep-set eyes","pl":"głęboko osadzone oczy","answers":["deep-set eyes"],"sourcePhoto":1},{"id":"face-dimple","category":"face","en":"dimple","pl":"dołek (np. w policzku)","answers":["dimple"],"sourcePhoto":1},{"id":"face-double-chin","category":"face","en":"double chin","pl":"podwójny podbródek","answers":["double chin"],"sourcePhoto":1},{"id":"face-hollow-cheeks","category":"face","en":"hollow cheeks","pl":"zapadnięte policzki","answers":["hollow cheeks"],"sourcePhoto":1},{"id":"face-hook-nose","category":"face","en":"hook nose","pl":"haczykowaty nos","answers":["hook nose"],"sourcePhoto":1},{"id":"face-lower-lip","category":"face","en":"lower lip","pl":"dolna warga","answers":["lower lip"],"sourcePhoto":1},{"id":"face-upper-lip","category":"face","en":"upper lip","pl":"górna warga","answers":["upper lip"],"sourcePhoto":1},{"id":"face-pointed-chin","category":"face","en":"pointed chin","pl":"ostry podbródek","answers":["pointed chin"],"sourcePhoto":1},{"id":"face-pointed-nose","category":"face","en":"pointed nose","pl":"spiczasty nos","answers":["pointed nose"],"sourcePhoto":1},{"id":"face-puffy-eyes","category":"face","en":"puffy eyes","pl":"zapuchnięte oczy","answers":["puffy eyes"],"sourcePhoto":1},{"id":"face-rosy-cheeks","category":"face","en":"rosy cheeks","pl":"rumiane policzki","answers":["rosy cheeks"],"sourcePhoto":1},{"id":"face-scar","category":"face","en":"scar","pl":"blizna","answers":["scar"],"sourcePhoto":1},{"id":"face-square-jaw","category":"face","en":"square jaw","pl":"mocno zarysowana szczęka","answers":["square jaw"],"sourcePhoto":1},{"id":"face-stubble","category":"face","en":"stubble","pl":"kilkudniowy zarost","answers":["stubble"],"sourcePhoto":1},{"id":"clothes-blazer","category":"clothes","en":"blazer","pl":"marynarka, żakiet","answers":["blazer"],"sourcePhoto":1},{"id":"clothes-cardigan","category":"clothes","en":"cardigan","pl":"rozpinany sweter","answers":["cardigan"],"sourcePhoto":1},{"id":"clothes-collar","category":"clothes","en":"collar","pl":"kołnierz","answers":["collar"],"sourcePhoto":1},{"id":"clothes-combat-trousers","category":"clothes","en":"combat trousers","pl":"spodnie bojówki","answers":["combat trousers"],"sourcePhoto":1},{"id":"clothes-dressing-gown","category":"clothes","en":"dressing gown","pl":"szlafrok","answers":["dressing gown"],"sourcePhoto":1},{"id":"clothes-hood","category":"clothes","en":"hood","pl":"kaptur","answers":["hood"],"sourcePhoto":1},{"id":"clothes-hoodie","category":"clothes","en":"hoodie","pl":"bluza z kapturem","answers":["hoodie"],"sourcePhoto":1},{"id":"clothes-joggers","category":"clothes","en":"joggers","pl":"wygodne spodnie, np. dresowe","answers":["joggers"],"sourcePhoto":1},{"id":"clothes-loungewear","category":"clothes","en":"loungewear","pl":"odzież domowa","answers":["loungewear"],"sourcePhoto":1},{"id":"clothes-raincoat","category":"clothes","en":"raincoat","pl":"płaszcz przeciwdeszczowy","answers":["raincoat"],"sourcePhoto":1},{"id":"clothes-tights","category":"clothes","en":"tights","pl":"rajstopy","answers":["tights"],"sourcePhoto":1},{"id":"clothes-stockings","category":"clothes","en":"stockings","pl":"pończochy","answers":["stockings"],"sourcePhoto":1},{"id":"clothes-sweatshirt","category":"clothes","en":"sweatshirt","pl":"bluza","answers":["sweatshirt"],"sourcePhoto":1},{"id":"clothes-trench-coat","category":"clothes","en":"trench coat","pl":"trencz (typ płaszcza)","answers":["trench coat"],"sourcePhoto":1},{"id":"clothes-turtleneck","category":"clothes","en":"turtleneck","pl":"golf","answers":["turtleneck"],"sourcePhoto":1},{"id":"clothes-waistcoat","category":"clothes","en":"waistcoat","pl":"kamizelka","answers":["waistcoat"],"sourcePhoto":1},{"id":"accessories-ankle-boots","category":"accessories","en":"ankle boots","pl":"krótkie botki","answers":["ankle boots"],"sourcePhoto":1},{"id":"accessories-athletic-shoes","category":"accessories","en":"athletic shoes","pl":"buty sportowe","answers":["athletic shoes"],"sourcePhoto":1},{"id":"accessories-ballet-flats","category":"accessories","en":"ballet flats","pl":"baleriny","answers":["ballet flats"],"sourcePhoto":1},{"id":"accessories-brooch","category":"accessories","en":"brooch","pl":"broszka","answers":["brooch"],"sourcePhoto":1},{"id":"accessories-flat-shoes","category":"accessories","en":"flat shoes","pl":"buty na płaskim obcasie","answers":["flat shoes"],"sourcePhoto":1},{"id":"accessories-flip-flops","category":"accessories","en":"flip-flops","pl":"klapki, japonki","answers":["flip-flops"],"sourcePhoto":1},{"id":"accessories-laces","category":"accessories","en":"laces","pl":"sznurowadła","answers":["laces"],"sourcePhoto":1},{"id":"accessories-necklace","category":"accessories","en":"necklace","pl":"naszyjnik","answers":["necklace"],"sourcePhoto":1},{"id":"accessories-piercing","category":"accessories","en":"piercing","pl":"piercing, kolczyk","answers":["piercing"],"sourcePhoto":1,"prompt":"kolczyk; ozdoba w przekłutym miejscu"},{"id":"accessories-wedges","category":"accessories","en":"wedges","pl":"buty na koturnie","answers":["wedges"],"sourcePhoto":1},{"id":"accessories-wellington-boots","category":"accessories","en":"wellington boots","pl":"kalosze","answers":["wellington boots"],"sourcePhoto":1},{"id":"clothing-verbs-blend-into-the-crowd","category":"clothing-verbs","en":"blend into the crowd","pl":"wmieszać się w tłum","answers":["blend into the crowd"],"sourcePhoto":1},{"id":"clothing-verbs-dress-down","category":"clothing-verbs","en":"dress down","pl":"ubrać się mniej formalnie niż zwykle","answers":["dress down"],"sourcePhoto":1},{"id":"clothing-verbs-dress-up","category":"clothing-verbs","en":"dress up","pl":"wystroić się, ubrać bardziej formalnie niż zwykle","answers":["dress up"],"sourcePhoto":1},{"id":"clothing-verbs-fold","category":"clothing-verbs","en":"fold","pl":"złożyć","answers":["fold"],"sourcePhoto":1},{"id":"clothing-verbs-let-down","category":"clothing-verbs","en":"let down","pl":"przedłużyć (ubranie)","answers":["let down"],"sourcePhoto":1},{"id":"clothing-verbs-let-out","category":"clothing-verbs","en":"let out","pl":"poszerzyć (ubranie)","answers":["let out"],"sourcePhoto":1},{"id":"clothing-verbs-mend","category":"clothing-verbs","en":"mend","pl":"naprawić, cerować","answers":["mend"],"sourcePhoto":1},{"id":"clothing-verbs-roll-up","category":"clothing-verbs","en":"roll up","pl":"podwinąć","answers":["roll up"],"sourcePhoto":1},{"id":"clothing-verbs-slip-on","category":"clothing-verbs","en":"slip on","pl":"wsunąć, narzucić","answers":["slip on"],"sourcePhoto":1},{"id":"clothing-verbs-stand-out-from-the-crowd","category":"clothing-verbs","en":"stand out from the crowd","pl":"wyróżniać się z tłumu","answers":["stand out from the crowd"],"sourcePhoto":1},{"id":"clothing-verbs-take-in","category":"clothing-verbs","en":"take in","pl":"zwęzić (ubranie)","answers":["take in"],"sourcePhoto":1},{"id":"clothing-verbs-throw-on","category":"clothing-verbs","en":"throw on","pl":"zarzucić na siebie","answers":["throw on"],"sourcePhoto":1},{"id":"clothing-verbs-turn-up","category":"clothing-verbs","en":"turn up","pl":"podwinąć, skrócić przez podwinięcie","answers":["turn up"],"sourcePhoto":1},{"id":"clothing-verbs-undo-buttons","category":"clothing-verbs","en":"undo buttons","pl":"rozpiąć guziki","answers":["undo buttons"],"sourcePhoto":1},{"id":"clothing-verbs-untie-shoes","category":"clothing-verbs","en":"untie shoes","pl":"rozwiązać buty","answers":["untie shoes"],"sourcePhoto":1},{"id":"clothing-verbs-walk-barefoot","category":"clothing-verbs","en":"walk barefoot","pl":"chodzić boso","answers":["walk barefoot"],"sourcePhoto":1},{"id":"clothing-verbs-wrap-up","category":"clothing-verbs","en":"wrap up","pl":"owinąć się, otulić","answers":["wrap up"],"sourcePhoto":1},{"id":"clothing-verbs-zip","category":"clothing-verbs","en":"zip","pl":"zapiąć zamek","answers":["zip"],"sourcePhoto":1},{"id":"clothing-verbs-unzip","category":"clothing-verbs","en":"unzip","pl":"rozpiąć zamek","answers":["unzip"],"sourcePhoto":1},{"id":"clothing-adjectives-baggy","category":"clothing-adjectives","en":"baggy","pl":"workowaty","answers":["baggy"],"sourcePhoto":1},{"id":"clothing-adjectives-buttoned","category":"clothing-adjectives","en":"buttoned","pl":"zapięty na guziki","answers":["buttoned"],"sourcePhoto":1},{"id":"clothing-adjectives-creased","category":"clothing-adjectives","en":"creased","pl":"wygnieciony","answers":["creased"],"sourcePhoto":1},{"id":"clothing-adjectives-cropped","category":"clothing-adjectives","en":"cropped","pl":"krótki","answers":["cropped"],"sourcePhoto":1},{"id":"clothing-adjectives-faded","category":"clothing-adjectives","en":"faded","pl":"wypłowiały","answers":["faded"],"sourcePhoto":1},{"id":"clothing-adjectives-high-waisted","category":"clothing-adjectives","en":"high-waisted","pl":"z wysokim stanem","answers":["high-waisted"],"sourcePhoto":1},{"id":"clothing-adjectives-knee-length","category":"clothing-adjectives","en":"knee-length","pl":"do kolan","answers":["knee-length"],"sourcePhoto":1},{"id":"clothing-adjectives-lightweight","category":"clothing-adjectives","en":"lightweight","pl":"lekki","answers":["lightweight"],"sourcePhoto":1},{"id":"clothing-adjectives-long-sleeved","category":"clothing-adjectives","en":"long-sleeved","pl":"z długim rękawem","answers":["long-sleeved"],"sourcePhoto":1},{"id":"clothing-adjectives-loose-fitting","category":"clothing-adjectives","en":"loose-fitting","pl":"luźny","answers":["loose-fitting"],"sourcePhoto":1},{"id":"clothing-adjectives-oversized","category":"clothing-adjectives","en":"oversized","pl":"za duży","answers":["oversized"],"sourcePhoto":1},{"id":"clothing-adjectives-patterned","category":"clothing-adjectives","en":"patterned","pl":"wzorzysty","answers":["patterned"],"sourcePhoto":1},{"id":"clothing-adjectives-plain","category":"clothing-adjectives","en":"plain","pl":"gładki, bez wzorów","answers":["plain"],"sourcePhoto":1},{"id":"clothing-adjectives-ripped","category":"clothing-adjectives","en":"ripped","pl":"podarty, z dziurami","answers":["ripped"],"sourcePhoto":1},{"id":"clothing-adjectives-scruffy","category":"clothing-adjectives","en":"scruffy","pl":"niechlujny","answers":["scruffy"],"sourcePhoto":1},{"id":"clothing-adjectives-shabby","category":"clothing-adjectives","en":"shabby","pl":"zaniedbany","answers":["shabby"],"sourcePhoto":1},{"id":"clothing-adjectives-short-sleeved","category":"clothing-adjectives","en":"short-sleeved","pl":"z krótkim rękawem","answers":["short-sleeved"],"sourcePhoto":1},{"id":"clothing-adjectives-skimpy","category":"clothing-adjectives","en":"skimpy","pl":"kusy","answers":["skimpy"],"sourcePhoto":1},{"id":"clothing-adjectives-sleeveless","category":"clothing-adjectives","en":"sleeveless","pl":"bez rękawów","answers":["sleeveless"],"sourcePhoto":1},{"id":"clothing-adjectives-stretchy","category":"clothing-adjectives","en":"stretchy","pl":"rozciągliwy, elastyczny","answers":["stretchy"],"sourcePhoto":1},{"id":"clothing-adjectives-striped","category":"clothing-adjectives","en":"striped","pl":"w paski","answers":["striped"],"sourcePhoto":1},{"id":"clothing-adjectives-tight-fitting","category":"clothing-adjectives","en":"tight-fitting","pl":"ciasny, dopasowany","answers":["tight-fitting"],"sourcePhoto":1},{"id":"clothing-adjectives-tucked-in","category":"clothing-adjectives","en":"tucked-in","pl":"wsunięty w spodnie / spódnicę","answers":["tucked-in","tucked in"],"sourcePhoto":1},{"id":"clothing-adjectives-unbuttoned","category":"clothing-adjectives","en":"unbuttoned","pl":"rozpięty","answers":["unbuttoned"],"sourcePhoto":1},{"id":"clothing-adjectives-vintage","category":"clothing-adjectives","en":"vintage","pl":"vintage, staromodny (jako zaleta)","answers":["vintage"],"sourcePhoto":1,"prompt":"staromodny (jako zaleta)"},{"id":"clothing-adjectives-v-necked","category":"clothing-adjectives","en":"v-necked","pl":"z dekoltem w serek","answers":["v-necked"],"sourcePhoto":1},{"id":"clothing-adjectives-woollen","category":"clothing-adjectives","en":"woollen","pl":"wełniany","answers":["woollen","woolen"],"sourcePhoto":1},{"id":"clothing-adjectives-worn-out","category":"clothing-adjectives","en":"worn-out","pl":"znoszony","answers":["worn-out"],"sourcePhoto":1},{"id":"personality-absent-minded","category":"personality","en":"absent-minded","pl":"roztargniony","answers":["absent-minded"],"sourcePhoto":1},{"id":"personality-adaptable","category":"personality","en":"adaptable","pl":"łatwo dostosowujący się","answers":["adaptable"],"sourcePhoto":1},{"id":"personality-argumentative","category":"personality","en":"argumentative","pl":"kłótliwy","answers":["argumentative"],"sourcePhoto":1},{"id":"personality-broad-minded","category":"personality","en":"broad-minded","pl":"o szerokich horyzontach","answers":["broad-minded"],"sourcePhoto":1},{"id":"personality-busybody","category":"personality","en":"busybody","pl":"osoba wścibska","answers":["busybody"],"sourcePhoto":1},{"id":"personality-chatty","category":"personality","en":"chatty","pl":"gadatliwy","answers":["chatty"],"sourcePhoto":1},{"id":"personality-cheerful","category":"personality","en":"cheerful","pl":"radosny","answers":["cheerful"],"sourcePhoto":1},{"id":"personality-compassionate","category":"personality","en":"compassionate","pl":"współczujący","answers":["compassionate"],"sourcePhoto":1,"cue":"Dla rozróżnienia synonimów: początek „c…”.","siblings":["personality-sympathetic"]},{"id":"personality-conceited","category":"personality","en":"conceited","pl":"zarozumiały","answers":["conceited"],"sourcePhoto":1},{"id":"personality-conscientious","category":"personality","en":"conscientious","pl":"sumienny","answers":["conscientious"],"sourcePhoto":1},{"id":"personality-courageous","category":"personality","en":"courageous","pl":"odważny","answers":["courageous"],"sourcePhoto":1},{"id":"personality-cynical","category":"personality","en":"cynical","pl":"cyniczny","answers":["cynical"],"sourcePhoto":1},{"id":"personality-discreet","category":"personality","en":"discreet","pl":"dyskretny","answers":["discreet"],"sourcePhoto":1},{"id":"personality-indiscreet","category":"personality","en":"indiscreet","pl":"niedyskretny","answers":["indiscreet"],"sourcePhoto":1},{"id":"personality-dishonest","category":"personality","en":"dishonest","pl":"nieuczciwy","answers":["dishonest"],"sourcePhoto":1},{"id":"personality-efficient","category":"personality","en":"efficient","pl":"wydajny, skuteczny","answers":["efficient"],"sourcePhoto":1},{"id":"personality-flexible","category":"personality","en":"flexible","pl":"elastyczny","answers":["flexible"],"sourcePhoto":1},{"id":"personality-gentle","category":"personality","en":"gentle","pl":"łagodny","answers":["gentle"],"sourcePhoto":1},{"id":"personality-gullible","category":"personality","en":"gullible","pl":"łatwowierny","answers":["gullible"],"sourcePhoto":1},{"id":"personality-imaginative","category":"personality","en":"imaginative","pl":"obdarzony wyobraźnią","answers":["imaginative"],"sourcePhoto":1},{"id":"personality-impartial","category":"personality","en":"impartial","pl":"bezstronny","answers":["impartial"],"sourcePhoto":1},{"id":"personality-impolite","category":"personality","en":"impolite","pl":"nieuprzejmy","answers":["impolite"],"sourcePhoto":1,"cue":"Dla rozróżnienia synonimów: początek „i…”.","siblings":["personality-rude"]},{"id":"personality-inconsistent","category":"personality","en":"inconsistent","pl":"niekonsekwentny","answers":["inconsistent"],"sourcePhoto":1},{"id":"personality-inefficient","category":"personality","en":"inefficient","pl":"niewydajny, nieskuteczny","answers":["inefficient"],"sourcePhoto":1},{"id":"personality-introvert","category":"personality","en":"introvert","pl":"introwertyk","answers":["introvert"],"sourcePhoto":1},{"id":"personality-extrovert","category":"personality","en":"extrovert","pl":"ekstrawertyk","answers":["extrovert"],"sourcePhoto":1},{"id":"personality-kind-hearted","category":"personality","en":"kind-hearted","pl":"dobrotliwy, o wielkim sercu","answers":["kind-hearted"],"sourcePhoto":1},{"id":"personality-lively","category":"personality","en":"lively","pl":"żywiołowy","answers":["lively"],"sourcePhoto":1},{"id":"personality-mature","category":"personality","en":"mature","pl":"dojrzały","answers":["mature"],"sourcePhoto":1},{"id":"personality-immature","category":"personality","en":"immature","pl":"niedojrzały","answers":["immature"],"sourcePhoto":1},{"id":"personality-moody","category":"personality","en":"moody","pl":"humorzasty","answers":["moody"],"sourcePhoto":1},{"id":"personality-nosy","category":"personality","en":"nosy","pl":"wścibski","answers":["nosy","nosey"],"sourcePhoto":1},{"id":"personality-open-minded","category":"personality","en":"open-minded","pl":"otwarty, bez uprzedzeń","answers":["open-minded"],"sourcePhoto":1},{"id":"personality-organised","category":"personality","en":"organised","pl":"zorganizowany","answers":["organised","organized"],"sourcePhoto":1},{"id":"personality-disorganised","category":"personality","en":"disorganised","pl":"niezorganizowany","answers":["disorganised","disorganized"],"sourcePhoto":1},{"id":"personality-over-ambitious","category":"personality","en":"over-ambitious","pl":"zbyt ambitny","answers":["over-ambitious"],"sourcePhoto":1},{"id":"personality-partial","category":"personality","en":"partial","pl":"stronniczy","answers":["partial"],"sourcePhoto":1},{"id":"personality-patient","category":"personality","en":"patient","pl":"cierpliwy","answers":["patient"],"sourcePhoto":1},{"id":"personality-impatient","category":"personality","en":"impatient","pl":"niecierpliwy","answers":["impatient"],"sourcePhoto":1},{"id":"personality-perfectionist","category":"personality","en":"perfectionist","pl":"perfekcjonista, perfekcjonistka","answers":["perfectionist"],"sourcePhoto":1},{"id":"personality-procrastinator","category":"personality","en":"procrastinator","pl":"osoba, która wszystko odkłada na później","answers":["procrastinator"],"sourcePhoto":1},{"id":"personality-punctual","category":"personality","en":"punctual","pl":"punktualny","answers":["punctual"],"sourcePhoto":1},{"id":"personality-unpunctual","category":"personality","en":"unpunctual","pl":"niepunktualny","answers":["unpunctual"],"sourcePhoto":1},{"id":"personality-rational","category":"personality","en":"rational","pl":"racjonalny","answers":["rational"],"sourcePhoto":1},{"id":"personality-irrational","category":"personality","en":"irrational","pl":"nieracjonalny","answers":["irrational"],"sourcePhoto":1},{"id":"personality-reasonable","category":"personality","en":"reasonable","pl":"rozsądny","answers":["reasonable"],"sourcePhoto":1},{"id":"personality-unreasonable","category":"personality","en":"unreasonable","pl":"nierozsądny","answers":["unreasonable"],"sourcePhoto":1},{"id":"personality-rebellious","category":"personality","en":"rebellious","pl":"buntowniczy","answers":["rebellious"],"sourcePhoto":1},{"id":"personality-reckless","category":"personality","en":"reckless","pl":"nierozważny","answers":["reckless"],"sourcePhoto":1},{"id":"personality-reliable","category":"personality","en":"reliable","pl":"rzetelny, sumienny","answers":["reliable"],"sourcePhoto":1},{"id":"personality-rude","category":"personality","en":"rude","pl":"nieuprzejmy","answers":["rude"],"sourcePhoto":1,"cue":"Dla rozróżnienia synonimów: początek „r…”.","siblings":["personality-impolite"]},{"id":"personality-self-assured","category":"personality","en":"self-assured","pl":"pewny siebie","answers":["self-assured"],"sourcePhoto":1,"cue":"Dla rozróżnienia synonimów: początek „self-a…”.","siblings":["personality-self-confident"]},{"id":"personality-self-centred","category":"personality","en":"self-centred","pl":"egocentryczny","answers":["self-centred","self-centered"],"sourcePhoto":1},{"id":"personality-self-confident","category":"personality","en":"self-confident","pl":"pewny siebie","answers":["self-confident"],"sourcePhoto":1,"cue":"Dla rozróżnienia synonimów: początek „self-c…”.","siblings":["personality-self-assured"]},{"id":"personality-self-conscious","category":"personality","en":"self-conscious","pl":"nieśmiały, skrępowany","answers":["self-conscious"],"sourcePhoto":1},{"id":"personality-selfless","category":"personality","en":"selfless","pl":"bezinteresowny","answers":["selfless"],"sourcePhoto":1},{"id":"personality-sensitive","category":"personality","en":"sensitive","pl":"wrażliwy","answers":["sensitive"],"sourcePhoto":1},{"id":"personality-insensitive","category":"personality","en":"insensitive","pl":"niewrażliwy","answers":["insensitive"],"sourcePhoto":1},{"id":"personality-sincere","category":"personality","en":"sincere","pl":"szczery","answers":["sincere"],"sourcePhoto":1},{"id":"personality-insincere","category":"personality","en":"insincere","pl":"nieszczery","answers":["insincere"],"sourcePhoto":1},{"id":"personality-sophisticated","category":"personality","en":"sophisticated","pl":"wyrafinowany","answers":["sophisticated"],"sourcePhoto":1},{"id":"personality-suspicious","category":"personality","en":"suspicious","pl":"podejrzliwy","answers":["suspicious"],"sourcePhoto":1},{"id":"personality-sympathetic","category":"personality","en":"sympathetic","pl":"współczujący","answers":["sympathetic"],"sourcePhoto":1,"cue":"Dla rozróżnienia synonimów: początek „s…”.","siblings":["personality-compassionate"]},{"id":"personality-trustworthy","category":"personality","en":"trustworthy","pl":"godny zaufania","answers":["trustworthy"],"sourcePhoto":1},{"id":"personality-unimaginative","category":"personality","en":"unimaginative","pl":"pozbawiony wyobraźni","answers":["unimaginative"],"sourcePhoto":1},{"id":"personality-unreliable","category":"personality","en":"unreliable","pl":"nierzetelny, niesumienny","answers":["unreliable"],"sourcePhoto":1},{"id":"personality-unscrupulous","category":"personality","en":"unscrupulous","pl":"pozbawiony skrupułów","answers":["unscrupulous"],"sourcePhoto":1},{"id":"personality-vain","category":"personality","en":"vain","pl":"próżny","answers":["vain"],"sourcePhoto":1},{"id":"personality-withdrawn","category":"personality","en":"withdrawn","pl":"wycofany","answers":["withdrawn"],"sourcePhoto":1},{"id":"feelings-annoyed","category":"feelings","en":"annoyed","pl":"zirytowany","answers":["annoyed"],"sourcePhoto":1,"cue":"Dla rozróżnienia synonimów: początek „a…”.","siblings":["feelings-in-a-bad-temper"]},{"id":"feelings-anxious","category":"feelings","en":"anxious","pl":"niespokojny","answers":["anxious"],"sourcePhoto":1},{"id":"feelings-apprehensive","category":"feelings","en":"apprehensive","pl":"pełen obaw","answers":["apprehensive"],"sourcePhoto":1},{"id":"feelings-ashamed","category":"feelings","en":"ashamed","pl":"zawstydzony","answers":["ashamed"],"sourcePhoto":1},{"id":"feelings-astonished","category":"feelings","en":"astonished","pl":"zdziwiony","answers":["astonished"],"sourcePhoto":1},{"id":"feelings-bewildered","category":"feelings","en":"bewildered","pl":"skonsternowany, oszołomiony","answers":["bewildered"],"sourcePhoto":1},{"id":"feelings-confused","category":"feelings","en":"confused","pl":"zdezorientowany","answers":["confused"],"sourcePhoto":1},{"id":"feelings-cross","category":"feelings","en":"cross","pl":"zły","answers":["cross"],"sourcePhoto":1},{"id":"feelings-cope-with-sth","category":"feelings","en":"cope with sth","pl":"radzić sobie z czymś","answers":["cope with sth"],"sourcePhoto":1,"note":"Wiersz przy dolnej krawędzi pierwszego zdjęcia jest ucięty. Tłumaczenie „radzić sobie z czymś” zostało uzupełnione redakcyjnie."},{"id":"feelings-devastated","category":"feelings","en":"devastated","pl":"zdruzgotany","answers":["devastated"],"sourcePhoto":2,"cue":"Dla rozróżnienia synonimów: początek „d…”.","siblings":["feelings-shattered"]},{"id":"feelings-discouraged","category":"feelings","en":"discouraged","pl":"zniechęcony","answers":["discouraged"],"sourcePhoto":2},{"id":"feelings-dissatisfied","category":"feelings","en":"dissatisfied","pl":"niezadowolony","answers":["dissatisfied"],"sourcePhoto":2},{"id":"feelings-elated","category":"feelings","en":"elated","pl":"uszczęśliwiony","answers":["elated"],"sourcePhoto":2},{"id":"feelings-exhausted","category":"feelings","en":"exhausted","pl":"wyczerpany","answers":["exhausted"],"sourcePhoto":2},{"id":"feelings-furious","category":"feelings","en":"furious","pl":"wściekły","answers":["furious"],"sourcePhoto":2},{"id":"feelings-gloomy","category":"feelings","en":"gloomy","pl":"ponury","answers":["gloomy"],"sourcePhoto":2},{"id":"feelings-heartbroken","category":"feelings","en":"heartbroken","pl":"zrozpaczony, załamany","answers":["heartbroken"],"sourcePhoto":2},{"id":"feelings-in-a-bad-temper","category":"feelings","en":"in a bad temper","pl":"zirytowany","answers":["in a bad temper"],"sourcePhoto":2,"cue":"Dla rozróżnienia synonimów: początek „i…”.","siblings":["feelings-annoyed"]},{"id":"feelings-in-the-mood-for-sth","category":"feelings","en":"in the mood (for sth)","pl":"w nastroju (na coś)","answers":["in the mood for sth","in the mood"],"sourcePhoto":2},{"id":"feelings-long-for-sb","category":"feelings","en":"long for sb/sth","pl":"tęsknić za kimś / czymś","answers":["long for sb","long for sth","long for sb/sth"],"sourcePhoto":2},{"id":"feelings-lose-control","category":"feelings","en":"lose control","pl":"stracić kontrolę","answers":["lose control"],"sourcePhoto":2},{"id":"feelings-lose-your-temper","category":"feelings","en":"lose your temper","pl":"stracić panowanie nad sobą","answers":["lose your temper"],"sourcePhoto":2},{"id":"feelings-miserable","category":"feelings","en":"miserable","pl":"nieszczęśliwy","answers":["miserable"],"sourcePhoto":2},{"id":"feelings-overwhelmed","category":"feelings","en":"overwhelmed","pl":"przytłoczony","answers":["overwhelmed"],"sourcePhoto":2},{"id":"feelings-petrified","category":"feelings","en":"petrified","pl":"przerażony","answers":["petrified"],"sourcePhoto":2,"cue":"Dla rozróżnienia synonimów: początek „p…”.","siblings":["feelings-terrified"]},{"id":"feelings-puzzled","category":"feelings","en":"puzzled","pl":"zaskoczony, zdziwiony","answers":["puzzled"],"sourcePhoto":2},{"id":"feelings-shattered","category":"feelings","en":"shattered","pl":"zdruzgotany","answers":["shattered"],"sourcePhoto":2,"cue":"Dla rozróżnienia synonimów: początek „s…”.","siblings":["feelings-devastated"]},{"id":"feelings-tense","category":"feelings","en":"tense","pl":"spięty","answers":["tense"],"sourcePhoto":2},{"id":"feelings-terrified","category":"feelings","en":"terrified","pl":"przerażony","answers":["terrified"],"sourcePhoto":2,"cue":"Dla rozróżnienia synonimów: początek „t…”.","siblings":["feelings-petrified"]},{"id":"feelings-thrilled","category":"feelings","en":"thrilled","pl":"bardzo podekscytowany","answers":["thrilled"],"sourcePhoto":2},{"id":"emotion-nouns-anger","category":"emotion-nouns","en":"anger","pl":"złość","answers":["anger"],"sourcePhoto":2},{"id":"emotion-nouns-anxiety","category":"emotion-nouns","en":"anxiety","pl":"niepokój","answers":["anxiety"],"sourcePhoto":2},{"id":"emotion-nouns-disapproval","category":"emotion-nouns","en":"disapproval","pl":"dezaprobata","answers":["disapproval"],"sourcePhoto":2},{"id":"emotion-nouns-discomfort","category":"emotion-nouns","en":"discomfort","pl":"dyskomfort","answers":["discomfort"],"sourcePhoto":2},{"id":"emotion-nouns-impatience","category":"emotion-nouns","en":"impatience","pl":"zniecierpliwienie","answers":["impatience"],"sourcePhoto":2},{"id":"emotion-nouns-indecision","category":"emotion-nouns","en":"indecision","pl":"niezdecydowanie","answers":["indecision"],"sourcePhoto":2},{"id":"emotion-nouns-insecurity","category":"emotion-nouns","en":"insecurity","pl":"niepewność","answers":["insecurity"],"sourcePhoto":2},{"id":"emotion-nouns-irritation","category":"emotion-nouns","en":"irritation","pl":"irytacja","answers":["irritation"],"sourcePhoto":2},{"id":"emotion-nouns-shyness","category":"emotion-nouns","en":"shyness","pl":"nieśmiałość","answers":["shyness"],"sourcePhoto":2},{"id":"body-language-bang-your-fist-on-a-table","category":"body-language","en":"bang your fist (on a table)","pl":"uderzyć pięścią (w stół)","answers":["bang your fist on a table","bang your fist"],"sourcePhoto":2},{"id":"body-language-bend-your-knees","category":"body-language","en":"bend your knees","pl":"ugiąć kolana","answers":["bend your knees"],"sourcePhoto":2},{"id":"body-language-blink","category":"body-language","en":"blink","pl":"mrugać powiekami","answers":["blink"],"sourcePhoto":2},{"id":"body-language-clench-your-fists","category":"body-language","en":"clench your fists","pl":"zacisnąć pięści","answers":["clench your fists"],"sourcePhoto":2},{"id":"body-language-clumsy","category":"body-language","en":"clumsy","pl":"niezgrabny","answers":["clumsy"],"sourcePhoto":2},{"id":"body-language-cross-your-legs","category":"body-language","en":"cross your legs","pl":"skrzyżować nogi","answers":["cross your legs"],"sourcePhoto":2},{"id":"body-language-fidget","category":"body-language","en":"fidget","pl":"wiercić się","answers":["fidget"],"sourcePhoto":2},{"id":"body-language-fold-your-arms","category":"body-language","en":"fold your arms","pl":"skrzyżować ramiona","answers":["fold your arms"],"sourcePhoto":2},{"id":"body-language-frown","category":"body-language","en":"frown","pl":"zmarszczyć brwi","answers":["frown"],"sourcePhoto":2},{"id":"body-language-gesture","category":"body-language","en":"gesture","pl":"gest","answers":["gesture"],"sourcePhoto":2},{"id":"body-language-glance","category":"body-language","en":"glance","pl":"rzucić okiem","answers":["glance"],"sourcePhoto":2},{"id":"body-language-glare","category":"body-language","en":"glare","pl":"wpatrywać się ze złością","answers":["glare"],"sourcePhoto":2},{"id":"body-language-glimpse","category":"body-language","en":"glimpse","pl":"spojrzeć przelotnie","answers":["glimpse"],"sourcePhoto":2},{"id":"body-language-grin","category":"body-language","en":"grin","pl":"uśmiechać się od ucha do ucha","answers":["grin"],"sourcePhoto":2},{"id":"body-language-grind-your-teeth","category":"body-language","en":"grind your teeth","pl":"zgrzytać zębami","answers":["grind your teeth"],"sourcePhoto":2},{"id":"body-language-hands-on-hips","category":"body-language","en":"hands on hips","pl":"ręce na biodrach","answers":["hands on hips"],"sourcePhoto":2},{"id":"body-language-have-your-elbows-on-the-table","category":"body-language","en":"have your elbows on the table","pl":"opierać się łokciami o stół","answers":["have your elbows on the table"],"sourcePhoto":2},{"id":"body-language-hide-your-face-in-your-hands","category":"body-language","en":"hide your face in your hands","pl":"ukryć twarz w dłoniach","answers":["hide your face in your hands"],"sourcePhoto":2},{"id":"body-language-lean-back","category":"body-language","en":"lean back","pl":"odchylać się, opierać się, rozpierać się (na krześle)","answers":["lean back"],"sourcePhoto":2},{"id":"body-language-moan","category":"body-language","en":"moan","pl":"jęczeć, narzekać","answers":["moan"],"sourcePhoto":2},{"id":"body-language-mumble","category":"body-language","en":"mumble / mutter","pl":"mamrotać","answers":["mumble","mutter"],"sourcePhoto":2},{"id":"body-language-peek","category":"body-language","en":"peek","pl":"zerkać","answers":["peek"],"sourcePhoto":2},{"id":"body-language-peer","category":"body-language","en":"peer","pl":"przyglądać się","answers":["peer"],"sourcePhoto":2},{"id":"body-language-point-to-sth","category":"body-language","en":"point to sth","pl":"wskazywać na coś","answers":["point to sth"],"sourcePhoto":2},{"id":"body-language-purse-your-lips","category":"body-language","en":"purse your lips","pl":"zacisnąć usta","answers":["purse your lips"],"sourcePhoto":2},{"id":"body-language-raise-your-eyebrows","category":"body-language","en":"raise your eyebrows","pl":"unieść brwi","answers":["raise your eyebrows"],"sourcePhoto":2},{"id":"body-language-scream","category":"body-language","en":"scream","pl":"wrzeszczeć, krzyczeć","answers":["scream"],"sourcePhoto":2},{"id":"body-language-scrutinise","category":"body-language","en":"scrutinise","pl":"zlustrować","answers":["scrutinise","scrutinize"],"sourcePhoto":2},{"id":"body-language-shrug-your-shoulders","category":"body-language","en":"shrug your shoulders","pl":"wzruszyć ramionami","answers":["shrug your shoulders"],"sourcePhoto":2},{"id":"body-language-slouch","category":"body-language","en":"slouch","pl":"garbić się","answers":["slouch"],"sourcePhoto":2},{"id":"body-language-stare","category":"body-language","en":"stare","pl":"gapić się, wpatrywać się","answers":["stare"],"sourcePhoto":2},{"id":"body-language-stutter","category":"body-language","en":"stutter","pl":"jąkać się","answers":["stutter"],"sourcePhoto":2},{"id":"body-language-tap-your-fingers-on-a-table","category":"body-language","en":"tap your fingers (on a table)","pl":"bębnić palcami (w stół)","answers":["tap your fingers on a table","tap your fingers"],"sourcePhoto":2},{"id":"body-language-tremble","category":"body-language","en":"tremble","pl":"drżeć, trząść się","answers":["tremble"],"sourcePhoto":2},{"id":"body-language-turn-your-back-on-sb","category":"body-language","en":"turn your back on sb","pl":"odwrócić się do kogoś plecami","answers":["turn your back on sb"],"sourcePhoto":2},{"id":"body-language-whine","category":"body-language","en":"whine","pl":"jęczeć","answers":["whine"],"sourcePhoto":2},{"id":"body-language-whisper-in-sb-s-ear","category":"body-language","en":"whisper (in sb's ear)","pl":"szeptać (komuś do ucha)","answers":["whisper in sb's ear","whisper"],"sourcePhoto":2},{"id":"body-language-wink-at-sb","category":"body-language","en":"wink at sb","pl":"mrugnąć okiem do kogoś","answers":["wink at sb"],"sourcePhoto":2},{"id":"body-language-yell","category":"body-language","en":"yell","pl":"wrzeszczeć","answers":["yell"],"sourcePhoto":2},{"id":"idioms-be-down-in-the-dumps","category":"idioms","en":"be down in the dumps","pl":"mieć chandrę, być bardzo smutnym","answers":["be down in the dumps"],"sourcePhoto":2},{"id":"idioms-be-on-cloud-nine","category":"idioms","en":"be on cloud nine","pl":"być w siódmym niebie","answers":["be on cloud nine"],"sourcePhoto":2},{"id":"idioms-be-over-the-moon","category":"idioms","en":"be over the moon","pl":"nie posiadać się ze szczęścia","answers":["be over the moon"],"sourcePhoto":2},{"id":"idioms-get-butterflies-in-your-stomach","category":"idioms","en":"get / have butterflies in your stomach","pl":"mieć tremę, denerwować się","answers":["get butterflies in your stomach","have butterflies in your stomach"],"sourcePhoto":2},{"id":"idioms-go-to-pieces","category":"idioms","en":"go to pieces","pl":"załamać się","answers":["go to pieces"],"sourcePhoto":2},{"id":"idioms-have-a-chip-on-your-shoulder-about-sth","category":"idioms","en":"have a chip on your shoulder about sth","pl":"być przewrażliwionym na punkcie czegoś","answers":["have a chip on your shoulder about sth"],"sourcePhoto":2},{"id":"idioms-wake-up-in-a-cold-sweat","category":"idioms","en":"wake up in a cold sweat","pl":"obudzić się zlanym zimnym potem","answers":["wake up in a cold sweat"],"sourcePhoto":2},{"id":"interests-appeal-to-sb","category":"interests","en":"appeal to sb","pl":"podobać się komuś","answers":["appeal to sb"],"sourcePhoto":2},{"id":"interests-be-familiar-with-sth","category":"interests","en":"be familiar with sth","pl":"znać coś","answers":["be familiar with sth"],"sourcePhoto":2},{"id":"interests-be-into-sth","category":"interests","en":"be into sth","pl":"interesować się czymś","answers":["be into sth"],"sourcePhoto":2},{"id":"interests-capable-of-doing-sth","category":"interests","en":"capable of doing sth","pl":"zdolny do zrobienia czegoś","answers":["capable of doing sth"],"sourcePhoto":2},{"id":"interests-convinced-of-sth","category":"interests","en":"convinced of sth","pl":"przekonany o czymś","answers":["convinced of sth"],"sourcePhoto":2},{"id":"interests-detest","category":"interests","en":"detest","pl":"nie znosić","answers":["detest"],"sourcePhoto":2},{"id":"interests-disapprove-of-sth","category":"interests","en":"disapprove of sth","pl":"nie pochwalać, być przeciwnikiem czegoś","answers":["disapprove of sth"],"sourcePhoto":2},{"id":"interests-dismiss-an-idea","category":"interests","en":"dismiss (an idea)","pl":"odrzucić (pomysł)","answers":["dismiss an idea","dismiss"],"sourcePhoto":2},{"id":"interests-focus-on","category":"interests","en":"focus on","pl":"skupić się, koncentrować na","answers":["focus on"],"sourcePhoto":2},{"id":"interests-grasp-sth","category":"interests","en":"grasp sth","pl":"rozumieć coś","answers":["grasp sth"],"sourcePhoto":2},{"id":"interests-have-a-go-at-sth","category":"interests","en":"have a go at sth","pl":"spróbować coś zrobić","answers":["have a go at sth"],"sourcePhoto":2},{"id":"interests-indifferent-to","category":"interests","en":"indifferent to","pl":"obojętny na","answers":["indifferent to"],"sourcePhoto":2},{"id":"interests-proficient-in","category":"interests","en":"proficient in / at","pl":"biegły, wprawny w","answers":["proficient in","proficient at"],"sourcePhoto":2},{"id":"interests-regard-sth-as-sth","category":"interests","en":"regard sth as sth","pl":"uważać coś za coś","answers":["regard sth as sth"],"sourcePhoto":2},{"id":"interests-take-an-interest-in-sth","category":"interests","en":"take an interest in sth","pl":"zainteresować się czymś","answers":["take an interest in sth"],"sourcePhoto":2},{"id":"interests-take-pride-in-sth","category":"interests","en":"take pride in sth","pl":"szczycić się czymś","answers":["take pride in sth"],"sourcePhoto":2},{"id":"interests-take-risks","category":"interests","en":"take risks","pl":"podejmować ryzyko","answers":["take risks"],"sourcePhoto":2},{"id":"values-adhere-to","category":"values","en":"adhere to","pl":"stosować się do","answers":["adhere to"],"sourcePhoto":2},{"id":"values-adjust-to","category":"values","en":"adjust to","pl":"dostosować się do","answers":["adjust to"],"sourcePhoto":2},{"id":"values-altruism","category":"values","en":"altruism","pl":"altruizm","answers":["altruism"],"sourcePhoto":2},{"id":"values-approve-of-sb","category":"values","en":"approve of sb/sth","pl":"aprobować kogoś / akceptować coś","answers":["approve of sb","approve of sth","approve of sb/sth"],"sourcePhoto":2},{"id":"values-autonomy","category":"values","en":"autonomy","pl":"autonomia","answers":["autonomy"],"sourcePhoto":2},{"id":"values-be-suspicious-of","category":"values","en":"be suspicious of","pl":"być podejrzliwym wobec","answers":["be suspicious of"],"sourcePhoto":2},{"id":"values-collaboration","category":"values","en":"collaboration","pl":"współpraca","answers":["collaboration"],"sourcePhoto":2},{"id":"values-community","category":"values","en":"community","pl":"wspólnota","answers":["community"],"sourcePhoto":2},{"id":"values-compromise","category":"values","en":"compromise","pl":"kompromis","answers":["compromise"],"sourcePhoto":2},{"id":"values-conformity","category":"values","en":"conformity","pl":"konformizm","answers":["conformity"],"sourcePhoto":2},{"id":"values-dignity","category":"values","en":"dignity","pl":"godność","answers":["dignity"],"sourcePhoto":2},{"id":"values-discriminate-against-sb","category":"values","en":"discriminate against sb","pl":"dyskryminować kogoś","answers":["discriminate against sb"],"sourcePhoto":2},{"id":"values-disobedient","category":"values","en":"disobedient","pl":"nieposłuszny","answers":["disobedient"],"sourcePhoto":2},{"id":"values-diversity","category":"values","en":"diversity","pl":"różnorodność","answers":["diversity"],"sourcePhoto":2},{"id":"values-empathy","category":"values","en":"empathy","pl":"empatia","answers":["empathy"],"sourcePhoto":2},{"id":"values-equality","category":"values","en":"equality","pl":"równość","answers":["equality"],"sourcePhoto":2},{"id":"values-inequality","category":"values","en":"inequality","pl":"nierówność","answers":["inequality"],"sourcePhoto":2},{"id":"values-ethical","category":"values","en":"ethical","pl":"etyczny, moralny","answers":["ethical"],"sourcePhoto":2},{"id":"values-face-up-to-sth","category":"values","en":"face up to sth","pl":"stawiać czemuś czoło","answers":["face up to sth"],"sourcePhoto":2},{"id":"values-follow-the-rules","category":"values","en":"follow the rules","pl":"przestrzegać zasad","answers":["follow the rules"],"sourcePhoto":2},{"id":"values-go-with-the-flow","category":"values","en":"go with the flow","pl":"płynąć z prądem","answers":["go with the flow"],"sourcePhoto":2},{"id":"values-go-against-the-flow","category":"values","en":"go against the flow","pl":"płynąć pod prąd","answers":["go against the flow"],"sourcePhoto":2},{"id":"values-gratitude","category":"values","en":"gratitude","pl":"wdzięczność","answers":["gratitude"],"sourcePhoto":2},{"id":"values-have-something-in-common-with-sb","category":"values","en":"have something in common with sb","pl":"mieć z kimś coś wspólnego","answers":["have something in common with sb"],"sourcePhoto":2},{"id":"values-human-rights","category":"values","en":"human rights","pl":"prawa człowieka","answers":["human rights"],"sourcePhoto":2},{"id":"values-imperfect","category":"values","en":"imperfect","pl":"niedoskonały","answers":["imperfect"],"sourcePhoto":2},{"id":"values-integrity","category":"values","en":"integrity","pl":"prawość","answers":["integrity"],"sourcePhoto":2},{"id":"values-judgement","category":"values","en":"judgement","pl":"osąd","answers":["judgement","judgment"],"sourcePhoto":2},{"id":"values-keep-an-eye-on-your-goal","category":"values","en":"keep an eye on (your goal)","pl":"nie tracić (celu) z oczu","answers":["keep an eye on your goal","keep an eye on"],"sourcePhoto":2},{"id":"values-liberty","category":"values","en":"liberty","pl":"wolność","answers":["liberty"],"sourcePhoto":2},{"id":"values-moral-principles","category":"values","en":"moral principles","pl":"zasady moralne","answers":["moral principles"],"sourcePhoto":2},{"id":"values-obedience","category":"values","en":"obedience","pl":"posłuszeństwo","answers":["obedience"],"sourcePhoto":2},{"id":"values-disobedience","category":"values","en":"disobedience","pl":"nieposłuszeństwo","answers":["disobedience"],"sourcePhoto":2},{"id":"values-outlook-on","category":"values","en":"outlook on","pl":"pogląd na","answers":["outlook on"],"sourcePhoto":2},{"id":"values-perceive","category":"values","en":"perceive","pl":"postrzegać, dostrzegać","answers":["perceive"],"sourcePhoto":2},{"id":"values-perseverance","category":"values","en":"perseverance","pl":"wytrwałość","answers":["perseverance"],"sourcePhoto":2},{"id":"values-principles","category":"values","en":"principles","pl":"wartości, zasady","answers":["principles"],"sourcePhoto":2},{"id":"values-rebel-against-sth","category":"values","en":"rebel against sth","pl":"buntować się przeciwko czemuś","answers":["rebel against sth"],"sourcePhoto":2},{"id":"values-relate-to-sb","category":"values","en":"relate to sb/sth","pl":"utożsamiać się z kimś / czymś","answers":["relate to sb","relate to sth","relate to sb/sth"],"sourcePhoto":2},{"id":"values-self-esteem","category":"values","en":"self-esteem","pl":"poczucie własnej wartości","answers":["self-esteem"],"sourcePhoto":2},{"id":"values-sense-of-belonging","category":"values","en":"sense of belonging","pl":"poczucie przynależności","answers":["sense of belonging"],"sourcePhoto":2},{"id":"values-share-views","category":"values","en":"share views","pl":"podzielać poglądy","answers":["share views"],"sourcePhoto":2},{"id":"values-share-values","category":"values","en":"share values","pl":"podzielać wartości","answers":["share values"],"sourcePhoto":2},{"id":"values-social-status","category":"values","en":"social status","pl":"status społeczny","answers":["social status"],"sourcePhoto":2},{"id":"values-stand-by-your-convictions","category":"values","en":"stand by your convictions","pl":"trwać przy swoich przekonaniach","answers":["stand by your convictions"],"sourcePhoto":2},{"id":"values-wisdom","category":"values","en":"wisdom","pl":"mądrość","answers":["wisdom"],"sourcePhoto":2},{"id":"values-worldview","category":"values","en":"worldview","pl":"światopogląd","answers":["worldview"],"sourcePhoto":2},{"id":"role-models-aspire-to-sth","category":"role-models","en":"aspire to sth","pl":"dążyć do czegoś, aspirować do czegoś","answers":["aspire to sth"],"sourcePhoto":2},{"id":"role-models-accomplished","category":"role-models","en":"accomplished","pl":"znakomity, utalentowany","answers":["accomplished"],"sourcePhoto":2},{"id":"role-models-achievement","category":"role-models","en":"achievement","pl":"osiągnięcie","answers":["achievement"],"sourcePhoto":2},{"id":"role-models-activist","category":"role-models","en":"activist","pl":"aktywista, aktywistka","answers":["activist"],"sourcePhoto":2},{"id":"role-models-gain-recognition","category":"role-models","en":"gain recognition","pl":"zdobyć uznanie","answers":["gain recognition"],"sourcePhoto":2},{"id":"role-models-notable","category":"role-models","en":"notable","pl":"wybitny","answers":["notable"],"sourcePhoto":2},{"id":"role-models-philanthropist","category":"role-models","en":"philanthropist","pl":"filantrop, filantropka","answers":["philanthropist"],"sourcePhoto":2},{"id":"role-models-put-sb-on-a-pedestal","category":"role-models","en":"put sb on a pedestal","pl":"stawiać kogoś na piedestale","answers":["put sb on a pedestal"],"sourcePhoto":2},{"id":"role-models-thinker","category":"role-models","en":"thinker","pl":"myśliciel, myślicielka","answers":["thinker"],"sourcePhoto":2},{"id":"role-models-visionary","category":"role-models","en":"visionary","pl":"wizjoner, wizjonerka","answers":["visionary"],"sourcePhoto":2},{"id":"role-models-well-rounded","category":"role-models","en":"well-rounded","pl":"gruntownie wykształcony","answers":["well-rounded"],"sourcePhoto":2}],"sourceFile":"data/slowka.txt"};
+
+/* Słówko — logic independent of the interface; no dependencies. */
+(function (root, factory) {
+  "use strict";
+  const api = factory();
+  if (typeof module === "object" && module.exports) module.exports = api;
+  else root.SlowkoCore = api;
+})(typeof globalThis !== "undefined" ? globalThis : this, function () {
+  "use strict";
+  const SCHEMA_VERSION = 1;
+
+  /** Normalize typography and textbook placeholders, never spelling mistakes. */
+  function normalizeAnswer(value) {
+    if (typeof value !== "string") return "";
+    return value.normalize("NFKC").toLowerCase()
+      .replace(/[\u2018\u2019\u02bc\u0060]/g, "'")
+      .replace(/[\u2010-\u2015\u2212]/g, "-")
+      .replace(/[()]/g, "")
+      .replace(/\bsb\b/g, "somebody")
+      .replace(/\bsth\b/g, "something")
+      .replace(/\bsomeone\b/g, "somebody")
+      .replace(/\s*-\s*/g, "-")
+      .replace(/\s*\/\s*/g, "/")
+      .replace(/\s+/g, " ").trim();
+  }
+
+  function isCorrect(word, answer) {
+    const candidate = normalizeAnswer(answer);
+    return candidate.length > 0 &&
+      word.answers.some(variant => normalizeAnswer(variant) === candidate);
+  }
+
+  function initialState(data) {
+    return { schemaVersion: SCHEMA_VERSION, datasetId: data.id, category: "all", entries: {} };
+  }
+
+  function blankEntry() {
+    return { learned: false, correct: 0, wrong: 0, skipped: 0, updatedAt: null };
+  }
+
+  function getEntry(state, id) {
+    return Object.prototype.hasOwnProperty.call(state.entries, id) ? state.entries[id] : blankEntry();
+  }
+
+  /** A result is recorded at most once for a learned card. */
+  function recordAnswer(state, id, verdict, now = new Date().toISOString()) {
+    if (!["correct", "wrong", "skipped"].includes(verdict)) throw new Error("Nieznany wynik odpowiedzi.");
+    const previous = getEntry(state, id);
+    if (previous.learned) return state;
+    const entry = { ...previous, [verdict]: previous[verdict] + 1, updatedAt: now };
+    if (verdict === "correct") entry.learned = true;
+    return { ...state, entries: { ...state.entries, [id]: entry } };
+  }
+
+  function restoreWord(state, id, now = new Date().toISOString()) {
+    const entry = getEntry(state, id);
+    return { ...state, entries: {
+      ...state.entries, [id]: { ...entry, learned: false, updatedAt: now }
+    } };
+  }
+
+  function scopedWords(data, category = "all") {
+    return category === "all" ? data.words : data.words.filter(word => word.category === category);
+  }
+
+  function statistics(words, state) {
+    const stats = { total: words.length, learned: 0, remaining: 0, correct: 0,
+      wrong: 0, skipped: 0, attempts: 0, accuracy: null };
+    for (const word of words) {
+      const entry = getEntry(state, word.id);
+      if (entry.learned) stats.learned++;
+      stats.correct += entry.correct;
+      stats.wrong += entry.wrong;
+      stats.skipped += entry.skipped;
+    }
+    stats.remaining = stats.total - stats.learned;
+    stats.attempts = stats.correct + stats.wrong + stats.skipped;
+    if (stats.attempts) stats.accuracy = Math.round(100 * stats.correct / stats.attempts);
+    return stats;
+  }
+
+  function shuffle(items, random = Math.random) {
+    const result = [...items];
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(random() * (i + 1));
+      [result[i], result[j]] = [result[j], result[i]];
+    }
+    return result;
+  }
+
+  /**
+   * Every pending card starts in a shuffled queue. A mistake is inserted at
+   * a random position, behind at least two other cards when those exist.
+   * Learned cards are filtered again at draw time (also safe across tabs).
+   */
+  class StudyQueue {
+    constructor(words, state, random = Math.random) {
+      this.words = words;
+      this.byId = new Map(words.map(word => [word.id, word]));
+      this.random = random;
+      this.last = null;
+      this.queue = shuffle(words.filter(word => !getEntry(state, word.id).learned)
+        .map(word => word.id), random);
+    }
+    draw(state) {
+      this.queue = this.queue.filter(id => !getEntry(state, id).learned);
+      if (!this.queue.length) {
+        this.queue = shuffle(this.words.filter(word => !getEntry(state, word.id).learned)
+          .map(word => word.id), this.random);
+      }
+      if (!this.queue.length) return null;
+      if (this.queue.length > 1 && this.queue[0] === this.last) {
+        const index = 1 + Math.floor(this.random() * (this.queue.length - 1));
+        [this.queue[0], this.queue[index]] = [this.queue[index], this.queue[0]];
+      }
+      const id = this.queue.shift();
+      this.last = id;
+      return this.byId.get(id);
+    }
+    retry(id) {
+      if (!this.byId.has(id) || this.queue.includes(id)) return;
+      const min = Math.min(2, this.queue.length);
+      const index = min + Math.floor(this.random() * (this.queue.length - min + 1));
+      this.queue.splice(index, 0, id);
+    }
+  }
+
+  /** Whitelist every imported field. Untrusted backup values never reach HTML. */
+  function validateState(candidate, data) {
+    const fail = () => { throw new Error("Kopia ma nieprawidłowy format lub pochodzi z innego zestawu."); };
+    if (!candidate || typeof candidate !== "object" || Array.isArray(candidate) ||
+        candidate.schemaVersion !== SCHEMA_VERSION || candidate.datasetId !== data.id ||
+        !candidate.entries || typeof candidate.entries !== "object" || Array.isArray(candidate.entries)) fail();
+    const allowedIds = new Set(data.words.map(word => word.id));
+    const validCategories = new Set(["all", ...data.categories.map(category => category.id)]);
+    if (!validCategories.has(candidate.category)) fail();
+    const entries = {};
+    for (const [id, value] of Object.entries(candidate.entries)) {
+      if (!allowedIds.has(id) || !value || typeof value !== "object" || Array.isArray(value) ||
+          typeof value.learned !== "boolean") fail();
+      for (const field of ["correct", "wrong", "skipped"]) {
+        if (!Number.isSafeInteger(value[field]) || value[field] < 0 || value[field] > 10000000) fail();
+      }
+      if (value.learned && value.correct < 1) fail();
+      if (value.updatedAt !== null &&
+          (typeof value.updatedAt !== "string" || value.updatedAt.length > 40 ||
+           !Number.isFinite(Date.parse(value.updatedAt)))) fail();
+      entries[id] = { learned: value.learned, correct: value.correct, wrong: value.wrong,
+        skipped: value.skipped, updatedAt: value.updatedAt };
+    }
+    return { schemaVersion: SCHEMA_VERSION, datasetId: data.id, category: candidate.category, entries };
+  }
+
+  function makeBackup(state, now = new Date().toISOString()) {
+    return { format: "slowko-progress", exportedAt: now, state };
+  }
+
+  function parseBackup(text, data) {
+    if (typeof text !== "string" || text.length > 2000000) throw new Error("Kopia jest zbyt duża.");
+    let backup;
+    try { backup = JSON.parse(text); }
+    catch { throw new Error("Nie udało się odczytać pliku JSON."); }
+    if (!backup || backup.format !== "slowko-progress") {
+      throw new Error("To nie jest kopia postępów z aplikacji Słówko.");
+    }
+    return validateState(backup.state, data);
+  }
+
+  function searchText(value) {
+    return String(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[łŁ]/g, "l").toLowerCase();
+  }
+
+  return Object.freeze({ SCHEMA_VERSION, normalizeAnswer, isCorrect, initialState, getEntry,
+    recordAnswer, restoreWord, scopedWords, statistics, shuffle, StudyQueue,
+    validateState, makeBackup, parseBackup, searchText });
+});
+
+/* Plain-text vocabulary parser. Shared by the browser and the build script. */
+(function (root, factory) {
+  'use strict';
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./core.js'));
+  else root.SlowkoTxt = factory(root.SlowkoCore);
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (C) {
+  'use strict';
+  const MAX_LENGTH = 2000000;
+  const MAX_WORDS = 5000;
+  const DEFAULT_CATEGORY = 'W\u0142asne s\u0142\u00f3wka';
+  const clean = value => String(value).normalize('NFC').trim().replace(/\s+/g, ' ');
+  const norm = value => clean(value).toLocaleLowerCase('pl');
+  const identity = row => JSON.stringify([norm(row.pl), C.normalizeAnswer(row.answers[0])]);
+
+  // Stable content IDs keep progress when rows are reordered or recategorized.
+  // These are identifiers, not cryptographic hashes. Collisions are checked below.
+  function hash(text) {
+    let a = 2166136261, b = 5381;
+    for (let i = 0; i < text.length; i++) {
+      a = Math.imul(a ^ text.charCodeAt(i), 16777619);
+      b = Math.imul(b, 33) ^ text.charCodeAt(i);
+    }
+    return (a >>> 0).toString(16).padStart(8, '0') + (b >>> 0).toString(16).padStart(8, '0');
+  }
+
+  function parse(text) {
+    const rows = [], errors = [], seen = new Set();
+    let duplicates = 0;
+    const fail = (line, message) => { if (errors.length < 100) errors.push({ line, message }); };
+    if (typeof text !== 'string' || text.length > MAX_LENGTH || new TextEncoder().encode(text).length > MAX_LENGTH) {
+      return { rows, errors: [{ line: 0, message: 'Plik musi by\u0107 tekstem UTF-8 o rozmiarze do 2 MB.' }], duplicates };
+    }
+    const lines = text.replace(/^\uFEFF/, '').split(/\r\n|\r|\n/);
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line || line.startsWith('#')) continue;
+      if (/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F\uFFFD]/.test(line)) {
+        fail(i + 1, 'Nieprawid\u0142owe znaki. Zapisz plik jako zwyk\u0142y tekst UTF-8.'); continue;
+      }
+      const fields = line.split(';').map(clean);
+      if (fields.length < 2 || fields.length > 3) {
+        fail(i + 1, 'U\u017cyj formatu: polski;angielski;dzia\u0142 (dzia\u0142 jest opcjonalny).'); continue;
+      }
+      const [pl, english, category = DEFAULT_CATEGORY] = fields;
+      if (!pl || !english) { fail(i + 1, 'Brakuje polskiego lub angielskiego has\u0142a.'); continue; }
+      if (pl.length > 300 || category.length > 80) { fail(i + 1, 'Polskie has\u0142o: do 300 znak\u00f3w; nazwa dzia\u0142u: do 80.'); continue; }
+      const variants = english.split('|').map(clean);
+      if (variants.length > 16 || variants.some(v => !C.normalizeAnswer(v) || v.length > 240)) {
+        fail(i + 1, 'Wpisz od 1 do 16 niepustych odpowiedzi (do 240 znak\u00f3w ka\u017cda), rozdzielonych znakiem |.'); continue;
+      }
+      const answerSet = new Set();
+      const answers = variants.filter(v => {
+        const key = C.normalizeAnswer(v);
+        if (answerSet.has(key)) return false;
+        answerSet.add(key); return true;
+      });
+      const row = { pl, answers, category: category || DEFAULT_CATEGORY, line: i + 1 };
+      const key = identity(row);
+      if (seen.has(key)) { duplicates++; continue; }
+      seen.add(key); rows.push(row);
+      if (rows.length > MAX_WORDS) { fail(i + 1, 'Limit bazy to 5000 fiszek. Podziel list\u0119 na mniejsze zestawy.'); break; }
+    }
+    if (!rows.length && !errors.length) fail(0, 'Plik nie zawiera s\u0142\u00f3wek. Dodaj przynajmniej jeden wiersz.');
+    return { rows, errors, duplicates };
+  }
+
+  function ensureParsed(text) {
+    const parsed = parse(text);
+    if (parsed.errors.length) throw new Error(parsed.errors.map(e =>
+      (e.line ? 'Wiersz ' + e.line + ': ' : '') + e.message).join('\n'));
+    return parsed;
+  }
+
+  function rowsOf(data) {
+    const categories = new Map(data.categories.map(c => [c.id, c.label]));
+    return data.words.map(w => ({ pl: w.pl, answers: [...w.answers], category: categories.get(w.category) }));
+  }
+
+  function serialize(data) {
+    const rows = rowsOf(data);
+    return '# S\u0142\u00f3wko - lista s\u0142\u00f3wek (UTF-8)\n' +
+      '# polski;angielski;dzia\u0142\n' +
+      '# Dzia\u0142 mo\u017cna pomin\u0105\u0107. Warianty odpowiedzi rozdziel znakiem |.\n' +
+      '# Pierwszy wariant identyfikuje fiszk\u0119 - nie zmieniaj jego kolejno\u015bci bez potrzeby.\n\n' +
+      rows.map(r => r.pl + ';' + r.answers.join(' | ') + ';' + r.category).join('\n') + '\n';
+  }
+
+  function fromRows(rows, reference, source = 'txt') {
+    if (rows.length > MAX_WORDS) throw new Error('Limit bazy to 5000 fiszek.');
+    const known = new Map(reference.words.map(w => [identity(w), w]));
+    const knownCategories = new Map(reference.categories.map(c => [norm(c.label), c]));
+    const categoryMap = new Map(), ids = new Map(), keys = new Set(), words = [];
+    for (const row of rows) {
+      const key = identity(row);
+      if (keys.has(key)) continue;
+      keys.add(key);
+      const labelKey = norm(row.category);
+      if (!categoryMap.has(labelKey)) {
+        const category = knownCategories.get(labelKey) || {
+          id: 'txt-category-' + hash(labelKey), label: row.category, group: 'W\u0142asna baza'
+        };
+        if ([...categoryMap.values()].some(c => c.id === category.id && norm(c.label) !== labelKey)) {
+          throw new Error('Konflikt nazw dzia\u0142\u00f3w. Zmie\u0144 jedn\u0105 z nazw.');
+        }
+        categoryMap.set(labelKey, category);
+      }
+      const old = known.get(key);
+      const id = old ? old.id : 'txt-' + hash(key);
+      if (ids.has(id) && ids.get(id) !== key) throw new Error('Konflikt identyfikator\u00f3w fiszek. Zmie\u0144 polskie has\u0142o.');
+      ids.set(id, key);
+      const unchanged = old && JSON.stringify(row.answers) === JSON.stringify(old.answers);
+      words.push({ ...(old || {}), id, pl: row.pl, answers: [...row.answers],
+        en: unchanged ? old.en : row.answers.join(' / '), category: categoryMap.get(labelKey).id,
+        ...(old ? {} : { source }) });
+    }
+    // Keep the original hints; add hints when user-supplied translations collide.
+    const groups = new Map();
+    for (const w of words) {
+      const key = w.category + ':' + norm(w.prompt || w.pl);
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(w);
+    }
+    for (const group of groups.values()) if (group.length > 1) {
+      for (const w of group) {
+        const answer = w.answers[0];
+        if (!w.cue) w.cue = 'G\u0142\u00f3wny wariant: ' + answer.slice(0, Math.min(3, Math.max(1, answer.length - 1))) +
+          '\u2026 (' + answer.length + ' znak\u00f3w, \u0142\u0105cznie ze spacjami).';
+        w.siblings = group.filter(other => other.id !== w.id).map(other => other.id);
+      }
+    }
+    const data = { ...reference, words, categories: [...categoryMap.values()] };
+    if (new TextEncoder().encode(serialize(data)).length > MAX_LENGTH) {
+      throw new Error('Cała lista TXT przekracza 2 MB. Usuń część haseł przed importem.');
+    }
+    return data;
+  }
+
+  function compile(text, reference) { return fromRows(ensureParsed(text).rows, reference); }
+
+  function merge(base, rows) {
+    const seen = new Set(base.words.map(identity));
+    const fresh = [];
+    let duplicates = 0;
+    for (const row of rows) {
+      const key = identity(row);
+      if (seen.has(key)) { duplicates++; continue; }
+      seen.add(key); fresh.push(row);
+    }
+    const data = fromRows([...rowsOf(base), ...fresh], base, 'import');
+    return { data, added: fresh.length, duplicates, addedRows: fresh };
+  }
+
+  // A changed TXT file may remove a card/category. Keep every surviving result.
+  // Validation remains strict for entry types, dataset IDs and counters.
+  function reconcileState(candidate, data) {
+    if (!candidate || typeof candidate !== 'object' || Array.isArray(candidate) ||
+        !candidate.entries || typeof candidate.entries !== 'object' || Array.isArray(candidate.entries)) {
+      return C.validateState(candidate, data); // throws the normal validation error
+    }
+    const allowed = new Set(data.words.map(w => w.id));
+    const categories = new Set(['all', ...data.categories.map(c => c.id)]);
+    const entries = Object.fromEntries(Object.entries(candidate.entries).filter(([id]) => allowed.has(id)));
+    return C.validateState({ ...candidate, entries,
+      category: categories.has(candidate.category) ? candidate.category : 'all' }, data);
+  }
+
+  return Object.freeze({ MAX_LENGTH, MAX_WORDS, DEFAULT_CATEGORY, parse, ensureParsed,
+    identity, serialize, rowsOf, fromRows, compile, merge, reconcileState });
+});
+
+/* Słówko — interface. All learning data stays in this browser. */
+(function () {
+  "use strict";
+  const BASE_DATA = window.SLOWKO_DATA;
+  let DATA = BASE_DATA;
+  const T = window.SlowkoTxt;
+  const C = window.SlowkoCore;
+  const $ = id => document.getElementById(id);
+  if (!DATA || !C || !T) {
+    $("storage-notice").hidden = false;
+    $("storage-notice").textContent = "Nie załadowano wszystkich plików aplikacji. Odśwież stronę lub sprawdź, czy skopiowano cały katalog public.";
+    return;
+  }
+
+  const STORAGE_KEY = "slowko." + DATA.id + ".v1";
+  const categories = new Map();
+  const byId = new Map();
+  const baseIds = new Set(BASE_DATA.words.map(word => word.id));
+  let customText = "";
+  let stagedRows = null;
+  let vocabularyFileLoad = 0;
+
+  function setData(data) {
+    DATA = data;
+    categories.clear();
+    byId.clear();
+    for (const c of data.categories) categories.set(c.id, c);
+    for (const w of data.words) byId.set(w.id, w);
+  }
+  setData(BASE_DATA);
+
+  function personalData(data = DATA) {
+    return { ...data, words: data.words.filter(word => !baseIds.has(word.id)) };
+  }
+
+  function readSession(raw) {
+    const candidate = JSON.parse(raw);
+    if (candidate.customVocabulary !== undefined && typeof candidate.customVocabulary !== "string") {
+      throw new Error("Invalid vocabulary in session");
+    }
+    const text = candidate.customVocabulary || "";
+    const data = text.trim() ? T.merge(BASE_DATA, T.ensureParsed(text).rows).data : BASE_DATA;
+    return { data, text, state: T.reconcileState(candidate, data) };
+  }
+  const standalone = Boolean(window.SLOWKO_STANDALONE) || location.protocol === "file:";
+  let storageAvailable = true;
+  let offlineReady = false;
+  let view = "study";
+  let current = null;
+  let answered = false;
+  let queue;
+  let toastTimer;
+  let pendingConfirmation = null;
+  let installPrompt = null;
+
+  function showNotice(message) {
+    $("storage-notice").textContent = message;
+    $("storage-notice").hidden = false;
+  }
+
+  function loadState() {
+    let raw;
+    try { raw = localStorage.getItem(STORAGE_KEY); }
+    catch {
+      storageAvailable = false;
+      showNotice("Przeglądarka blokuje zapis postępów. Nauka działa, ale wyniki mogą zniknąć po zamknięciu karty. Używaj opcji „Zapisz kopię” w ustawieniach.");
+      return C.initialState(DATA);
+    }
+    if (!raw) return C.initialState(DATA);
+    try {
+      const loaded = readSession(raw);
+      setData(loaded.data);
+      customText = loaded.text;
+      return loaded.state;
+    }
+    catch {
+      // Preserve the unreadable original rather than silently deleting it.
+      try { localStorage.setItem(STORAGE_KEY + ".recovery." + Date.now(), raw); }
+      catch { storageAvailable = false; }
+      showNotice("Nie udało się odczytać zapisanych wyników. Uruchomiono pustą sesję. Wczytaj ostatnią kopię JSON; nieprawidłowy zapis pozostawiono w pamięci przeglądarki.");
+      return C.initialState(DATA);
+    }
+  }
+
+  let state = loadState();
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...state, customVocabulary: customText }));
+      storageAvailable = true;
+    } catch {
+      storageAvailable = false;
+      showNotice("Nie można zapisać postępu w przeglądarce. Wyniki tej sesji są w pamięci karty — zapisz ich kopię w ustawieniach przed jej zamknięciem.");
+    }
+    renderConnection();
+  }
+
+  function toast(message) {
+    clearTimeout(toastTimer);
+    const node = $("toast");
+    // A dialog lives in the browser's top layer, so keep messages in it while open.
+    const parent = $("vocab-dialog").open ? $("vocab-dialog") : $("settings-dialog").open ? $("settings-dialog") : document.body;
+    parent.append(node);
+    node.textContent = message;
+    node.hidden = false;
+    toastTimer = setTimeout(() => { node.hidden = true; }, 5000);
+  }
+
+  function icon(name) {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.classList.add("icon");
+    svg.setAttribute("aria-hidden", "true");
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    use.setAttribute("href", "#i-" + name);
+    svg.append(use);
+    return svg;
+  }
+
+  function wordsInScope() { return C.scopedWords(DATA, state.category); }
+
+  function initCategories() {
+    const select = $("category");
+    select.replaceChildren();
+    select.append(new Option("Wszystkie działy · " + DATA.words.length, "all"));
+    for (const category of DATA.categories) {
+      const count = DATA.words.filter(word => word.category === category.id).length;
+      select.append(new Option(category.label + " · " + count, category.id));
+    }
+    select.value = state.category;
+    $("set-size").textContent = DATA.words.length + " fiszek · " + DATA.categories.length + " działów";
+    $("source-summary").textContent = DATA.words.length + " fiszek w " + DATA.categories.length +
+      " działach. Baza początkowa pochodzi z dwóch zdjęć rozdziału „Człowiek / Unit 01”. Wersja 1.1 czyta bazę projektu z pliku data/slowka.txt i obsługuje prywatne importy TXT.";
+  }
+
+  function renderStatistics() {
+    const stats = C.statistics(wordsInScope(), state);
+    const percent = stats.total ? Math.floor(100 * stats.learned / stats.total) : 0;
+    $("learned-count").textContent = stats.learned;
+    $("remaining-count").textContent = stats.remaining;
+    $("accuracy").textContent = stats.accuracy === null ? "—" : stats.accuracy + "%";
+    $("progress-percent").replaceChildren(document.createTextNode(String(percent)));
+    const unit = document.createElement("span");
+    unit.textContent = "%";
+    $("progress-percent").append(unit);
+    $("progress-ring").style.setProperty("--progress", percent + "%");
+    $("progress-ring").setAttribute("aria-valuenow", String(percent));
+    $("progress-ring").setAttribute("aria-valuetext", stats.learned + " z " + stats.total + " fiszek opanowanych");
+    const global = C.statistics(DATA.words, state);
+    $("global-progress").textContent = state.category === "all" ? "" :
+      "Cały zestaw: " + global.learned + " / " + global.total + " opanowanych";
+    $("reset-scope").disabled = stats.attempts === 0;
+  }
+
+  function rebuildQueue() { queue = new C.StudyQueue(wordsInScope(), state); }
+
+  function renderCompletion() {
+    $("quiz-card").hidden = true;
+    $("done-card").hidden = false;
+    const stats = C.statistics(wordsInScope(), state);
+    const allStats = C.statistics(DATA.words, state);
+    $("done-title").textContent = state.category === "all" ? "Wszystko opanowane." : "Ten dział już umiesz.";
+    $("done-description").textContent = "Opanowane fiszki: " + stats.learned + " / " + stats.total +
+      ". Nie ma już słówek do losowania w tym zakresie. Świetna robota!";
+    $("done-all").hidden = state.category === "all" || allStats.remaining === 0;
+    $("done-reset").textContent = state.category === "all" ? "Rozpocznij cały zestaw od nowa" : "Rozpocznij ten dział od nowa";
+  }
+
+  function nextCard(shouldFocus = false) {
+    current = queue.draw(state);
+    answered = false;
+    renderStatistics();
+    if (!current) { renderCompletion(); return; }
+    $("quiz-card").hidden = false;
+    $("done-card").hidden = true;
+    $("word-category").textContent = categories.get(current.category).label;
+    const prompt = current.prompt || current.pl;
+    $("polish-word").textContent = prompt;
+    $("polish-word").classList.toggle("long", prompt.length > 44);
+    $("word-cue").textContent = current.cue || "";
+    $("word-cue").hidden = !current.cue;
+    const entry = C.getEntry(state, current.id);
+    const isRetry = entry.wrong + entry.skipped > 0;
+    $("attempt-label").textContent = isRetry ? "TO SŁÓWKO JESZCZE ĆWICZYMY" : "JAK TO NAPISZESZ PO ANGIELSKU?";
+    $("attempt-label").classList.toggle("retry", isRetry);
+    const answer = $("answer");
+    answer.value = "";
+    answer.readOnly = false;
+    answer.setAttribute("aria-invalid", "false");
+    $("input-wrap").classList.remove("is-correct", "is-wrong");
+    $("input-icon").textContent = "";
+    $("input-error").hidden = true;
+    $("input-error").textContent = "";
+    $("feedback").hidden = true;
+    $("skip-button").hidden = false;
+    $("check-button").hidden = false;
+    $("next-button").hidden = true;
+    $("answer-hint").textContent = /\b(sb|sth)\b/.test(current.en)
+      ? "sb = somebody / someone, sth = something. Możesz wpisać skrót albo pełne słowo."
+      : current.sourcePhoto && current.en.includes("(")
+        ? "Część w nawiasie jest opcjonalna. Wielkość liter nie ma znaczenia."
+        : "Wielkość liter i dodatkowe spacje nie mają znaczenia.";
+    if (shouldFocus && view === "study") answer.focus({ preventScroll: true });
+  }
+
+  function submitAnswer(skipped = false) {
+    if (!current || answered) return;
+    const value = $("answer").value;
+    if (!skipped && !C.normalizeAnswer(value)) {
+      $("input-error").textContent = "Najpierw wpisz odpowiedź albo wybierz „Nie wiem”.";
+      $("input-error").hidden = false;
+      $("answer").setAttribute("aria-invalid", "true");
+      $("answer").focus();
+      return;
+    }
+
+    answered = true; // Guard against Enter + click or rapid double taps.
+    const correct = !skipped && C.isCorrect(current, value);
+    const verdict = correct ? "correct" : skipped ? "skipped" : "wrong";
+    const sibling = !correct && !skipped && (current.siblings || [])
+      .map(id => byId.get(id)).find(word => word && C.isCorrect(word, value));
+    state = C.recordAnswer(state, current.id, verdict);
+    if (!correct) queue.retry(current.id);
+    saveState();
+    renderStatistics();
+
+    $("answer").readOnly = true;
+    $("answer").setAttribute("aria-invalid", correct || skipped ? "false" : "true");
+    $("input-error").hidden = true;
+    $("input-wrap").classList.toggle("is-correct", correct);
+    $("input-wrap").classList.toggle("is-wrong", !correct);
+    $("input-icon").textContent = correct ? "✓" : "↺";
+    $("feedback").classList.toggle("is-wrong", !correct);
+    $("feedback-title").textContent = correct ? "Brawo, poprawnie!" :
+      sibling ? "To też poprawny synonim." : skipped ? "Spokojnie. Zapamiętaj i spróbuj później." : "Jeszcze trochę praktyki.";
+    $("feedback-symbol").textContent = correct ? "✓" : "↺";
+    $("solution-label").textContent = correct ? "POPRAWNA ODPOWIEDŹ" : sibling ? "W TEJ FISZCE ĆWICZYMY" : "ZAPAMIĘTAJ TEN ZAPIS";
+    $("solution").textContent = current.en;
+    $("typed-answer").textContent = !skipped && !correct ? "Twoja odpowiedź: " + value.trim() : "";
+    $("typed-answer").hidden = skipped || correct;
+    $("feedback-description").textContent = correct
+      ? "To słówko jest opanowane i nie wróci do losowania."
+      : sibling
+        ? "Pytanie ze wskazówką dotyczy drugiego hasła. Ta fiszka zostaje do nauki; spróbujesz jej ponownie później."
+        : "Ta fiszka zostaje w puli. Wróci w losowym miejscu, aż zapiszesz odpowiedź poprawnie.";
+    $("variant-note").hidden = current.answers.length < 2;
+    $("variant-note").textContent = current.answers.length > 1
+      ? "Akceptowane warianty: " + current.answers.join(" · ") + "." : "";
+    $("feedback").hidden = false;
+    $("check-button").hidden = true;
+    $("skip-button").hidden = true;
+    $("next-label").textContent = C.statistics(wordsInScope(), state).remaining === 0
+      ? "Zobacz podsumowanie" : "Następne słówko";
+    $("next-button").hidden = false;
+    $("next-button").focus({ preventScroll: true });
+  }
+
+  function showView(next) {
+    view = next;
+    $("study-view").hidden = next !== "study";
+    $("library-view").hidden = next !== "library";
+    for (const id of ["study", "library"]) {
+      const button = $("nav-" + id);
+      button.classList.toggle("active", id === next);
+      if (id === next) button.setAttribute("aria-current", "page");
+      else button.removeAttribute("aria-current");
+    }
+    $("page-title").textContent = next === "study" ? "Jedno słówko bliżej." : "Twoja kolekcja słów.";
+    document.querySelector(".page-subtitle").textContent = next === "study"
+      ? "Przeczytaj po polsku. Zapisz po angielsku. Zapamiętaj."
+      : "Przeglądaj hasła, sprawdzaj znaczenia i wracaj do nauki.";
+    if (next === "library") renderLibrary();
+  }
+
+  function renderLibrary() {
+    const query = C.searchText($("word-search").value.trim());
+    const status = $("status-filter").value;
+    const matches = wordsInScope().filter(word => {
+      const learned = C.getEntry(state, word.id).learned;
+      if ((status === "learned" && !learned) || (status === "pending" && learned)) return false;
+      return !query || C.searchText(word.pl + " " + word.en + " " + word.answers.join(" ") +
+        " " + categories.get(word.category).label).includes(query);
+    });
+    $("library-count").textContent = "Wyświetlane fiszki: " + matches.length + " / " + wordsInScope().length;
+    $("library-empty").hidden = matches.length !== 0;
+    const fragment = document.createDocumentFragment();
+    for (const word of matches) {
+      const entry = C.getEntry(state, word.id);
+      const li = document.createElement("li");
+      li.className = "word-row";
+      li.dataset.wordId = word.id;
+      const main = document.createElement("div");
+      main.className = "word-row-main";
+      const pl = document.createElement("strong");
+      pl.textContent = word.pl;
+      const en = document.createElement("p");
+      en.className = "word-english";
+      en.lang = "en";
+      en.textContent = word.en;
+      const meta = document.createElement("p");
+      meta.className = "word-meta";
+      meta.textContent = categories.get(word.category).label + (word.sourcePhoto ? " · zdjęcie " + word.sourcePhoto : word.source === "import" ? " · import TXT" : " · baza TXT") +
+        (word.note ? " · uzupełnione tłumaczenie" : "");
+      if (word.note) meta.title = word.note;
+      main.append(pl, en, meta);
+      const right = document.createElement("div");
+      right.className = "word-state";
+      const chip = document.createElement("span");
+      chip.className = "state-chip" + (entry.learned ? " learned" : "");
+      chip.textContent = entry.learned ? "✓ Opanowane" : entry.wrong + entry.skipped > 0 ? "Do powtórki" : "Do nauki";
+      right.append(chip);
+      if (entry.learned) {
+        const restore = document.createElement("button");
+        restore.className = "icon-button restore-button";
+        restore.type = "button";
+        restore.setAttribute("aria-label", "Przywróć do nauki: " + word.en);
+        restore.title = "Przywróć do nauki";
+        restore.append(icon("refresh"));
+        restore.addEventListener("click", () => {
+          state = C.restoreWord(state, word.id);
+          saveState();
+          rebuildQueue();
+          nextCard(false);
+          renderLibrary();
+          toast("Przywrócono do nauki: " + word.en + ".");
+        });
+        right.append(restore);
+      }
+      li.append(main, right);
+      fragment.append(li);
+    }
+    $("word-list").replaceChildren(fragment);
+  }
+
+  function applyCategory(category, focus = false) {
+    if (category !== "all" && !categories.has(category)) return;
+    state = { ...state, category };
+    $("category").value = category;
+    saveState();
+    rebuildQueue();
+    nextCard(focus);
+    if (view === "library") renderLibrary();
+  }
+
+  function ask(title, description, okLabel = "Potwierdź", danger = true) {
+    if ($("confirm-dialog").open) return Promise.resolve(false);
+    $("confirm-title").textContent = title;
+    $("confirm-description").textContent = description;
+    $("confirm-ok").textContent = okLabel;
+    $("confirm-ok").className = "button " + (danger ? "button-danger" : "button-primary");
+    return new Promise(resolve => {
+      pendingConfirmation = resolve;
+      $("confirm-dialog").showModal();
+      $("confirm-cancel").focus();
+    });
+  }
+
+  async function resetProgress(all = false) {
+    const ids = (all ? DATA.words : wordsInScope()).map(word => word.id);
+    const label = all || state.category === "all" ? "całym zestawie" : "dziale „" + categories.get(state.category).label + "”";
+    if (!await ask("Rozpocząć od nowa?", "Usuniesz wszystkie wyniki w " + label +
+      ". Liczba fiszek: " + ids.length + ". Tej operacji nie można cofnąć bez wcześniej zapisanej kopii.", "Wyzeruj wyniki")) return;
+    const entries = { ...state.entries };
+    for (const id of ids) delete entries[id];
+    state = { ...state, entries };
+    saveState();
+    rebuildQueue();
+    nextCard(false);
+    if (view === "library") renderLibrary();
+    toast("Wyniki wyzerowane. Możesz zacząć od początku.");
+  }
+
+  function openSettings(source = false) {
+    $("settings-dialog").showModal();
+    if (source) {
+      $("source-details").open = true;
+      $("source-details").scrollIntoView({ block: "nearest" });
+    }
+  }
+
+  function exportProgress() {
+    try {
+      const text = JSON.stringify({ ...C.makeBackup(state), vocabularyText: T.serialize(DATA) }, null, 2);
+      const blob = new Blob([text], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "slowko-postepy-" + new Date().toISOString().slice(0, 10) + ".json";
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 30000);
+      toast("Przygotowano kopię JSON. Zachowaj ją w bezpiecznym miejscu.");
+    } catch {
+      toast("Nie udało się przygotować pliku. Spróbuj ponownie w zwykłej karcie przeglądarki.");
+    }
+  }
+
+  async function importProgress(file) {
+    if (!file) return;
+    try {
+      if (file.size > 6000000) throw new Error("Ten plik jest za duży. Wybierz kopię postępów JSON (do 6 MB).");
+      const raw = await file.text();
+      let snapshot;
+      try { snapshot = JSON.parse(raw); }
+      catch { throw new Error("Nie udało się odczytać pliku JSON."); }
+      if (!snapshot || snapshot.format !== "slowko-progress") throw new Error("To nie jest kopia postępów z aplikacji Słówko.");
+      if (snapshot.vocabularyText !== undefined && typeof snapshot.vocabularyText !== "string") throw new Error("Nieprawidłowa lista słówek w kopii.");
+      const incomingData = snapshot.vocabularyText ? T.merge(BASE_DATA, T.ensureParsed(snapshot.vocabularyText).rows).data : DATA;
+      const imported = C.validateState({ ...snapshot.state, category: incomingData.categories.some(c => c.id === snapshot.state?.category) ? snapshot.state.category : "all" }, incomingData);
+      const importedStats = C.statistics(incomingData.words, imported);
+      const accepted = await ask("Wczytać zapisaną kopię?",
+        "Kopia zawiera " + importedStats.learned + " opanowanych fiszek i " +
+        importedStats.attempts + " prób. Zastąpi obecne wyniki" + (snapshot.vocabularyText ? " i odtworzy listę prywatnych słówek" : "") + ". Najpierw możesz anulować i zapisać bieżącą kopię.",
+        "Wczytaj kopię", false);
+      if (!accepted) return;
+      state = imported;
+      setData(incomingData);
+      const own = personalData();
+      customText = own.words.length ? T.serialize(own) : "";
+      initCategories();
+      renderVocabularySummary();
+      saveState();
+      rebuildQueue();
+      nextCard(false);
+      if (view === "library") renderLibrary();
+      toast("Wczytano kopię postępów.");
+    } catch (error) {
+      toast(error instanceof Error ? error.message : "Nie udało się wczytać kopii.");
+    } finally {
+      $("import-file").value = "";
+    }
+  }
+
+
+  function refreshCollection() {
+    initCategories();
+    rebuildQueue();
+    nextCard(false);
+    if (view === "library") renderLibrary();
+    renderVocabularySummary();
+  }
+
+  function renderVocabularySummary() {
+    const count = personalData().words.length;
+    $("vocab-summary").textContent = "Baza projektu: " + BASE_DATA.words.length +
+      " \u00b7 Dodane na tym urz\u0105dzeniu: " + count + " \u00b7 Razem: " + DATA.words.length;
+    $("export-own-txt").disabled = count === 0;
+    $("clear-own-txt").disabled = count === 0;
+  }
+
+  function openVocabulary() {
+    $("settings-dialog").close();
+    renderVocabularySummary();
+    $("vocab-dialog").showModal();
+  }
+
+  function invalidateVocabularyPreview() {
+    stagedRows = null;
+    $("vocab-preview").hidden = true;
+    $("confirm-vocab-import").disabled = true;
+    $("vocab-result").hidden = true;
+  }
+
+  function vocabularyError(message) {
+    stagedRows = null;
+    $("confirm-vocab-import").disabled = true;
+    $("vocab-preview").hidden = true;
+    const result = $("vocab-result");
+    result.textContent = message;
+    result.className = "vocab-result is-error";
+    result.hidden = false;
+  }
+
+  function previewVocabulary() {
+    invalidateVocabularyPreview();
+    try {
+      const parsed = T.parse($("vocab-text").value);
+      if (parsed.errors.length) {
+        vocabularyError("Nic nie zosta\u0142o dodane. Popraw list\u0119:\n" + parsed.errors.slice(0, 10)
+          .map(e => (e.line ? "Wiersz " + e.line + ": " : "") + e.message).join("\n"));
+        return;
+      }
+      const merged = T.merge(DATA, parsed.rows);
+      stagedRows = parsed.rows;
+      $("vocab-preview-title").textContent = "Nowe fiszki: " + merged.added +
+        " \u00b7 Pomijane duplikaty: " + (merged.duplicates + parsed.duplicates);
+      const fragment = document.createDocumentFragment();
+      for (const row of merged.addedRows.slice(0, 5)) {
+        const li = document.createElement("li");
+        const pl = document.createElement("strong");
+        pl.textContent = row.pl;
+        const en = document.createElement("span");
+        en.lang = "en";
+        en.textContent = row.answers.join(" / ");
+        li.append(pl, en);
+        fragment.append(li);
+      }
+      $("vocab-preview-list").replaceChildren(fragment);
+      $("vocab-preview-note").textContent = merged.added > 5 ? "Pokazano pierwsze 5 z " + merged.added + " nowych fiszek." :
+        merged.added === 0 ? "Wszystkie has\u0142a s\u0105 ju\u017c w bazie. Ich wyniki i warianty odpowiedzi pozostaj\u0105 bez zmian." : "Wyniki dotychczasowych fiszek pozostan\u0105 bez zmian.";
+      $("confirm-vocab-import").disabled = merged.added === 0;
+      $("vocab-preview").hidden = false;
+    } catch (error) { vocabularyError(error.message || "Nie uda\u0142o si\u0119 sprawdzi\u0107 listy."); }
+  }
+
+  async function loadVocabularyFile(file) {
+    if (!file) return;
+    const request = ++vocabularyFileLoad;
+    invalidateVocabularyPreview();
+    $("preview-vocab-button").disabled = true;
+    try {
+      if (file.size > T.MAX_LENGTH) throw new Error("Plik TXT jest za du\u017cy. Limit: 2 MB.");
+      let text;
+      try { text = new TextDecoder("utf-8", { fatal: true }).decode(await file.arrayBuffer()); }
+      catch { throw new Error("Nie uda\u0142o si\u0119 odczyta\u0107 TXT. Zapisz plik w kodowaniu UTF-8."); }
+      if (request !== vocabularyFileLoad) return;
+      $("vocab-text").value = text;
+      $("vocab-file-name").textContent = "Wybrano: " + file.name;
+      previewVocabulary();
+    } catch (error) {
+      if (request === vocabularyFileLoad) vocabularyError(error.message || "Nie uda\u0142o si\u0119 odczyta\u0107 pliku.");
+    } finally {
+      if (request === vocabularyFileLoad) {
+        $("preview-vocab-button").disabled = false;
+        $("vocab-file").value = "";
+      }
+    }
+  }
+
+  function commitVocabulary() {
+    if (!stagedRows) return;
+    try {
+      // Recompute against the live collection in case a second tab changed it.
+      const merged = T.merge(DATA, stagedRows);
+      if (!merged.added) { previewVocabulary(); return; }
+      setData(merged.data);
+      customText = T.serialize(personalData());
+      state = { ...state, category: "all" };
+      saveState();
+      refreshCollection();
+      $("vocab-text").value = "";
+      $("vocab-file-name").textContent = "";
+      invalidateVocabularyPreview();
+      $("vocab-result").textContent = "Dodano " + merged.added + " nowych fiszek. S\u0105 ju\u017c w puli do nauki. Dotychczasowy post\u0119p zachowany." +
+        (storageAvailable ? "" : " UWAGA: zapis lokalny jest zablokowany. Zapisz kopi\u0119 JSON przed zamkni\u0119ciem karty.");
+      $("vocab-result").className = "vocab-result";
+      $("vocab-result").hidden = false;
+      $("vocab-result").scrollIntoView({ block: "nearest" });
+    } catch (error) { vocabularyError(error.message || "Nie uda\u0142o si\u0119 doda\u0107 s\u0142\u00f3wek."); }
+  }
+
+  function downloadText(text, filename) {
+    try {
+      const url = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 30000);
+      toast("Przygotowano plik " + filename + ".");
+    } catch { toast("Nie uda\u0142o si\u0119 przygotowa\u0107 pliku. Spr\u00f3buj w zwyk\u0142ej karcie przegl\u0105darki."); }
+  }
+
+  async function clearPersonalVocabulary() {
+    const count = personalData().words.length;
+    if (!count || !await ask("Usun\u0105\u0107 prywatny import?", "Usuniesz " + count +
+      " zaimportowanych fiszek i ich wyniki. Baza projektu i jej post\u0119p pozostan\u0105. Najpierw mo\u017cesz zapisa\u0107 kopi\u0119 JSON w ustawieniach.", "Usu\u0144 import")) return;
+    setData(BASE_DATA);
+    customText = "";
+    state = T.reconcileState(state, DATA);
+    saveState();
+    refreshCollection();
+    invalidateVocabularyPreview();
+    toast("Usuni\u0119to prywatny import. Baza projektu i jej wyniki zosta\u0142y zachowane.");
+  }
+
+  function renderConnection() {
+    const node = $("connection-status");
+    const dot = $("connection-dot");
+    dot.classList.toggle("warning", !storageAvailable);
+    dot.classList.toggle("offline", !navigator.onLine && storageAvailable);
+    if (!storageAvailable) node.textContent = "Postęp tylko w tej karcie — zapisz kopię";
+    else if (standalone) node.textContent = "Wersja plikowa · postęp na tym urządzeniu";
+    else if (!navigator.onLine) node.textContent = offlineReady ? "Tryb offline · postęp zapisany lokalnie" : "Brak połączenia · zapis lokalny";
+    else if (offlineReady) node.textContent = "Gotowe offline · zapis lokalny";
+    else node.textContent = "Postęp zapisywany lokalnie";
+  }
+
+  async function prepareOffline() {
+    if (standalone || !("serviceWorker" in navigator) || !window.isSecureContext) return;
+    try {
+      const hadController = Boolean(navigator.serviceWorker.controller);
+      const registration = await navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" });
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (hadController) toast("Nowa wersja aplikacji jest gotowa. Odśwież stronę po zakończeniu odpowiedzi.");
+      });
+      await navigator.serviceWorker.ready;
+      offlineReady = true;
+      renderConnection();
+    } catch {
+      // Learning remains fully usable online even when offline caching is unavailable.
+      offlineReady = false;
+      renderConnection();
+    }
+  }
+
+  document.querySelector(".brand").addEventListener("click", event => {
+    event.preventDefault();
+    showView("study");
+    window.scrollTo({ top: 0, behavior: "auto" });
+  });
+  $("answer-form").addEventListener("submit", event => {
+    event.preventDefault();
+    if (answered) nextCard(true);
+    else submitAnswer(false);
+  });
+  $("answer").addEventListener("input", () => {
+    if (!answered) {
+      $("input-error").hidden = true;
+      $("answer").setAttribute("aria-invalid", "false");
+    }
+  });
+  $("skip-button").addEventListener("click", () => submitAnswer(true));
+  $("next-button").addEventListener("click", () => nextCard(true));
+  $("nav-study").addEventListener("click", () => showView("study"));
+  $("nav-library").addEventListener("click", () => showView("library"));
+  $("category").addEventListener("change", event => applyCategory(event.target.value));
+  $("word-search").addEventListener("input", renderLibrary);
+  $("status-filter").addEventListener("change", renderLibrary);
+  $("settings-button").addEventListener("click", () => openSettings());
+  $("about-button").addEventListener("click", () => openSettings(true));
+  $("close-settings").addEventListener("click", () => $("settings-dialog").close());
+  $("settings-dialog").addEventListener("close", () => document.body.append($("toast")));
+  $("settings-dialog").addEventListener("click", event => {
+    if (event.target !== $("settings-dialog")) return;
+    const rect = $("settings-dialog").getBoundingClientRect();
+    if (event.clientX < rect.left || event.clientX > rect.right ||
+        event.clientY < rect.top || event.clientY > rect.bottom) $("settings-dialog").close();
+  });
+  $("confirm-cancel").addEventListener("click", () => $("confirm-dialog").close("no"));
+  $("confirm-ok").addEventListener("click", () => $("confirm-dialog").close("yes"));
+  $("confirm-dialog").addEventListener("cancel", event => {
+    event.preventDefault();
+    $("confirm-dialog").close("no");
+  });
+  $("confirm-dialog").addEventListener("close", () => {
+    if (pendingConfirmation) {
+      const resolve = pendingConfirmation;
+      pendingConfirmation = null;
+      resolve($("confirm-dialog").returnValue === "yes");
+    }
+  });
+  $("reset-scope").addEventListener("click", () => resetProgress(false));
+  $("reset-all").addEventListener("click", () => resetProgress(true));
+  $("done-reset").addEventListener("click", () => resetProgress(false));
+  $("done-all").addEventListener("click", () => applyCategory("all"));
+  $("done-library").addEventListener("click", () => showView("library"));
+  $("export-button").addEventListener("click", exportProgress);
+  $("import-button").addEventListener("click", () => $("import-file").click());
+  $("import-file").addEventListener("change", event => importProgress(event.target.files[0]));
+
+  $("add-vocab-button").addEventListener("click", openVocabulary);
+  $("library-add-vocab").addEventListener("click", openVocabulary);
+  $("settings-vocab-button").addEventListener("click", openVocabulary);
+  $("close-vocab").addEventListener("click", () => $("vocab-dialog").close());
+  $("vocab-dialog").addEventListener("close", () => document.body.append($("toast")));
+  $("choose-vocab-file").addEventListener("click", () => $("vocab-file").click());
+  $("vocab-file").addEventListener("change", event => loadVocabularyFile(event.target.files[0]));
+  $("vocab-text").addEventListener("input", () => {
+    ++vocabularyFileLoad;
+    $("preview-vocab-button").disabled = false;
+    $("vocab-file-name").textContent = "";
+    invalidateVocabularyPreview();
+  });
+  $("preview-vocab-button").addEventListener("click", previewVocabulary);
+  $("confirm-vocab-import").addEventListener("click", commitVocabulary);
+  $("export-all-txt").addEventListener("click", () => downloadText(T.serialize(DATA), "slowka-wszystkie.txt"));
+  $("export-own-txt").addEventListener("click", () => downloadText(T.serialize(personalData()), "slowka-wlasne.txt"));
+  $("clear-own-txt").addEventListener("click", clearPersonalVocabulary);
+  window.addEventListener("online", renderConnection);
+  window.addEventListener("offline", renderConnection);
+  window.addEventListener("storage", event => {
+    if (event.key !== STORAGE_KEY || !event.newValue) return;
+    try {
+      const loaded = readSession(event.newValue);
+      setData(loaded.data);
+      customText = loaded.text;
+      state = loaded.state;
+      refreshCollection();
+      if (stagedRows) previewVocabulary();
+      toast("Zaktualizowano postęp z drugiej karty przeglądarki.");
+    } catch { /* Ignore invalid external writes without damaging current state. */ }
+  });
+
+  window.addEventListener("beforeinstallprompt", event => {
+    event.preventDefault();
+    installPrompt = event;
+    $("install-button").hidden = false;
+  });
+  $("install-button").addEventListener("click", async () => {
+    if (!installPrompt) return;
+    await installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null;
+    $("install-button").hidden = true;
+  });
+
+  initCategories();
+  rebuildQueue();
+  nextCard(false);
+  renderConnection();
+  if (document.readyState === "complete") prepareOffline();
+  else window.addEventListener("load", prepareOffline, { once: true });
+})();
+
+</script>
+</body>
+</html>

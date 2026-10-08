@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f7f3">
+  <meta name="description" content="Słówko — ćwicz pisownię angielskich słów. Polski podpowiada, Ty wpisujesz po angielsku.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Słówko">
+  <meta name="color-scheme" content="light">
+  <title>Słówko — angielski, po Twojemu</title>
+  <!-- PWA_LINKS_START -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <!-- PWA_LINKS_END -->
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./vocabulary.js" defer></script>
+  <script src="./core.js" defer></script>
+  <script src="./vocabulary-txt.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Przejdź do treści</a>
+  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6v14M3 4c4-1 7 0 9 2 2-2 5-3 9-2v14c-4-1-7 0-9 2-2-2-5-3-9-2Z"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h7m6 0h3M4 12h3m6 0h7M4 18h11m6 0h-1"/><circle cx="14" cy="6" r="3"/><circle cx="10" cy="12" r="3"/><circle cx="18" cy="18" r="3"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5M6 6a8 8 0 0 1 13 3M18 18A8 8 0 0 1 5 15"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m-5 5 5-5 5 5M4 16v5h16v-5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6Z"/><path d="m8 12 3 3 5-6"/></symbol>
+  </svg>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand" href="#main-content" aria-label="Słówko — strona główna">
+        <span class="brand-mark"><svg class="icon"><use href="#i-check"/></svg></span>
+        <span>Słówko<span class="brand-dot">.</span></span>
+      </a>
+      <nav class="top-nav" aria-label="Widoki aplikacji">
+        <button id="nav-study" class="nav-button active" aria-current="page">
+          <svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg><span>Nauka</span>
+        </button>
+        <button id="nav-library" class="nav-button">
+          <svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><span>Baza słówek</span>
+        </button>
+      </nav>
+      <button id="settings-button" class="icon-button settings-button" aria-label="Ustawienia i pomoc" title="Ustawienia i pomoc">
+        <svg class="icon" aria-hidden="true"><use href="#i-sliders"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div id="storage-notice" class="notice" role="alert" hidden></div>
+  <main id="main-content" class="app-main">
+    <section class="page-heading" aria-labelledby="page-title">
+      <div>
+        <div class="eyebrow"><span class="tiny-line"></span> TWÓJ ANGIELSKI. TWOJE TEMPO.</div>
+        <h1 id="page-title">Jedno słówko bliżej.</h1>
+        <p class="page-subtitle">Przeczytaj po polsku. Zapisz po angielsku. Zapamiętaj.</p>
+      </div>
+      <div class="set-badge" aria-label="Zestaw 01: Człowiek">
+        <span class="set-number">01</span><div><strong>Człowiek</strong><span id="set-size">Baza ze zdjęć</span></div>
+      </div>
+    </section>
+
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Zakres nauki i postęp">
+        <section class="progress-card">
+          <div class="section-overline">TWÓJ POSTĘP <svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg></div>
+          <div id="progress-ring" class="progress-ring" role="progressbar" aria-label="Opanowanie wybranego zakresu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="ring-inner"><strong id="progress-percent">0<span>%</span></strong><span>opanowane</span></div>
+          </div>
+          <div class="stats-grid">
+            <div><strong id="learned-count">0</strong><span>opanowane</span></div>
+            <div><strong id="remaining-count">0</strong><span>do nauki</span></div>
+          </div>
+          <div class="accuracy-row"><span>Trafność odpowiedzi</span><strong id="accuracy">—</strong></div>
+          <p id="global-progress" class="global-progress"></p>
+        </section>
+        <section class="scope-card">
+          <label for="category" class="section-overline">ZAKRES NAUKI</label>
+          <select id="category" class="select-input" aria-label="Wybierz dział"></select>
+          <p class="scope-help">Ucz się całego zestawu albo wybierz jeden dział.</p>
+          <button id="reset-scope" class="text-button">
+            <svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg>Zacznij zakres od nowa
+          </button>
+        </section>
+        <button id="add-vocab-button" class="button button-secondary vocab-launch" type="button">
+          <svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Dodaj słówka z TXT
+        </button>
+        <div class="quiet-note">
+          <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
+          <p>Bez konta i bez pośpiechu.<br>Postęp zostaje na tym urządzeniu.</p>
+        </div>
+      </aside>
+
+      <div class="content">
+        <section id="study-view" aria-label="Nauka pisowni">
+          <article id="quiz-card" class="quiz-card">
+            <div class="quiz-top">
+              <span id="word-category" class="category-badge"></span>
+              <span class="direction"><b>PL</b><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>EN</span>
+            </div>
+            <div class="question-block">
+              <p id="attempt-label" class="question-overline">JAK TO NAPISZESZ PO ANGIELSKU?</p>
+              <h2 id="polish-word"></h2>
+              <p id="word-cue" class="word-cue" hidden></p>
+            </div>
+
+            <form id="answer-form" novalidate>
+              <label for="answer" class="answer-label">Twoja odpowiedź <span>po angielsku</span></label>
+              <div id="input-wrap" class="input-wrap">
+                <input id="answer" type="text" lang="en" placeholder="Wpisz słowo lub zwrot…"
+                  autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false"
+                  inputmode="text" enterkeyhint="go" maxlength="240"
+                  aria-describedby="answer-hint input-error" aria-invalid="false">
+                <span id="input-icon" class="input-icon" aria-hidden="true"></span>
+              </div>
+              <p id="input-error" class="input-error" role="alert" hidden></p>
+              <p id="answer-hint" class="answer-hint">Wielkość liter i dodatkowe spacje nie mają znaczenia.</p>
+
+              <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true" hidden>
+                <div class="feedback-heading"><span id="feedback-symbol" aria-hidden="true"></span><h3 id="feedback-title"></h3></div>
+                <p id="solution-label" class="solution-label"></p>
+                <p id="solution" class="solution" lang="en"></p>
+                <p id="typed-answer" class="typed-answer" hidden></p>
+                <p id="feedback-description" class="feedback-description"></p>
+                <p id="variant-note" class="variant-note" hidden></p>
+              </div>
+
+              <div class="quiz-actions">
+                <button id="skip-button" class="button button-quiet" type="button">Nie wiem</button>
+                <button id="check-button" class="button button-primary" type="submit">
+                  Sprawdź<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </button>
+                <button id="next-button" class="button button-primary next-button" type="button" hidden>
+                  <span id="next-label">Następne słówko</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+                </button>
+              </div>
+            </form>
+          </article>
+
+          <article id="done-card" class="done-card" hidden>
+            <div class="done-illustration" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg><span>✓</span></div>
+            <p class="eyebrow centered">DOBRA ROBOTA!</p>
+            <h2 id="done-title">Wszystko opanowane.</h2>
+            <p id="done-description"></p>
+            <div class="done-actions">
+              <button id="done-all" class="button button-primary">Przejdź do całego zestawu</button>
+              <button id="done-reset" class="button button-secondary">Rozpocznij ten zakres od nowa</button>
+              <button id="done-library" class="text-button">Zobacz opanowane słówka</button>
+            </div>
+          </article>
+
+          <div class="learning-rule">
+            <span class="rule-check"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>
+            <p><strong>Umiesz? Słówko znika z puli.</strong><br>Po pomyłce zobaczysz odpowiedź i wrócisz do niego później.</p>
+          </div>
+        </section>
+
+        <section id="library-view" class="library-view" aria-labelledby="library-title" hidden>
+          <div class="library-heading"><div><p class="section-overline">TWÓJ SŁOWNICZEK</p><h2 id="library-title">Wszystko w jednym miejscu.</h2></div>
+            <button id="library-add-vocab" class="button button-secondary" type="button">+ Dodaj słówka</button>
+          </div>
+          <div class="library-toolbar">
+            <label class="search-field">
+              <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+              <input id="word-search" type="search" placeholder="Szukaj po polsku lub angielsku…" aria-label="Szukaj w bazie słówek" autocomplete="off">
+            </label>
+            <select id="status-filter" class="select-input" aria-label="Filtruj według postępu">
+              <option value="all">Wszystkie</option><option value="pending">Do nauki</option><option value="learned">Opanowane</option>
+            </select>
+          </div>
+          <p id="library-count" class="library-count" aria-live="polite"></p>
+          <ul id="word-list" class="word-list"></ul>
+          <div id="library-empty" class="empty-state" hidden><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><h3>Tu jeszcze nic nie ma.</h3><p>Zmień wyszukiwanie, dział lub filtr postępu.</p></div>
+        </section>
+      </div>
+    </div>
+    <footer class="app-footer">
+      <span class="save-status"><span id="connection-dot" class="status-dot"></span><span id="connection-status">Postęp zapisywany lokalnie</span></span>
+      <button id="about-button" class="text-button">O zestawie i zasadach<svg class="icon" aria-hidden="true"><use href="#i-info"/></svg></button>
+    </footer>
+  </main>
+
+  <dialog id="settings-dialog" class="settings-dialog">
+    <div class="dialog-heading"><div><p class="section-overline">WSZYSTKO POD KONTROLĄ</p><h2>Ustawienia i pomoc</h2></div>
+      <button id="close-settings" class="icon-button" aria-label="Zamknij ustawienia"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <section class="settings-section">
+      <h3>Twoje postępy</h3>
+      <p>Zapisywane automatycznie w tej przeglądarce. Nie synchronizują się same między urządzeniami ani przeglądarkami. Usunięcie danych witryny lub tryb prywatny może spowodować ich utratę.</p>
+      <div class="backup-actions">
+        <button id="export-button" class="button button-secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Zapisz kopię</button>
+        <button id="import-button" class="button button-secondary"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Wczytaj kopię</button>
+        <input id="import-file" type="file" accept=".json,application/json" hidden>
+      </div>
+      <p class="small-note">Plik JSON przenosi wyniki razem ze słówkami na drugi telefon lub komputer. Wczytanie kopii zastępuje obecny postęp dopiero po Twoim potwierdzeniu.</p>
+    </section>
+    <section class="settings-section">
+      <h3>Własna baza TXT</h3>
+      <p>Wczytaj listę z pliku albo wpisz nowe słówka. Import tylko dodaje hasła, nie kasuje wyników. Swoją kolekcję możesz wyeksportować do TXT.</p>
+      <button id="settings-vocab-button" class="button button-secondary" type="button">Dodaj / eksportuj słówka</button>
+    </section>
+    <section class="settings-section">
+      <h3>Na ekranie iPhone’a</h3>
+      <p>Otwórz adres aplikacji w Safari. W menu udostępniania wybierz <strong>Do ekranu głównego</strong>. Gdy pojawi się opcja <strong>Otwórz jako aplikację www</strong>, włącz ją i stuknij <strong>Dodaj</strong>.</p>
+      <p class="small-note">Wersja pod adresem HTTPS ma tryb offline po pierwszym załadowaniu i przygotowaniu pamięci podręcznej. Gotowość zobaczysz u dołu ekranu. Wersję plikową HTML najlepiej otworzyć na komputerze.</p>
+      <button id="install-button" class="button button-secondary" hidden>Zainstaluj aplikację</button>
+    </section>
+    <details id="rules-details" class="help-details">
+      <summary>Jak sprawdzane są odpowiedzi?</summary>
+      <p>Jedna poprawna odpowiedź oznacza opanowanie fiszki i usuwa ją z losowania. Błędna odpowiedź albo „Nie wiem” pokazuje rozwiązanie, ale zostawia fiszkę do nauki. Jeśli są dostępne inne fiszki, pomyłka wróci po nich, a nie natychmiast.</p>
+      <p>Liczy się pisownia z tego słowniczka. Wielkość liter, nadmiar spacji i typograficzne odmiany apostrofów oraz łączników nie wpływają na wynik. Brakująca litera, inny wyraz lub brak wymaganego łącznika to błąd. Wybrane warianty amerykańskie są akceptowane.</p>
+      <p><strong>sb</strong> oznacza <strong>somebody / someone</strong>, a <strong>sth</strong> oznacza <strong>something</strong>: każdy z tych zapisów jest prawidłowy. W bazie ze zdjęć części podane w nawiasach są opcjonalne. W imporcie TXT wpisz oba warianty oddzielone znakiem |, np. test | a test. Przy hasłach z równoważnymi wariantami wystarczy jeden z nich.</p>
+      <p>Niektóre różne słówka mają identyczne polskie tłumaczenie. Wtedy wskazówka z początkiem wyrazu mówi, którego hasła dotyczy pytanie. Każde z nich opanowujesz oddzielnie. Inne, niezapisane tu synonimy nie są automatycznie zaliczane.</p>
+      <p>Trafność to udział poprawnych odpowiedzi we wszystkich próbach; „Nie wiem” też jest próbą. Przywrócenie pojedynczego słówka do nauki zachowuje historię prób. Reset zakresu ją usuwa.</p>
+    </details>
+    <details id="source-details" class="help-details">
+      <summary>Skąd pochodzą słówka?</summary>
+      <p id="source-summary"></p>
+      <p>Przepisano listę słownictwa, bez bloku ćwiczeń „Pronounce it”. Zaznaczenia długopisem nie ograniczają bazy. Przeciwieństwa i warianty o innych znaczeniach rozdzielono na osobne pytania.</p>
+      <p>Wiersz <strong lang="en">cope with sth</strong> przy dolnej krawędzi pierwszego zdjęcia jest ucięty. Tłumaczenie „radzić sobie z czymś” zostało uzupełnione redakcyjnie. W pytaniach o „vintage” i „piercing” polską podpowiedź zapisano tak, aby nie zdradzała angielskiej odpowiedzi.</p>
+      <p>Kod aplikacji nie wysyła wpisywanych odpowiedzi ani postępów na serwer. Nie wymaga konta, płatnego API ani zewnętrznych bibliotek.</p>
+    </details>
+    <section class="danger-zone">
+      <div><h3>Nowy start</h3><p>Wyzerowanie usuwa wyniki wszystkich działów. Najpierw warto zapisać kopię.</p></div>
+      <button id="reset-all" class="button button-danger">Wyzeruj postępy</button>
+    </section>
+    <p class="version-label">Słówko · wersja 1.1 · import TXT · z polskiego na angielski</p>
+  </dialog>
+
+
+  <dialog id="vocab-dialog" class="vocab-dialog" aria-labelledby="vocab-title">
+    <div class="dialog-heading">
+      <div><p class="section-overline">TWOJE SŁOWA. TWOJA LISTA.</p><h2 id="vocab-title">Dodaj słówka.</h2></div>
+      <button id="close-vocab" class="icon-button" aria-label="Zamknij import słówek" type="button"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <p id="vocab-summary" class="vocab-summary"></p>
+    <div class="txt-format">
+      <span class="txt-tag">.TXT</span>
+      <div><strong>Jedna linia = jedna fiszka.</strong>
+        <p>Najpierw polskie hasło, potem angielska odpowiedź. Rozdziel je średnikiem. Dział jest opcjonalny.</p>
+      </div>
+    </div>
+    <pre class="txt-example">jabłko;apple;Jedzenie
+podróż;journey | trip;Podróże
+uczyć się;learn</pre>
+    <div class="vocab-file-row">
+      <button id="choose-vocab-file" class="button button-secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Wybierz plik .txt</button>
+      <span id="vocab-file-name" class="small-note" aria-live="polite"></span>
+      <input id="vocab-file" type="file" accept=".txt,text/plain" hidden>
+    </div>
+    <label for="vocab-text" class="answer-label vocab-text-label">Albo wpisz / wklej swoją listę</label>
+    <textarea id="vocab-text" rows="5" maxlength="2000000" spellcheck="false" autocapitalize="none" autocorrect="off" aria-describedby="vocab-format-help" placeholder="polskie hasło;angielska odpowiedź;dział"></textarea>
+    <p id="vocab-format-help" class="small-note">Zapisz plik w UTF-8. Alternatywne odpowiedzi rozdziel znakiem <strong>|</strong>. Puste linie i komentarze zaczynające się od <strong>#</strong> są pomijane. Brak działu = „Własne słówka”.</p>
+    <button id="preview-vocab-button" class="button button-secondary" type="button">Sprawdź listę</button>
+    <section id="vocab-preview" class="vocab-preview" aria-live="polite" hidden>
+      <h3 id="vocab-preview-title"></h3>
+      <ul id="vocab-preview-list"></ul>
+      <p id="vocab-preview-note" class="small-note"></p>
+      <button id="confirm-vocab-import" class="button button-primary" type="button" disabled>Dodaj do nauki<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    </section>
+    <p id="vocab-result" class="vocab-result" role="status" aria-live="polite" hidden></p>
+    <details class="help-details vocab-help">
+      <summary>Zapisz listę do TXT / zarządzaj importem</summary>
+      <div class="backup-actions">
+        <button id="export-all-txt" class="button button-secondary" type="button">Eksportuj całą bazę</button>
+        <button id="export-own-txt" class="button button-secondary" type="button">Eksportuj tylko własne</button>
+      </div>
+      <p>TXT zawiera słówka, bez wyników. Kopię słówek razem z postępem zapiszesz w ustawieniach jako JSON.</p>
+      <p>Import jest kopią pliku na tym urządzeniu, nie synchronizacją. Zmiana pliku na dysku wymaga ponownego importu. Duplikat (to samo polskie hasło i pierwszy angielski wariant) jest pomijany; import nie nadpisuje jego odpowiedzi ani działu.</p>
+      <p>Wspólna baza projektu jest w <code>data/slowka.txt</code>. Zmiana tego pliku wymaga przebudowania i opublikowania projektu. Usunięcie prywatnego importu nie zmienia pliku projektu.</p>
+      <button id="clear-own-txt" class="text-button" type="button">Usuń zaimportowane słówka z tego urządzenia</button>
+    </details>
+  </dialog>
+
+  <dialog id="confirm-dialog" class="confirm-dialog">
+    <h2 id="confirm-title"></h2><p id="confirm-description"></p>
+    <div class="confirm-actions">
+      <button id="confirm-cancel" class="button button-secondary">Anuluj</button>
+      <button id="confirm-ok" class="button button-danger">Potwierdź</button>
+    </div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><div class="notice">Włącz JavaScript w przeglądarce, aby rozpocząć naukę. Aplikacja nie potrzebuje konta.</div></noscript>
+</body>
+</html>
