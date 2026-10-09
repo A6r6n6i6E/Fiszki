@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
   <meta name="theme-color" content="#f6f7f3">
   <meta name="description" content="Słówko — ćwicz pisownię angielskich słów. Polski podpowiada, Ty wpisujesz po angielsku.">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -21,7 +21,7 @@
   <script src="./vocabulary-txt.js" defer></script>
   <script src="./app.js" defer></script>
 </head>
-<body>
+<body data-view="study">
   <a class="skip-link" href="#main-content">Przejdź do treści</a>
   <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
@@ -64,6 +64,7 @@
       <div>
         <div class="eyebrow"><span class="tiny-line"></span> TWÓJ ANGIELSKI. TWOJE TEMPO.</div>
         <h1 id="page-title">Jedno słówko bliżej.</h1>
+        <p class="page-subtitle">Przeczytaj po polsku. Zapisz po angielsku. Zapamiętaj.</p>
       </div>
       <div class="set-badge" aria-label="Zestaw 01: Człowiek">
         <span class="set-number">01</span><div><strong>Człowiek</strong><span id="set-size">Baza ze zdjęć</span></div>
@@ -92,8 +93,8 @@
             <svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg>Zacznij zakres od nowa
           </button>
         </section>
-        <button id="add-vocab-button" class="button button-secondary vocab-launch" type="button">
-          <svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Dodaj słówka z TXT
+        <button id="add-vocab-button" class="button button-secondary vocab-launch" type="button" aria-label="Dodaj słówka z pliku TXT">
+          <svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg><span class="vocab-launch-label">Dodaj słówka z TXT</span><span class="vocab-launch-short" aria-hidden="true">Dodaj TXT</span>
         </button>
         <div class="quiet-note">
           <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
@@ -104,6 +105,8 @@
       <div class="content">
         <section id="study-view" aria-label="Nauka pisowni">
           <article id="quiz-card" class="quiz-card">
+            <form id="answer-form" novalidate>
+              <div class="quiz-content">
             <div class="quiz-top">
               <span id="word-category" class="category-badge"></span>
               <span class="direction"><b>PL</b><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>EN</span>
@@ -114,7 +117,7 @@
               <p id="word-cue" class="word-cue" hidden></p>
             </div>
 
-            <form id="answer-form" novalidate>
+              <div class="answer-fields">
               <label for="answer" class="answer-label">Twoja odpowiedź <span>po angielsku</span></label>
               <div id="input-wrap" class="input-wrap">
                 <input id="answer" type="text" lang="en" placeholder="Wpisz słowo lub zwrot…"
@@ -126,13 +129,21 @@
               <p id="input-error" class="input-error" role="alert" hidden></p>
               <p id="answer-hint" class="answer-hint">Wielkość liter i dodatkowe spacje nie mają znaczenia.</p>
 
+              </div>
+
               <div id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true" hidden>
                 <div class="feedback-heading"><span id="feedback-symbol" aria-hidden="true"></span><h3 id="feedback-title"></h3></div>
                 <p id="solution-label" class="solution-label"></p>
                 <p id="solution" class="solution" lang="en"></p>
                 <p id="typed-answer" class="typed-answer" hidden></p>
-                <p id="feedback-description" class="feedback-description"></p>
-                <p id="variant-note" class="variant-note" hidden></p>
+                <p id="feedback-brief" class="feedback-brief"></p>
+                <details id="feedback-details" class="feedback-details" open>
+                  <summary>Więcej o odpowiedzi</summary>
+                  <p id="feedback-description" class="feedback-description"></p>
+                  <p id="variant-note" class="variant-note" hidden></p>
+                </details>
+              </div>
+
               </div>
 
               <div class="quiz-actions">
@@ -212,7 +223,7 @@
     <section class="settings-section">
       <h3>Na ekranie iPhone’a</h3>
       <p>Otwórz adres aplikacji w Safari. W menu udostępniania wybierz <strong>Do ekranu głównego</strong>. Gdy pojawi się opcja <strong>Otwórz jako aplikację www</strong>, włącz ją i stuknij <strong>Dodaj</strong>.</p>
-      <p class="small-note">Wersja pod adresem HTTPS ma tryb offline po pierwszym załadowaniu i przygotowaniu pamięci podręcznej. Gotowość zobaczysz u dołu ekranu. Wersję plikową HTML najlepiej otworzyć na komputerze.</p>
+      <p class="small-note">Wersja pod adresem HTTPS ma tryb offline po pierwszym załadowaniu i przygotowaniu pamięci podręcznej. Stan aplikacji: <strong id="connection-settings">Postęp zapisywany lokalnie</strong>. Wersję plikową HTML najlepiej otworzyć na komputerze.</p>
       <button id="install-button" class="button button-secondary" hidden>Zainstaluj aplikację</button>
     </section>
     <details id="rules-details" class="help-details">
@@ -234,7 +245,7 @@
       <div><h3>Nowy start</h3><p>Wyzerowanie usuwa wyniki wszystkich działów. Najpierw warto zapisać kopię.</p></div>
       <button id="reset-all" class="button button-danger">Wyzeruj postępy</button>
     </section>
-    <p class="version-label">Słówko · wersja 1.1 · import TXT · z polskiego na angielski</p>
+    <p class="version-label">Słówko · wersja 1.2 · widok mobilny · import TXT · z polskiego na angielski</p>
   </dialog>
 
 

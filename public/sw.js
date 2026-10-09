@@ -1,8 +1,8 @@
 "use strict";
-/* Generated cache version: cf-navfix-1-db5e4d0dc3a39ab6. Do not edit; run node tools/build.cjs. */
+/* Generated cache version: cf-navfix-1-982b51a821f500b9. Do not edit; run node tools/build.cjs. */
 /* Cloudflare navigation fix: use the canonical root, not redirected index.html. */
 const PREFIX = "slowko:" + self.registration.scope + ":";
-const CACHE = PREFIX + "cf-navfix-1-db5e4d0dc3a39ab6";
+const CACHE = PREFIX + "cf-navfix-1-982b51a821f500b9";
 const ASSETS = ["./","./index.html","./styles.css","./vocabulary.js","./core.js","./vocabulary-txt.js","./app.js","./manifest.webmanifest","./icons/icon.svg","./icons/icon-192.png","./icons/icon-512.png","./icons/icon-maskable.png","./icons/apple-touch-icon.png"];
 const urlOf = path => new URL(path, self.registration.scope).href;
 const ASSET_URLS = new Set(ASSETS.map(urlOf));

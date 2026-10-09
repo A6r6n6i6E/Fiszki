@@ -53,6 +53,39 @@
   let pendingConfirmation = null;
   let installPrompt = null;
 
+  // Use the visible viewport, not the area hidden behind the on-screen keyboard.
+  // Keep browser zoom available: do not resize the app to a pinch-zoomed viewport.
+  const compactQuery = window.matchMedia("(max-width: 700px), (max-width: 960px) and (max-height: 500px)");
+  let viewportFrame = 0;
+  let largestViewport = 0;
+  const isCompact = () => compactQuery.matches;
+  function fitViewport() {
+    viewportFrame = 0;
+    const vv = window.visualViewport;
+    if (vv && Math.abs(vv.scale - 1) > 0.05) return;
+    const height = Math.round(vv ? vv.height : window.innerHeight);
+    const answerFocused = document.activeElement === $("answer") && !answered;
+    if (!answerFocused) largestViewport = height;
+    else largestViewport = Math.max(largestViewport, height);
+    document.documentElement.style.setProperty("--app-height", height + "px");
+    document.body.classList.toggle("compact-height", isCompact() && height < 590);
+    document.body.classList.toggle("tiny-viewport", isCompact() && height < 400);
+    document.body.classList.toggle("keyboard-open", isCompact() && answerFocused &&
+      (largestViewport - height > 115 || height < 480));
+  }
+  function scheduleViewport() {
+    if (!viewportFrame) viewportFrame = requestAnimationFrame(fitViewport);
+  }
+  window.addEventListener("resize", scheduleViewport);
+  window.visualViewport?.addEventListener("resize", scheduleViewport);
+  document.addEventListener("focusin", scheduleViewport);
+  document.addEventListener("focusout", scheduleViewport);
+  compactQuery.addEventListener("change", () => {
+    $("feedback-details").open = !isCompact();
+    scheduleViewport();
+  });
+  fitViewport();
+
   function showNotice(message) {
     $("storage-notice").textContent = message;
     $("storage-notice").hidden = false;
@@ -129,7 +162,7 @@
     select.value = state.category;
     $("set-size").textContent = DATA.words.length + " fiszek · " + DATA.categories.length + " działów";
     $("source-summary").textContent = DATA.words.length + " fiszek w " + DATA.categories.length +
-      " działach. Baza początkowa pochodzi z dwóch zdjęć rozdziału „Człowiek / Unit 01”. Wersja 1.1 czyta bazę projektu z pliku data/slowka.txt i obsługuje prywatne importy TXT.";
+      " działach. Baza początkowa pochodzi z dwóch zdjęć rozdziału „Człowiek / Unit 01”. Wersja 1.2 czyta bazę projektu z pliku data/slowka.txt i obsługuje prywatne importy TXT.";
   }
 
   function renderStatistics() {
@@ -168,6 +201,10 @@
   function nextCard(shouldFocus = false) {
     current = queue.draw(state);
     answered = false;
+    $("quiz-card").classList.remove("is-answered");
+    $("feedback-details").open = !isCompact();
+    document.querySelector(".quiz-content").scrollTop = 0;
+    scheduleViewport();
     renderStatistics();
     if (!current) { renderCompletion(); return; }
     $("quiz-card").hidden = false;
@@ -199,7 +236,8 @@
       : current.sourcePhoto && current.en.includes("(")
         ? "Część w nawiasie jest opcjonalna. Wielkość liter nie ma znaczenia."
         : "Wielkość liter i dodatkowe spacje nie mają znaczenia.";
-    if (shouldFocus && view === "study") answer.focus({ preventScroll: true });
+    // On phones, show the new prompt first instead of immediately reopening the keyboard.
+    if (shouldFocus && view === "study" && !isCompact()) answer.focus({ preventScroll: true });
   }
 
   function submitAnswer(skipped = false) {
@@ -223,6 +261,9 @@
     saveState();
     renderStatistics();
 
+    if (isCompact()) $("answer").blur();
+    $("quiz-card").classList.add("is-answered");
+    $("feedback-details").open = !isCompact();
     $("answer").readOnly = true;
     $("answer").setAttribute("aria-invalid", correct || skipped ? "false" : "true");
     $("input-error").hidden = true;
@@ -237,6 +278,9 @@
     $("solution").textContent = current.en;
     $("typed-answer").textContent = !skipped && !correct ? "Twoja odpowiedź: " + value.trim() : "";
     $("typed-answer").hidden = skipped || correct;
+    $("feedback-brief").textContent = correct
+      ? "Opanowane. Nie wróci do losowania."
+      : sibling ? "Tu ćwiczymy inne hasło. Ta fiszka wróci." : "To słówko wróci do nauki.";
     $("feedback-description").textContent = correct
       ? "To słówko jest opanowane i nie wróci do losowania."
       : sibling
@@ -252,10 +296,15 @@
       ? "Zobacz podsumowanie" : "Następne słówko";
     $("next-button").hidden = false;
     $("next-button").focus({ preventScroll: true });
+    document.querySelector(".quiz-content").scrollTop = 0;
+    scheduleViewport();
   }
 
   function showView(next) {
     view = next;
+    document.body.dataset.view = next;
+    if (next === "study" && isCompact()) window.scrollTo({ top: 0, behavior: "auto" });
+    scheduleViewport();
     $("study-view").hidden = next !== "study";
     $("library-view").hidden = next !== "library";
     for (const id of ["study", "library"]) {
@@ -586,6 +635,7 @@
     else if (!navigator.onLine) node.textContent = offlineReady ? "Tryb offline · postęp zapisany lokalnie" : "Brak połączenia · zapis lokalny";
     else if (offlineReady) node.textContent = "Gotowe offline · zapis lokalny";
     else node.textContent = "Postęp zapisywany lokalnie";
+    $("connection-settings").textContent = node.textContent;
   }
 
   async function prepareOffline() {
