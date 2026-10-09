@@ -35,7 +35,7 @@ function harness(scope="https://slowko.test/sub/") {
           for(const url of urls){
             const response=await network(url);
             if(!response.ok)throw new Error("Missing precache asset: "+url);
-            map.set(url,response);
+            map.set(keyOf(url),response);
           }
         },
         async match(request){const response=map.get(keyOf(request));return response?.clone();},
@@ -52,7 +52,7 @@ function harness(scope="https://slowko.test/sub/") {
     async skipWaiting(){skipped=true;},
     addEventListener(name,callback){listeners[name]=callback;}
   };
-  vm.runInNewContext(source,{self,caches,fetch:network,URL,Set,Response,Promise});
+  vm.runInNewContext(source,{self,caches,fetch:network,URL,Set,Request,Response,Promise});
   return {
     stores,
     async lifecycle(name){let done;listeners[name]({waitUntil(p){done=p;}});await done;},
