@@ -159,6 +159,4 @@ python3 tests/ui_harness.py
 python3 tests/txt_ui_harness.py
 ```
 
-Testy UI wymagają pakietu Python Playwright i Chromium. Domyślna ścieżka
-przeglądarki: `/usr/bin/chromium`; można ustawić `CHROMIUM_PATH`.
-Dokładny zakres testów i ograniczenia są opisane w `TESTY.md`.
+
