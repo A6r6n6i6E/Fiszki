@@ -1,10 +1,5 @@
-# Własne słówka - przykład do importu w aplikacji Słówko
-# Zapisuj jako UTF-8. Jedna linia = jedna fiszka.
-# polski;angielski;dział
-# Dział jest opcjonalny. Akceptowane warianty rozdziel znakiem |.
-
-jabłko;apple;Jedzenie
-chleb;bread;Jedzenie
-podróż;journey | trip;Podróże
-lotnisko;airport;Podróże
+# Słówko 1.3: polski;angielski;dział;strona
+# Kodowanie UTF-8
+jabłko;apple;Jedzenie;Strona 4
+podróż;journey | trip;Podróże;Strona 4
 uczyć się;learn

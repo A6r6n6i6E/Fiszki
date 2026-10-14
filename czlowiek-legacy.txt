@@ -1,0 +1,371 @@
+# Słówko - lista słówek (UTF-8)
+# polski;angielski;dział
+# Dział można pominąć. Warianty odpowiedzi rozdziel znakiem |.
+# Pierwszy wariant identyfikuje fiszkę - nie zmieniaj jego kolejności bez potrzeby.
+
+obywatelstwo;citizenship | nationality;Dane osobowe
+znaki szczególne;distinguishing features;Dane osobowe
+nazwisko;family name | last name;Dane osobowe
+płeć;gender | sex;Dane osobowe
+nazwisko panieńskie;maiden name;Dane osobowe
+drugie imię;middle name;Dane osobowe
+zawód;profession | occupation;Dane osobowe
+grupa etniczna;racial group | ethnic group;Dane osobowe
+osoba w wieku dojrzewania;adolescent;Okresy życia
+dorosłość;adulthood;Okresy życia
+starzejący się;ageing | aging;Okresy życia
+być w kwiecie wieku;be in your prime;Okresy życia
+dorosły, osoba dorosła;grown-up;Okresy życia
+osoba nieletnia;minor;Okresy życia
+noworodek;newborn;Okresy życia
+nie wyglądać na swój wiek;not look your age;Okresy życia
+umrzeć;pass away;Okresy życia
+emeryt, emerytka;pensioner;Okresy życia
+pójść na emeryturę;retire;Okresy życia
+dziecko w wieku 1–2 lat;toddler;Okresy życia
+skończyć (osiemnaście) lat;turn eighteen | turn;Okresy życia
+niepełnoletni;underage;Okresy życia
+szczupły, chudy;lean;Budowa ciała
+muskularny;muscular;Budowa ciała
+z nadwagą;overweight;Budowa ciała
+drobny;petite;Budowa ciała
+szczupły;slender;Budowa ciała
+krępy;stocky;Budowa ciała
+tęgi, korpulentny;stout;Budowa ciała
+dobrze zbudowany;well-built;Budowa ciała
+łysiejący;balding;Włosy
+puszyste, napuszone;bushy;Włosy
+bardzo krótka fryzura;crew cut;Włosy
+dredy;dreadlocks;Włosy
+kędzierzawe;frizzy;Włosy
+błyszczące;glossy;Włosy
+tłuste, przetłuszczające się;greasy;Włosy
+siwiejący;greying | graying;Włosy
+pasemka;highlights;Włosy
+warkoczyki;pigtails;Włosy
+warkocz;plait;Włosy
+(zebrane) w kok;tied in a bun | in a bun;Włosy
+trądzik;acne;Twarz
+worki pod oczami;bags | bags under the eyes;Twarz
+brodaty, z brodą;bearded;Twarz
+pieprzyk;beauty spot;Twarz
+krzaczaste brwi;bushy eyebrows;Twarz
+ogolony;clean-shaven;Twarz
+blisko osadzone oczy;close-set eyes;Twarz
+głęboko osadzone oczy;deep-set eyes;Twarz
+dołek (np. w policzku);dimple;Twarz
+podwójny podbródek;double chin;Twarz
+zapadnięte policzki;hollow cheeks;Twarz
+haczykowaty nos;hook nose;Twarz
+dolna warga;lower lip;Twarz
+górna warga;upper lip;Twarz
+ostry podbródek;pointed chin;Twarz
+spiczasty nos;pointed nose;Twarz
+zapuchnięte oczy;puffy eyes;Twarz
+rumiane policzki;rosy cheeks;Twarz
+blizna;scar;Twarz
+mocno zarysowana szczęka;square jaw;Twarz
+kilkudniowy zarost;stubble;Twarz
+marynarka, żakiet;blazer;Ubrania
+rozpinany sweter;cardigan;Ubrania
+kołnierz;collar;Ubrania
+spodnie bojówki;combat trousers;Ubrania
+szlafrok;dressing gown;Ubrania
+kaptur;hood;Ubrania
+bluza z kapturem;hoodie;Ubrania
+wygodne spodnie, np. dresowe;joggers;Ubrania
+odzież domowa;loungewear;Ubrania
+płaszcz przeciwdeszczowy;raincoat;Ubrania
+rajstopy;tights;Ubrania
+pończochy;stockings;Ubrania
+bluza;sweatshirt;Ubrania
+trencz (typ płaszcza);trench coat;Ubrania
+golf;turtleneck;Ubrania
+kamizelka;waistcoat;Ubrania
+krótkie botki;ankle boots;Obuwie i dodatki
+buty sportowe;athletic shoes;Obuwie i dodatki
+baleriny;ballet flats;Obuwie i dodatki
+broszka;brooch;Obuwie i dodatki
+buty na płaskim obcasie;flat shoes;Obuwie i dodatki
+klapki, japonki;flip-flops;Obuwie i dodatki
+sznurowadła;laces;Obuwie i dodatki
+naszyjnik;necklace;Obuwie i dodatki
+piercing, kolczyk;piercing;Obuwie i dodatki
+buty na koturnie;wedges;Obuwie i dodatki
+kalosze;wellington boots;Obuwie i dodatki
+wmieszać się w tłum;blend into the crowd;Ubieranie: czasowniki i zwroty
+ubrać się mniej formalnie niż zwykle;dress down;Ubieranie: czasowniki i zwroty
+wystroić się, ubrać bardziej formalnie niż zwykle;dress up;Ubieranie: czasowniki i zwroty
+złożyć;fold;Ubieranie: czasowniki i zwroty
+przedłużyć (ubranie);let down;Ubieranie: czasowniki i zwroty
+poszerzyć (ubranie);let out;Ubieranie: czasowniki i zwroty
+naprawić, cerować;mend;Ubieranie: czasowniki i zwroty
+podwinąć;roll up;Ubieranie: czasowniki i zwroty
+wsunąć, narzucić;slip on;Ubieranie: czasowniki i zwroty
+wyróżniać się z tłumu;stand out from the crowd;Ubieranie: czasowniki i zwroty
+zwęzić (ubranie);take in;Ubieranie: czasowniki i zwroty
+zarzucić na siebie;throw on;Ubieranie: czasowniki i zwroty
+podwinąć, skrócić przez podwinięcie;turn up;Ubieranie: czasowniki i zwroty
+rozpiąć guziki;undo buttons;Ubieranie: czasowniki i zwroty
+rozwiązać buty;untie shoes;Ubieranie: czasowniki i zwroty
+chodzić boso;walk barefoot;Ubieranie: czasowniki i zwroty
+owinąć się, otulić;wrap up;Ubieranie: czasowniki i zwroty
+zapiąć zamek;zip;Ubieranie: czasowniki i zwroty
+rozpiąć zamek;unzip;Ubieranie: czasowniki i zwroty
+workowaty;baggy;Opis ubrań
+zapięty na guziki;buttoned;Opis ubrań
+wygnieciony;creased;Opis ubrań
+krótki;cropped;Opis ubrań
+wypłowiały;faded;Opis ubrań
+z wysokim stanem;high-waisted;Opis ubrań
+do kolan;knee-length;Opis ubrań
+lekki;lightweight;Opis ubrań
+z długim rękawem;long-sleeved;Opis ubrań
+luźny;loose-fitting;Opis ubrań
+za duży;oversized;Opis ubrań
+wzorzysty;patterned;Opis ubrań
+gładki, bez wzorów;plain;Opis ubrań
+podarty, z dziurami;ripped;Opis ubrań
+niechlujny;scruffy;Opis ubrań
+zaniedbany;shabby;Opis ubrań
+z krótkim rękawem;short-sleeved;Opis ubrań
+kusy;skimpy;Opis ubrań
+bez rękawów;sleeveless;Opis ubrań
+rozciągliwy, elastyczny;stretchy;Opis ubrań
+w paski;striped;Opis ubrań
+ciasny, dopasowany;tight-fitting;Opis ubrań
+wsunięty w spodnie / spódnicę;tucked-in | tucked in;Opis ubrań
+rozpięty;unbuttoned;Opis ubrań
+vintage, staromodny (jako zaleta);vintage;Opis ubrań
+z dekoltem w serek;v-necked;Opis ubrań
+wełniany;woollen | woolen;Opis ubrań
+znoszony;worn-out;Opis ubrań
+roztargniony;absent-minded;Cechy charakteru
+łatwo dostosowujący się;adaptable;Cechy charakteru
+kłótliwy;argumentative;Cechy charakteru
+o szerokich horyzontach;broad-minded;Cechy charakteru
+osoba wścibska;busybody;Cechy charakteru
+gadatliwy;chatty;Cechy charakteru
+radosny;cheerful;Cechy charakteru
+współczujący;compassionate;Cechy charakteru
+zarozumiały;conceited;Cechy charakteru
+sumienny;conscientious;Cechy charakteru
+odważny;courageous;Cechy charakteru
+cyniczny;cynical;Cechy charakteru
+dyskretny;discreet;Cechy charakteru
+niedyskretny;indiscreet;Cechy charakteru
+nieuczciwy;dishonest;Cechy charakteru
+wydajny, skuteczny;efficient;Cechy charakteru
+elastyczny;flexible;Cechy charakteru
+łagodny;gentle;Cechy charakteru
+łatwowierny;gullible;Cechy charakteru
+obdarzony wyobraźnią;imaginative;Cechy charakteru
+bezstronny;impartial;Cechy charakteru
+nieuprzejmy;impolite;Cechy charakteru
+niekonsekwentny;inconsistent;Cechy charakteru
+niewydajny, nieskuteczny;inefficient;Cechy charakteru
+introwertyk;introvert;Cechy charakteru
+ekstrawertyk;extrovert;Cechy charakteru
+dobrotliwy, o wielkim sercu;kind-hearted;Cechy charakteru
+żywiołowy;lively;Cechy charakteru
+dojrzały;mature;Cechy charakteru
+niedojrzały;immature;Cechy charakteru
+humorzasty;moody;Cechy charakteru
+wścibski;nosy | nosey;Cechy charakteru
+otwarty, bez uprzedzeń;open-minded;Cechy charakteru
+zorganizowany;organised | organized;Cechy charakteru
+niezorganizowany;disorganised | disorganized;Cechy charakteru
+zbyt ambitny;over-ambitious;Cechy charakteru
+stronniczy;partial;Cechy charakteru
+cierpliwy;patient;Cechy charakteru
+niecierpliwy;impatient;Cechy charakteru
+perfekcjonista, perfekcjonistka;perfectionist;Cechy charakteru
+osoba, która wszystko odkłada na później;procrastinator;Cechy charakteru
+punktualny;punctual;Cechy charakteru
+niepunktualny;unpunctual;Cechy charakteru
+racjonalny;rational;Cechy charakteru
+nieracjonalny;irrational;Cechy charakteru
+rozsądny;reasonable;Cechy charakteru
+nierozsądny;unreasonable;Cechy charakteru
+buntowniczy;rebellious;Cechy charakteru
+nierozważny;reckless;Cechy charakteru
+rzetelny, sumienny;reliable;Cechy charakteru
+nieuprzejmy;rude;Cechy charakteru
+pewny siebie;self-assured;Cechy charakteru
+egocentryczny;self-centred | self-centered;Cechy charakteru
+pewny siebie;self-confident;Cechy charakteru
+nieśmiały, skrępowany;self-conscious;Cechy charakteru
+bezinteresowny;selfless;Cechy charakteru
+wrażliwy;sensitive;Cechy charakteru
+niewrażliwy;insensitive;Cechy charakteru
+szczery;sincere;Cechy charakteru
+nieszczery;insincere;Cechy charakteru
+wyrafinowany;sophisticated;Cechy charakteru
+podejrzliwy;suspicious;Cechy charakteru
+współczujący;sympathetic;Cechy charakteru
+godny zaufania;trustworthy;Cechy charakteru
+pozbawiony wyobraźni;unimaginative;Cechy charakteru
+nierzetelny, niesumienny;unreliable;Cechy charakteru
+pozbawiony skrupułów;unscrupulous;Cechy charakteru
+próżny;vain;Cechy charakteru
+wycofany;withdrawn;Cechy charakteru
+zirytowany;annoyed;Uczucia i emocje
+niespokojny;anxious;Uczucia i emocje
+pełen obaw;apprehensive;Uczucia i emocje
+zawstydzony;ashamed;Uczucia i emocje
+zdziwiony;astonished;Uczucia i emocje
+skonsternowany, oszołomiony;bewildered;Uczucia i emocje
+zdezorientowany;confused;Uczucia i emocje
+zły;cross;Uczucia i emocje
+radzić sobie z czymś;cope with sth;Uczucia i emocje
+zdruzgotany;devastated;Uczucia i emocje
+zniechęcony;discouraged;Uczucia i emocje
+niezadowolony;dissatisfied;Uczucia i emocje
+uszczęśliwiony;elated;Uczucia i emocje
+wyczerpany;exhausted;Uczucia i emocje
+wściekły;furious;Uczucia i emocje
+ponury;gloomy;Uczucia i emocje
+zrozpaczony, załamany;heartbroken;Uczucia i emocje
+zirytowany;in a bad temper;Uczucia i emocje
+w nastroju (na coś);in the mood for sth | in the mood;Uczucia i emocje
+tęsknić za kimś / czymś;long for sb | long for sth | long for sb/sth;Uczucia i emocje
+stracić kontrolę;lose control;Uczucia i emocje
+stracić panowanie nad sobą;lose your temper;Uczucia i emocje
+nieszczęśliwy;miserable;Uczucia i emocje
+przytłoczony;overwhelmed;Uczucia i emocje
+przerażony;petrified;Uczucia i emocje
+zaskoczony, zdziwiony;puzzled;Uczucia i emocje
+zdruzgotany;shattered;Uczucia i emocje
+spięty;tense;Uczucia i emocje
+przerażony;terrified;Uczucia i emocje
+bardzo podekscytowany;thrilled;Uczucia i emocje
+złość;anger;Emocje: rzeczowniki
+niepokój;anxiety;Emocje: rzeczowniki
+dezaprobata;disapproval;Emocje: rzeczowniki
+dyskomfort;discomfort;Emocje: rzeczowniki
+zniecierpliwienie;impatience;Emocje: rzeczowniki
+niezdecydowanie;indecision;Emocje: rzeczowniki
+niepewność;insecurity;Emocje: rzeczowniki
+irytacja;irritation;Emocje: rzeczowniki
+nieśmiałość;shyness;Emocje: rzeczowniki
+uderzyć pięścią (w stół);bang your fist on a table | bang your fist;Mowa ciała
+ugiąć kolana;bend your knees;Mowa ciała
+mrugać powiekami;blink;Mowa ciała
+zacisnąć pięści;clench your fists;Mowa ciała
+niezgrabny;clumsy;Mowa ciała
+skrzyżować nogi;cross your legs;Mowa ciała
+wiercić się;fidget;Mowa ciała
+skrzyżować ramiona;fold your arms;Mowa ciała
+zmarszczyć brwi;frown;Mowa ciała
+gest;gesture;Mowa ciała
+rzucić okiem;glance;Mowa ciała
+wpatrywać się ze złością;glare;Mowa ciała
+spojrzeć przelotnie;glimpse;Mowa ciała
+uśmiechać się od ucha do ucha;grin;Mowa ciała
+zgrzytać zębami;grind your teeth;Mowa ciała
+ręce na biodrach;hands on hips;Mowa ciała
+opierać się łokciami o stół;have your elbows on the table;Mowa ciała
+ukryć twarz w dłoniach;hide your face in your hands;Mowa ciała
+odchylać się, opierać się, rozpierać się (na krześle);lean back;Mowa ciała
+jęczeć, narzekać;moan;Mowa ciała
+mamrotać;mumble | mutter;Mowa ciała
+zerkać;peek;Mowa ciała
+przyglądać się;peer;Mowa ciała
+wskazywać na coś;point to sth;Mowa ciała
+zacisnąć usta;purse your lips;Mowa ciała
+unieść brwi;raise your eyebrows;Mowa ciała
+wrzeszczeć, krzyczeć;scream;Mowa ciała
+zlustrować;scrutinise | scrutinize;Mowa ciała
+wzruszyć ramionami;shrug your shoulders;Mowa ciała
+garbić się;slouch;Mowa ciała
+gapić się, wpatrywać się;stare;Mowa ciała
+jąkać się;stutter;Mowa ciała
+bębnić palcami (w stół);tap your fingers on a table | tap your fingers;Mowa ciała
+drżeć, trząść się;tremble;Mowa ciała
+odwrócić się do kogoś plecami;turn your back on sb;Mowa ciała
+jęczeć;whine;Mowa ciała
+szeptać (komuś do ucha);whisper in sb's ear | whisper;Mowa ciała
+mrugnąć okiem do kogoś;wink at sb;Mowa ciała
+wrzeszczeć;yell;Mowa ciała
+mieć chandrę, być bardzo smutnym;be down in the dumps;Idiomy
+być w siódmym niebie;be on cloud nine;Idiomy
+nie posiadać się ze szczęścia;be over the moon;Idiomy
+mieć tremę, denerwować się;get butterflies in your stomach | have butterflies in your stomach;Idiomy
+załamać się;go to pieces;Idiomy
+być przewrażliwionym na punkcie czegoś;have a chip on your shoulder about sth;Idiomy
+obudzić się zlanym zimnym potem;wake up in a cold sweat;Idiomy
+podobać się komuś;appeal to sb;Umiejętności i zainteresowania
+znać coś;be familiar with sth;Umiejętności i zainteresowania
+interesować się czymś;be into sth;Umiejętności i zainteresowania
+zdolny do zrobienia czegoś;capable of doing sth;Umiejętności i zainteresowania
+przekonany o czymś;convinced of sth;Umiejętności i zainteresowania
+nie znosić;detest;Umiejętności i zainteresowania
+nie pochwalać, być przeciwnikiem czegoś;disapprove of sth;Umiejętności i zainteresowania
+odrzucić (pomysł);dismiss an idea | dismiss;Umiejętności i zainteresowania
+skupić się, koncentrować na;focus on;Umiejętności i zainteresowania
+rozumieć coś;grasp sth;Umiejętności i zainteresowania
+spróbować coś zrobić;have a go at sth;Umiejętności i zainteresowania
+obojętny na;indifferent to;Umiejętności i zainteresowania
+biegły, wprawny w;proficient in | proficient at;Umiejętności i zainteresowania
+uważać coś za coś;regard sth as sth;Umiejętności i zainteresowania
+zainteresować się czymś;take an interest in sth;Umiejętności i zainteresowania
+szczycić się czymś;take pride in sth;Umiejętności i zainteresowania
+podejmować ryzyko;take risks;Umiejętności i zainteresowania
+stosować się do;adhere to;Osobisty system wartości
+dostosować się do;adjust to;Osobisty system wartości
+altruizm;altruism;Osobisty system wartości
+aprobować kogoś / akceptować coś;approve of sb | approve of sth | approve of sb/sth;Osobisty system wartości
+autonomia;autonomy;Osobisty system wartości
+być podejrzliwym wobec;be suspicious of;Osobisty system wartości
+współpraca;collaboration;Osobisty system wartości
+wspólnota;community;Osobisty system wartości
+kompromis;compromise;Osobisty system wartości
+konformizm;conformity;Osobisty system wartości
+godność;dignity;Osobisty system wartości
+dyskryminować kogoś;discriminate against sb;Osobisty system wartości
+nieposłuszny;disobedient;Osobisty system wartości
+różnorodność;diversity;Osobisty system wartości
+empatia;empathy;Osobisty system wartości
+równość;equality;Osobisty system wartości
+nierówność;inequality;Osobisty system wartości
+etyczny, moralny;ethical;Osobisty system wartości
+stawiać czemuś czoło;face up to sth;Osobisty system wartości
+przestrzegać zasad;follow the rules;Osobisty system wartości
+płynąć z prądem;go with the flow;Osobisty system wartości
+płynąć pod prąd;go against the flow;Osobisty system wartości
+wdzięczność;gratitude;Osobisty system wartości
+mieć z kimś coś wspólnego;have something in common with sb;Osobisty system wartości
+prawa człowieka;human rights;Osobisty system wartości
+niedoskonały;imperfect;Osobisty system wartości
+prawość;integrity;Osobisty system wartości
+osąd;judgement | judgment;Osobisty system wartości
+nie tracić (celu) z oczu;keep an eye on your goal | keep an eye on;Osobisty system wartości
+wolność;liberty;Osobisty system wartości
+zasady moralne;moral principles;Osobisty system wartości
+posłuszeństwo;obedience;Osobisty system wartości
+nieposłuszeństwo;disobedience;Osobisty system wartości
+pogląd na;outlook on;Osobisty system wartości
+postrzegać, dostrzegać;perceive;Osobisty system wartości
+wytrwałość;perseverance;Osobisty system wartości
+wartości, zasady;principles;Osobisty system wartości
+buntować się przeciwko czemuś;rebel against sth;Osobisty system wartości
+utożsamiać się z kimś / czymś;relate to sb | relate to sth | relate to sb/sth;Osobisty system wartości
+poczucie własnej wartości;self-esteem;Osobisty system wartości
+poczucie przynależności;sense of belonging;Osobisty system wartości
+podzielać poglądy;share views;Osobisty system wartości
+podzielać wartości;share values;Osobisty system wartości
+status społeczny;social status;Osobisty system wartości
+trwać przy swoich przekonaniach;stand by your convictions;Osobisty system wartości
+mądrość;wisdom;Osobisty system wartości
+światopogląd;worldview;Osobisty system wartości
+dążyć do czegoś, aspirować do czegoś;aspire to sth;Autorytety
+znakomity, utalentowany;accomplished;Autorytety
+osiągnięcie;achievement;Autorytety
+aktywista, aktywistka;activist;Autorytety
+zdobyć uznanie;gain recognition;Autorytety
+wybitny;notable;Autorytety
+filantrop, filantropka;philanthropist;Autorytety
+stawiać kogoś na piedestale;put sb on a pedestal;Autorytety
+myśliciel, myślicielka;thinker;Autorytety
+wizjoner, wizjonerka;visionary;Autorytety
+gruntownie wykształcony;well-rounded;Autorytety
