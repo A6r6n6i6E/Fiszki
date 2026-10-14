@@ -561,3 +561,34 @@ dialog::backdrop { background: #14251fb0; backdrop-filter: blur(3px); }
   body[data-view="study"] .progress-card { column-gap: 7px; padding-inline: 9px; }
   body[data-view="study"] .vocab-launch { padding-inline: 8px; }
 }
+
+
+/* v1.3: two independent filters; keep the same one-row mobile dock height. */
+.scope-filters { display: grid; gap: 15px; width: 100%; min-width: 0; }
+.scope-field { min-width: 0; }
+.scope-field label { display: block; }
+.word-tags { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.word-page { color: var(--muted); font-size: 10px; white-space: nowrap; flex-shrink: 0; }
+@media (max-width: 700px), (max-width: 960px) and (max-height: 500px) {
+  .scope-filters { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 8px; }
+  .scope-field label { margin-bottom: 5px; }
+  .scope-field .select-input { min-height: 44px; font-size: 16px; }
+  .word-tags { gap: 6px; }
+  .word-page { font-size: 9px; }
+  body[data-view="study"] .vocab-launch { width: 44px; min-width: 44px; padding: 9px; }
+  body[data-view="study"] .vocab-launch-short { display: none; }
+  body[data-view="study"] .vocab-launch .icon { width: 20px; height: 20px; }
+  body[data-view="study"] .scope-card .select-input { padding-left: 8px; }
+  body[data-view="study"] .scope-filters { gap: 7px; }
+}
+@media (max-width: 360px) {
+  body[data-view="study"].compact-height .quiz-card.is-answered #polish-word.long { font-size: 20px; line-height: 1.16; }
+  body[data-view="study"].compact-height .solution { font-size: 21px; }
+}
+@media (max-width: 360px) {
+  body[data-view="study"].compact-height .feedback-details > summary { padding-block: 0; }
+  body[data-view="study"].compact-height .feedback { margin-top: 4px; }
+}
+@media (max-width: 700px), (max-width: 960px) and (max-height: 500px) {
+  body[data-view="study"] .feedback-details > summary { padding-block: 0; }
+}

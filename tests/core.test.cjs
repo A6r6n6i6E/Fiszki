@@ -5,7 +5,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const C = require("../public/core.js");
-const DATA = JSON.parse(fs.readFileSync(path.join(__dirname, "../data/words.json"), "utf8"));
+const DATA = JSON.parse(fs.readFileSync(path.join(__dirname, "./fixtures/czlowiek-legacy.json"), "utf8"));
 const find = english => {
   const word = DATA.words.find(item => item.en === english);
   assert.ok(word, "Missing word: " + english);

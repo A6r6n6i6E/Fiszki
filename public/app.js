@@ -14,6 +14,7 @@
 
   const STORAGE_KEY = "slowko." + DATA.id + ".v1";
   const categories = new Map();
+  const pages = new Map();
   const byId = new Map();
   const baseIds = new Set(BASE_DATA.words.map(word => word.id));
   let customText = "";
@@ -23,8 +24,10 @@
   function setData(data) {
     DATA = data;
     categories.clear();
+    pages.clear();
     byId.clear();
     for (const c of data.categories) categories.set(c.id, c);
+    for (const p of data.pages || []) pages.set(p.id, p);
     for (const w of data.words) byId.set(w.id, w);
   }
   setData(BASE_DATA);
@@ -149,20 +152,41 @@
     return svg;
   }
 
-  function wordsInScope() { return C.scopedWords(DATA, state.category); }
+  function wordsInScope() { return C.scopedWords(DATA, state.category, state.page); }
+  function wholeCollection() { return state.category === "all" && state.page === "all"; }
 
   function initCategories() {
+    if (state.page !== "all" && !pages.has(state.page)) state = { ...state, page: "all" };
+    const pageSelect = $("page");
+    pageSelect.replaceChildren(new Option("Wszystkie strony \u00b7 " + DATA.words.length, "all"));
+    for (const page of pages.values()) {
+      const count = C.scopedWords(DATA, "all", page.id).length;
+      if (!count) continue;
+      const label = page.label + (page.shortLabel ? " \u00b7 " + page.shortLabel : "") + " \u00b7 " + count;
+      pageSelect.append(new Option(label, page.id));
+    }
+    pageSelect.value = state.page;
+    pageSelect.title = state.page === "all" ? "S\u0142\u00f3wka ze wszystkich stron" :
+      pages.get(state.page).label + " \u2014 " + (pages.get(state.page).description || "wybrana lista");
+
+    const pageWords = C.scopedWords(DATA, "all", state.page);
     const select = $("category");
-    select.replaceChildren();
-    select.append(new Option("Wszystkie działy · " + DATA.words.length, "all"));
+    select.replaceChildren(new Option("Wszystkie dzia\u0142y \u00b7 " + pageWords.length, "all"));
     for (const category of DATA.categories) {
-      const count = DATA.words.filter(word => word.category === category.id).length;
-      select.append(new Option(category.label + " · " + count, category.id));
+      const count = pageWords.filter(word => word.category === category.id).length;
+      if (count) select.append(new Option(category.label + " \u00b7 " + count, category.id));
+    }
+    if (state.category !== "all" && !pageWords.some(w => w.category === state.category)) {
+      state = { ...state, category: "all" };
     }
     select.value = state.category;
-    $("set-size").textContent = DATA.words.length + " fiszek · " + DATA.categories.length + " działów";
-    $("source-summary").textContent = DATA.words.length + " fiszek w " + DATA.categories.length +
-      " działach. Baza początkowa pochodzi z dwóch zdjęć rozdziału „Człowiek / Unit 01”. Wersja 1.2 czyta bazę projektu z pliku data/slowka.txt i obsługuje prywatne importy TXT.";
+    select.title = state.category === "all" ? "Wszystkie dzia\u0142y wybranej strony" : categories.get(state.category).label;
+    $("set-pages").textContent = pages.size;
+    $("set-size").textContent = DATA.words.length + " fiszek \u00b7 " + DATA.categories.length + " dzia\u0142\u00f3w";
+    $("source-summary").textContent = DATA.words.length + " fiszek, " + DATA.categories.length +
+      " dzia\u0142\u00f3w i " + pages.size + " grup stron. Baza pocz\u0105tkowa zawiera trzy zdj\u0119cia: " +
+      "Strona 1 i 2 \u2014 Cz\u0142owiek, Strona 3 \u2014 Dom i okolica. Numery okre\u015blaj\u0105 kolejno\u015b\u0107 zdj\u0119\u0107, " +
+      "nie strony podr\u0119cznika. Wersja 1.3 czyta baz\u0119 projektu z data/slowka.txt; czwarta kolumna oznacza stron\u0119.";
   }
 
   function renderStatistics() {
@@ -179,7 +203,7 @@
     $("progress-ring").setAttribute("aria-valuenow", String(percent));
     $("progress-ring").setAttribute("aria-valuetext", stats.learned + " z " + stats.total + " fiszek opanowanych");
     const global = C.statistics(DATA.words, state);
-    $("global-progress").textContent = state.category === "all" ? "" :
+    $("global-progress").textContent = wholeCollection() ? "" :
       "Cały zestaw: " + global.learned + " / " + global.total + " opanowanych";
     $("reset-scope").disabled = stats.attempts === 0;
   }
@@ -191,11 +215,13 @@
     $("done-card").hidden = false;
     const stats = C.statistics(wordsInScope(), state);
     const allStats = C.statistics(DATA.words, state);
-    $("done-title").textContent = state.category === "all" ? "Wszystko opanowane." : "Ten dział już umiesz.";
-    $("done-description").textContent = "Opanowane fiszki: " + stats.learned + " / " + stats.total +
-      ". Nie ma już słówek do losowania w tym zakresie. Świetna robota!";
-    $("done-all").hidden = state.category === "all" || allStats.remaining === 0;
-    $("done-reset").textContent = state.category === "all" ? "Rozpocznij cały zestaw od nowa" : "Rozpocznij ten dział od nowa";
+    $("done-title").textContent = !stats.total ? "Brak fiszek w tym zakresie." :
+      wholeCollection() ? "Wszystko opanowane." : "Ten zakres ju\u017c umiesz.";
+    $("done-description").textContent = stats.total ? "Opanowane fiszki: " + stats.learned + " / " + stats.total +
+      ". Nie ma ju\u017c s\u0142\u00f3wek do losowania w tym zakresie. \u015awietna robota!" : "Wybierz inn\u0105 stron\u0119 lub dzia\u0142.";
+    $("done-all").hidden = wholeCollection() || allStats.remaining === 0;
+    $("done-reset").disabled = stats.total === 0;
+    $("done-reset").textContent = wholeCollection() ? "Rozpocznij ca\u0142y zestaw od nowa" : "Rozpocznij ten zakres od nowa";
   }
 
   function nextCard(shouldFocus = false) {
@@ -210,6 +236,8 @@
     $("quiz-card").hidden = false;
     $("done-card").hidden = true;
     $("word-category").textContent = categories.get(current.category).label;
+    $("word-page").textContent = pages.get(current.page)?.label || "Bez strony";
+    $("word-page").title = pages.get(current.page)?.description || "";
     const prompt = current.prompt || current.pl;
     $("polish-word").textContent = prompt;
     $("polish-word").classList.toggle("long", prompt.length > 44);
@@ -327,7 +355,7 @@
       const learned = C.getEntry(state, word.id).learned;
       if ((status === "learned" && !learned) || (status === "pending" && learned)) return false;
       return !query || C.searchText(word.pl + " " + word.en + " " + word.answers.join(" ") +
-        " " + categories.get(word.category).label).includes(query);
+        " " + categories.get(word.category).label + " " + (pages.get(word.page)?.label || "")).includes(query);
     });
     $("library-count").textContent = "Wyświetlane fiszki: " + matches.length + " / " + wordsInScope().length;
     $("library-empty").hidden = matches.length !== 0;
@@ -347,8 +375,10 @@
       en.textContent = word.en;
       const meta = document.createElement("p");
       meta.className = "word-meta";
-      meta.textContent = categories.get(word.category).label + (word.sourcePhoto ? " · zdjęcie " + word.sourcePhoto : word.source === "import" ? " · import TXT" : " · baza TXT") +
-        (word.note ? " · uzupełnione tłumaczenie" : "");
+      meta.textContent = categories.get(word.category).label + " \u00b7 " +
+        (pages.get(word.page)?.label || "Bez przypisanej strony") +
+        (word.source === "import" ? " \u00b7 import TXT" : "") +
+        (word.note ? " \u00b7 uzupe\u0142nione t\u0142umaczenie" : "");
       if (word.note) meta.title = word.note;
       main.append(pl, en, meta);
       const right = document.createElement("div");
@@ -380,15 +410,20 @@
     $("word-list").replaceChildren(fragment);
   }
 
-  function applyCategory(category, focus = false) {
-    if (category !== "all" && !categories.has(category)) return;
-    state = { ...state, category };
-    $("category").value = category;
+  function applyScope(category, page, focus = false) {
+    if ((category !== "all" && !categories.has(category)) || (page !== "all" && !pages.has(page))) return;
+    const resetCategory = category !== "all" && !C.scopedWords(DATA, category, page).length;
+    state = { ...state, category: resetCategory ? "all" : category, page };
+    initCategories();
     saveState();
     rebuildQueue();
     nextCard(focus);
     if (view === "library") renderLibrary();
+    if (resetCategory) toast("Ten dzia\u0142 nie wyst\u0119puje na tej stronie. Pokazano wszystkie dzia\u0142y wybranej strony.");
   }
+
+  function applyCategory(category, focus = false) { applyScope(category, state.page, focus); }
+  function applyPage(page) { applyScope(state.category, page); }
 
   function ask(title, description, okLabel = "Potwierdź", danger = true) {
     if ($("confirm-dialog").open) return Promise.resolve(false);
@@ -405,7 +440,9 @@
 
   async function resetProgress(all = false) {
     const ids = (all ? DATA.words : wordsInScope()).map(word => word.id);
-    const label = all || state.category === "all" ? "całym zestawie" : "dziale „" + categories.get(state.category).label + "”";
+    const label = all || wholeCollection() ? "ca\u0142ym zestawie" : "wybranym zakresie: " +
+      (state.page === "all" ? "wszystkie strony" : pages.get(state.page).label) + " / " +
+      (state.category === "all" ? "wszystkie dzia\u0142y" : categories.get(state.category).label);
     if (!await ask("Rozpocząć od nowa?", "Usuniesz wszystkie wyniki w " + label +
       ". Liczba fiszek: " + ids.length + ". Tej operacji nie można cofnąć bez wcześniej zapisanej kopii.", "Wyzeruj wyniki")) return;
     const entries = { ...state.entries };
@@ -455,7 +492,10 @@
       if (!snapshot || snapshot.format !== "slowko-progress") throw new Error("To nie jest kopia postępów z aplikacji Słówko.");
       if (snapshot.vocabularyText !== undefined && typeof snapshot.vocabularyText !== "string") throw new Error("Nieprawidłowa lista słówek w kopii.");
       const incomingData = snapshot.vocabularyText ? T.merge(BASE_DATA, T.ensureParsed(snapshot.vocabularyText).rows).data : DATA;
-      const imported = C.validateState({ ...snapshot.state, category: incomingData.categories.some(c => c.id === snapshot.state?.category) ? snapshot.state.category : "all" }, incomingData);
+      const imported = C.validateState({ ...snapshot.state,
+        category: incomingData.categories.some(c => c.id === snapshot.state?.category) ? snapshot.state.category : "all",
+        page: (incomingData.pages || []).some(p => p.id === snapshot.state?.page) ? snapshot.state.page : "all"
+      }, incomingData);
       const importedStats = C.statistics(incomingData.words, imported);
       const accepted = await ask("Wczytać zapisaną kopię?",
         "Kopia zawiera " + importedStats.learned + " opanowanych fiszek i " +
@@ -584,7 +624,7 @@
       if (!merged.added) { previewVocabulary(); return; }
       setData(merged.data);
       customText = T.serialize(personalData());
-      state = { ...state, category: "all" };
+      state = { ...state, category: "all", page: "all" };
       saveState();
       refreshCollection();
       $("vocab-text").value = "";
@@ -677,6 +717,7 @@
   $("nav-study").addEventListener("click", () => showView("study"));
   $("nav-library").addEventListener("click", () => showView("library"));
   $("category").addEventListener("change", event => applyCategory(event.target.value));
+  $("page").addEventListener("change", event => applyPage(event.target.value));
   $("word-search").addEventListener("input", renderLibrary);
   $("status-filter").addEventListener("change", renderLibrary);
   $("settings-button").addEventListener("click", () => openSettings());
@@ -705,7 +746,7 @@
   $("reset-scope").addEventListener("click", () => resetProgress(false));
   $("reset-all").addEventListener("click", () => resetProgress(true));
   $("done-reset").addEventListener("click", () => resetProgress(false));
-  $("done-all").addEventListener("click", () => applyCategory("all"));
+  $("done-all").addEventListener("click", () => applyScope("all", "all"));
   $("done-library").addEventListener("click", () => showView("library"));
   $("export-button").addEventListener("click", exportProgress);
   $("import-button").addEventListener("click", () => $("import-file").click());

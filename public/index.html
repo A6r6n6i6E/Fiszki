@@ -66,8 +66,8 @@
         <h1 id="page-title">Jedno słówko bliżej.</h1>
         <p class="page-subtitle">Przeczytaj po polsku. Zapisz po angielsku. Zapamiętaj.</p>
       </div>
-      <div class="set-badge" aria-label="Zestaw 01: Człowiek">
-        <span class="set-number">01</span><div><strong>Człowiek</strong><span id="set-size">Baza ze zdjęć</span></div>
+      <div class="set-badge" aria-label="Baza ze zdjęć">
+        <span id="set-pages" class="set-number">3</span><div><strong>Twoje strony</strong><span id="set-size">Baza ze zdjęć</span></div>
       </div>
     </section>
 
@@ -86,9 +86,17 @@
           <p id="global-progress" class="global-progress"></p>
         </section>
         <section class="scope-card">
-          <label for="category" class="section-overline">ZAKRES NAUKI</label>
-          <select id="category" class="select-input" aria-label="Wybierz dział"></select>
-          <p class="scope-help">Ucz się całego zestawu albo wybierz jeden dział.</p>
+          <div class="scope-filters">
+            <div class="scope-field">
+              <label for="page" class="section-overline">STRONA ZE ZDJĘCIA</label>
+              <select id="page" class="select-input" aria-label="Wybierz stronę ze zdjęcia"></select>
+            </div>
+            <div class="scope-field">
+              <label for="category" class="section-overline">DZIAŁ</label>
+              <select id="category" class="select-input" aria-label="Wybierz dział"></select>
+            </div>
+          </div>
+          <p class="scope-help">Wybierz stronę, a potem dowolny dział z tej strony. Możesz też ćwiczyć wszystkie strony razem.</p>
           <button id="reset-scope" class="text-button">
             <svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg>Zacznij zakres od nowa
           </button>
@@ -108,7 +116,7 @@
             <form id="answer-form" novalidate>
               <div class="quiz-content">
             <div class="quiz-top">
-              <span id="word-category" class="category-badge"></span>
+              <div class="word-tags"><span id="word-category" class="category-badge"></span><span id="word-page" class="word-page"></span></div>
               <span class="direction"><b>PL</b><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>EN</span>
             </div>
             <div class="question-block">
@@ -191,7 +199,7 @@
           </div>
           <p id="library-count" class="library-count" aria-live="polite"></p>
           <ul id="word-list" class="word-list"></ul>
-          <div id="library-empty" class="empty-state" hidden><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><h3>Tu jeszcze nic nie ma.</h3><p>Zmień wyszukiwanie, dział lub filtr postępu.</p></div>
+          <div id="library-empty" class="empty-state" hidden><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><h3>Tu jeszcze nic nie ma.</h3><p>Zmień wyszukiwanie, stronę, dział lub filtr postępu.</p></div>
         </section>
       </div>
     </div>
@@ -239,13 +247,14 @@
       <p id="source-summary"></p>
       <p>Przepisano listę słownictwa, bez bloku ćwiczeń „Pronounce it”. Zaznaczenia długopisem nie ograniczają bazy. Przeciwieństwa i warianty o innych znaczeniach rozdzielono na osobne pytania.</p>
       <p>Wiersz <strong lang="en">cope with sth</strong> przy dolnej krawędzi pierwszego zdjęcia jest ucięty. Tłumaczenie „radzić sobie z czymś” zostało uzupełnione redakcyjnie. W pytaniach o „vintage” i „piercing” polską podpowiedź zapisano tak, aby nie zdradzała angielskiej odpowiedzi.</p>
+      <p>Na trzecim zdjęciu ikona zasłania fragmenty: gated community, housing estate, housing development i hustle and bustle. Ich tłumaczenia zostały uzupełnione redakcyjnie, jak w poprzedniej bazie Dom.</p>
       <p>Kod aplikacji nie wysyła wpisywanych odpowiedzi ani postępów na serwer. Nie wymaga konta, płatnego API ani zewnętrznych bibliotek.</p>
     </details>
     <section class="danger-zone">
-      <div><h3>Nowy start</h3><p>Wyzerowanie usuwa wyniki wszystkich działów. Najpierw warto zapisać kopię.</p></div>
+      <div><h3>Nowy start</h3><p>Wyzerowanie usuwa wyniki wszystkich stron i działów. Najpierw warto zapisać kopię.</p></div>
       <button id="reset-all" class="button button-danger">Wyzeruj postępy</button>
     </section>
-    <p class="version-label">Słówko · wersja 1.2 · widok mobilny · import TXT · z polskiego na angielski</p>
+    <p class="version-label">Słówko · wersja 1.3 · pełna paczka · wybór stron · import TXT · z polskiego na angielski</p>
   </dialog>
 
 
@@ -258,11 +267,11 @@
     <div class="txt-format">
       <span class="txt-tag">.TXT</span>
       <div><strong>Jedna linia = jedna fiszka.</strong>
-        <p>Najpierw polskie hasło, potem angielska odpowiedź. Rozdziel je średnikiem. Dział jest opcjonalny.</p>
+        <p>Najpierw polskie hasło, potem angielska odpowiedź. Rozdziel je średnikiem. Trzecia kolumna to dział, czwarta — strona. Obie są opcjonalne.</p>
       </div>
     </div>
-    <pre class="txt-example">jabłko;apple;Jedzenie
-podróż;journey | trip;Podróże
+    <pre class="txt-example">jabłko;apple;Jedzenie;Strona 4
+podróż;journey | trip;Podróże;Strona 4
 uczyć się;learn</pre>
     <div class="vocab-file-row">
       <button id="choose-vocab-file" class="button button-secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Wybierz plik .txt</button>
@@ -270,8 +279,8 @@ uczyć się;learn</pre>
       <input id="vocab-file" type="file" accept=".txt,text/plain" hidden>
     </div>
     <label for="vocab-text" class="answer-label vocab-text-label">Albo wpisz / wklej swoją listę</label>
-    <textarea id="vocab-text" rows="5" maxlength="2000000" spellcheck="false" autocapitalize="none" autocorrect="off" aria-describedby="vocab-format-help" placeholder="polskie hasło;angielska odpowiedź;dział"></textarea>
-    <p id="vocab-format-help" class="small-note">Zapisz plik w UTF-8. Alternatywne odpowiedzi rozdziel znakiem <strong>|</strong>. Puste linie i komentarze zaczynające się od <strong>#</strong> są pomijane. Brak działu = „Własne słówka”.</p>
+    <textarea id="vocab-text" rows="5" maxlength="2000000" spellcheck="false" autocapitalize="none" autocorrect="off" aria-describedby="vocab-format-help" placeholder="polskie hasło;angielska odpowiedź;dział;strona"></textarea>
+    <p id="vocab-format-help" class="small-note">Zapisz plik w UTF-8. Alternatywne odpowiedzi rozdziel znakiem <strong>|</strong>. Puste linie i komentarze zaczynające się od <strong>#</strong> są pomijane. Brak działu = „Własne słówka”. Nowe hasło bez strony trafia do „Bez przypisanej strony”. Nowa nazwa strony tworzy ją automatycznie.</p>
     <button id="preview-vocab-button" class="button button-secondary" type="button">Sprawdź listę</button>
     <section id="vocab-preview" class="vocab-preview" aria-live="polite" hidden>
       <h3 id="vocab-preview-title"></h3>
@@ -287,7 +296,7 @@ uczyć się;learn</pre>
         <button id="export-own-txt" class="button button-secondary" type="button">Eksportuj tylko własne</button>
       </div>
       <p>TXT zawiera słówka, bez wyników. Kopię słówek razem z postępem zapiszesz w ustawieniach jako JSON.</p>
-      <p>Import jest kopią pliku na tym urządzeniu, nie synchronizacją. Zmiana pliku na dysku wymaga ponownego importu. Duplikat (to samo polskie hasło i pierwszy angielski wariant) jest pomijany; import nie nadpisuje jego odpowiedzi ani działu.</p>
+      <p>Import jest kopią pliku na tym urządzeniu, nie synchronizacją. Zmiana pliku na dysku wymaga ponownego importu. Duplikat (to samo polskie hasło i pierwszy angielski wariant) jest pomijany; import nie nadpisuje jego odpowiedzi, działu ani strony. Zmianę przypisania istniejącej fiszki wykonaj w bazie projektu. Jedna fiszka jest przypisana do jednej strony.</p>
       <p>Wspólna baza projektu jest w <code>data/slowka.txt</code>. Zmiana tego pliku wymaga przebudowania i opublikowania projektu. Usunięcie prywatnego importu nie zmienia pliku projektu.</p>
       <button id="clear-own-txt" class="text-button" type="button">Usuń zaimportowane słówka z tego urządzenia</button>
     </details>

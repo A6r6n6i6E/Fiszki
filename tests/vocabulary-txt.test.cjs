@@ -5,8 +5,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const T = require('../public/vocabulary-txt.js');
 const C = require('../public/core.js');
-const original = require('../data/words.json');
-const txt = fs.readFileSync(path.join(__dirname, '../data/slowka.txt'), 'utf8');
+const original = require('./fixtures/czlowiek-legacy.json');
+const txt = fs.readFileSync(path.join(__dirname, 'fixtures/czlowiek-legacy.txt'), 'utf8');
 const base = T.compile(txt, original);
 const row = text => T.ensureParsed(text).rows;
 
@@ -79,7 +79,7 @@ test('Import duplicates cannot override an existing answer or its category', () 
   assert.deepEqual(b.words.at(-1), a.words.at(-1));
 });
 test('Empty/invalid lines have precise line numbers; parser does not throw', () => {
-  for (const text of ['# empty', '', 'word', ';cat', 'kot;', 'kot;cat;', 'kot;cat|', 'kot;cat;x;extra']) {
+  for (const text of ['# empty', '', 'word', ';cat', 'kot;', 'kot;cat;', 'kot;cat|', 'kot;cat;x;extra;fifth']) {
     const p = T.parse(text);
     if (text === 'kot;cat;') assert.equal(p.errors.length, 0);
     else assert.ok(p.errors.length);

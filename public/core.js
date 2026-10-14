@@ -30,7 +30,7 @@
   }
 
   function initialState(data) {
-    return { schemaVersion: SCHEMA_VERSION, datasetId: data.id, category: "all", entries: {} };
+    return { schemaVersion: SCHEMA_VERSION, datasetId: data.id, category: "all", page: "all", entries: {} };
   }
 
   function blankEntry() {
@@ -58,8 +58,9 @@
     } };
   }
 
-  function scopedWords(data, category = "all") {
-    return category === "all" ? data.words : data.words.filter(word => word.category === category);
+  function scopedWords(data, category = "all", page = "all") {
+    return data.words.filter(word => (category === "all" || word.category === category) &&
+      (page === "all" || (word.page || "unassigned") === page));
   }
 
   function statistics(words, state) {
@@ -133,6 +134,11 @@
     const allowedIds = new Set(data.words.map(word => word.id));
     const validCategories = new Set(["all", ...data.categories.map(category => category.id)]);
     if (!validCategories.has(candidate.category)) fail();
+    // v1.0-v1.2 backups did not contain a page filter. They still load unchanged.
+    const page = candidate.page === undefined ? "all" : candidate.page;
+    const validPages = new Set(["all", ...(data.pages || []).map(p => p.id)]);
+    if (data.words.some(w => !w.page || w.page === "unassigned")) validPages.add("unassigned");
+    if (!validPages.has(page)) fail();
     const entries = {};
     for (const [id, value] of Object.entries(candidate.entries)) {
       if (!allowedIds.has(id) || !value || typeof value !== "object" || Array.isArray(value) ||
@@ -147,7 +153,7 @@
       entries[id] = { learned: value.learned, correct: value.correct, wrong: value.wrong,
         skipped: value.skipped, updatedAt: value.updatedAt };
     }
-    return { schemaVersion: SCHEMA_VERSION, datasetId: data.id, category: candidate.category, entries };
+    return { schemaVersion: SCHEMA_VERSION, datasetId: data.id, category: candidate.category, page, entries };
   }
 
   function makeBackup(state, now = new Date().toISOString()) {

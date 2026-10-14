@@ -13,3 +13,6 @@
 
 /
   Cache-Control: no-cache
+
+/wersja.json
+  Cache-Control: no-store

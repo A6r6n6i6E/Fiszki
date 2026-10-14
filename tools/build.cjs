@@ -11,12 +11,13 @@ const pub = path.join(root, "public");
 const T = require(path.join(pub, "vocabulary-txt.js"));
 const reference = JSON.parse(fs.readFileSync(path.join(root, "data/words.json"), "utf8"));
 const data = T.compile(fs.readFileSync(path.join(root, "data/slowka.txt"), "utf8"), reference);
-data.version = 2;
+data.version = 3;
 data.sourceFile = "data/slowka.txt";
 const ids = new Set();
 const categories = new Set(data.categories.map(c => c.id));
+const pages = new Set(data.pages.map(p => p.id));
 for (const word of data.words) {
-  if (!word.id || ids.has(word.id) || !categories.has(word.category) ||
+  if (!word.id || ids.has(word.id) || !categories.has(word.category) || !pages.has(word.page) ||
       !word.en || !word.pl || !Array.isArray(word.answers) || word.answers.length === 0 ||
       word.answers.some(answer => typeof answer !== "string" || !answer.trim())) {
     throw new Error("Niepoprawna fiszka lub powtorzony identyfikator: " + word.id);
@@ -149,6 +150,28 @@ self.addEventListener("fetch", event => {
 });
 `;
 fs.writeFileSync(path.join(pub, "sw.js"), sw);
+
+// Public deployment diagnostics. No learning progress or private data is included.
+// This file is intentionally outside the service-worker asset cache.
+const revision = process.env.CF_PAGES_COMMIT_SHA || "";
+const info = {
+  wydanie: "PELNA-PACZKA-1.3",
+  wersjaAplikacji: JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")).version,
+  liczbaFiszek: data.words.length,
+  liczbaDzialow: data.categories.length,
+  liczbaStron: data.pages.length,
+  strony: data.pages.map(page => ({
+    nazwa: page.label,
+    liczbaFiszek: data.words.filter(word => word.page === page.id).length
+  })),
+  zrodlo: "data/slowka.txt",
+  sha256Bazy: crypto.createHash("sha256").update(fs.readFileSync(path.join(root, "data/slowka.txt"))).digest("hex"),
+  commit: /^[a-f0-9]{40,64}$/i.test(revision) ? revision : null,
+  cache: version
+};
+fs.writeFileSync(path.join(pub, "wersja.json"), JSON.stringify(info, null, 2) + "\n");
+console.log("PELNA-PACZKA-1.3 |", info.liczbaFiszek, "fiszek |", info.liczbaStron, "strony | sprawdz /wersja.json");
+
 let demo = fs.readFileSync(path.join(pub, "index.html"), "utf8")
   .replace(/<!-- PWA_LINKS_START -->[\s\S]*?<!-- PWA_LINKS_END -->/,
     '<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,' +
@@ -162,4 +185,4 @@ const code = ["window.SLOWKO_STANDALONE = true;", vocabulary,
   fs.readFileSync(path.join(pub, "app.js"), "utf8")].join("\n");
 demo = demo.replace("</body>", () => "<script>\n" + code.replace(/<\/script/gi, "<\\/script") + "\n</script>\n</body>");
 fs.writeFileSync(path.join(root, "slowko-demo.html"), demo);
-console.log("Ready:", data.words.length, "cards,", data.categories.length, "categories. Cache:", version);
+console.log("Ready:", data.words.length, "cards,", data.categories.length, "categories,", data.pages.length, "pages. Cache:", version);
