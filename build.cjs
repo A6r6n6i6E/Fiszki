@@ -150,6 +150,28 @@ self.addEventListener("fetch", event => {
 });
 `;
 fs.writeFileSync(path.join(pub, "sw.js"), sw);
+
+// Public deployment diagnostics. No learning progress or private data is included.
+// This file is intentionally outside the service-worker asset cache.
+const revision = process.env.CF_PAGES_COMMIT_SHA || "";
+const info = {
+  wydanie: "PELNA-PACZKA-1.3",
+  wersjaAplikacji: JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")).version,
+  liczbaFiszek: data.words.length,
+  liczbaDzialow: data.categories.length,
+  liczbaStron: data.pages.length,
+  strony: data.pages.map(page => ({
+    nazwa: page.label,
+    liczbaFiszek: data.words.filter(word => word.page === page.id).length
+  })),
+  zrodlo: "data/slowka.txt",
+  sha256Bazy: crypto.createHash("sha256").update(fs.readFileSync(path.join(root, "data/slowka.txt"))).digest("hex"),
+  commit: /^[a-f0-9]{40,64}$/i.test(revision) ? revision : null,
+  cache: version
+};
+fs.writeFileSync(path.join(pub, "wersja.json"), JSON.stringify(info, null, 2) + "\n");
+console.log("PELNA-PACZKA-1.3 |", info.liczbaFiszek, "fiszek |", info.liczbaStron, "strony | sprawdz /wersja.json");
+
 let demo = fs.readFileSync(path.join(pub, "index.html"), "utf8")
   .replace(/<!-- PWA_LINKS_START -->[\s\S]*?<!-- PWA_LINKS_END -->/,
     '<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,' +
